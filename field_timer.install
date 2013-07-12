@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Implements hook_field_schema
+ */
+function field_timer_field_schema($field) {
+  if ($field['type'] == 'field_timer') {
+    return array (
+        'columns' => array (
+            'timestamp' => array (
+                'type' => 'int',
+                'not null' => FALSE,
+                'unsigned' => TRUE
+            ),
+            'entity_item' => array (
+                'type' => 'varchar',
+                'length' => 20,
+                'not null' => FALSE,
+            ),
+            'entity_item_name' => array (
+                'type' => 'varchar',
+                'length' => 100,
+                'not null' => FALSE,
+            ),
+        )
+    );
+  }
+}
