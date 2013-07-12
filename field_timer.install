@@ -12,12 +12,12 @@ function field_timer_field_schema($field) {
                 'not null' => FALSE,
                 'unsigned' => TRUE
             ),
-            'entity_item' => array (
+            'entity_property' => array (
                 'type' => 'varchar',
                 'length' => 20,
                 'not null' => FALSE,
             ),
-            'entity_item_name' => array (
+            'entity_property_name' => array (
                 'type' => 'varchar',
                 'length' => 100,
                 'not null' => FALSE,
