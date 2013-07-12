@@ -1,9 +1,5 @@
 <?php
 
-define('FIELD_TIMER_CREATED', 'created');
-define('FIELD_TIMER_CHANGED', 'changed');
-define('FIELD_TIMER_FIELD', 'field');
-
 /**
  * Implements hook_field_info
  */
@@ -31,16 +27,16 @@ function field_timer_field_widget_info() {
           'settings' => array (),
           'weight' => -1
       ),
-      'field_timer_entity_item_select' => array (
-          'label' => t('Entity Item (Select List)'),
-          'description' => t('Allow set an entity\'s item value as the target date.'),
+      'field_timer_entity_property_select' => array (
+          'label' => t('Entity Property (Select List)'),
+          'description' => t('Allow set an entity\'s property value as the target date.'),
           'field types' => array ('field_timer'),
           'settings' => array (),
           'weight' => 0
       ),
-      'field_timer_entity_item_radio' => array (
-          'label' => t('Entity Item (Radiobuttons)'),
-          'description' => t('Allow set an entity\'s item value as the target date.'),
+      'field_timer_entity_property_radio' => array (
+          'label' => t('Entity Property (Radiobuttons)'),
+          'description' => t('Allow set an entity\'s property value as the target date.'),
           'field types' => array ('field_timer'),
           'settings' => array (),
           'weight' => 0
@@ -65,33 +61,26 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
       break;
     }
     
-    case 'field_timer_entity_item_select': {
-      $options = array (
-          FIELD_TIMER_CREATED => t('Create date'),
-          FIELD_TIMER_CHANGED => t('Date of last change'),
-      );
+    case 'field_timer_entity_property_select': {
+      $options = field_timer_get;
       $widget = array (
           '#type' => 'select',
           '#options' => $options,
           '#multiple' => FALSE,
-          '#default_value' => isset($items[$delta]['entity_item']) ?
-                  $items[$delta]['entity_item'] : ''
+          '#default_value' => isset($items[$delta]['entity_property']) ?
+                  $items[$delta]['entity_property'] : ''
       );
-      $element['entity_item'] = $widget;
+      $element['entity_property'] = $widget;
       break;
     }
-    case 'field_timer_entity_item_radio': {
-      $options = array (
-          FIELD_TIMER_CREATED => t('Create date'),
-          FIELD_TIMER_CHANGED => t('Date of last change')
-      );
+    case 'field_timer_entity_property_radio': {
       $widget = array (
           '#type' => 'radios',
           '#options' => $options,
-          '#default_value' => isset($items[$delta]['entity_item']) ?
-                  $items[$delta]['entity_item'] : ''
+          '#default_value' => isset($items[$delta]['entity_property']) ?
+                  $items[$delta]['entity_property'] : ''
       );
-      $element['entity_item'] = $widget;
+      $element['entity_property'] = $widget;
     }
   }
 
@@ -172,4 +161,48 @@ function field_timer_field_presave($entity_type, $entity, $field, $instance,
       }
     }
   }
+}
+
+/**
+ * Implements hook_field_timer_entity_properties
+ * Define properties for default drupal entities
+ */
+function field_timer_field_timer_entity_properties() {
+  $properties = array (
+      'node' => array (
+          'created' => t('Node create date'),
+          'changed' => t('Node last change date')
+      ),
+      'comment' => array (
+          'created' => t('Comment create date'),
+          'changed' => t('Comment last change date')
+      ),
+      'file' => array (
+          'timestamp' => t('File upload date')
+      ),
+      'taxanomy_term' => array(),
+      'taxanomy_vocabulary' => array(),
+      'user' => array (
+          'created' => t('User create date'),
+          'access' => t('User last access date'),
+          'login' => t('User last login date')
+      )
+  );
+  
+  return $properties;
+}
+
+/**
+ * Load entity properties which represent a date.
+ * @param string $entity_type
+ * @return array of entity's properties which represent a date keyed 
+ * by entity types if $entity_type is empty, array of properties of given 
+ * entity type otherwise.
+ */
+function field_timer_entity_properties($entity_type = '') {
+  $properties = module_invoke_all('field_timer_entity_properties');
+  if (!empty($entity_type)) {
+    return $properties[$entity_type];
+  }
+  return $properties;
 }
