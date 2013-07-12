@@ -1,0 +1,6 @@
+name = Timer Field
+description = Provides a basic field to create timer or countdown.
+version = 1.xdev
+core = 7.x
+dependencies[] = libraries
+dependencies[] = date_popup
