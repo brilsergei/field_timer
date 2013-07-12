@@ -1,0 +1,156 @@
+<?php
+
+define('FIELD_TIMER_CREATED', 'created');
+define('FIELD_TIMER_CHANGED', 'changed');
+define('FIELD_TIMER_FIELD', 'field');
+
+/**
+ * Implements hook_field_info
+ */
+function field_timer_field_info() {
+  return array (
+      'field_timer' => array (
+          'label' => t('Timer Field'),
+          'description' => t('Timer or countdown'),
+          'settings' => array (),
+          'instance_settings' => array (),
+          'default_widget' => 'field_timer_simple_date',
+          'default_formatter' => 'field_timer_text'
+      )
+  );
+}
+
+/**
+ * Implements hook_field_widget_info
+ */
+function field_timer_field_widget_info() {
+  return array (
+      'field_timer_simple_date' => array (
+          'label' => t('Date Form'),
+          'field types' => array ('field_timer'),
+          'settings' => array (),
+          'weight' => -1
+      ),
+      'field_timer_entity_item_select' => array (
+          'label' => t('Entity Item (Select List)'),
+          'description' => t('Allow set an entity\'s item value as the target date.'),
+          'field types' => array ('field_timer'),
+          'settings' => array (),
+          'weight' => 0
+      ),
+      'field_timer_entity_item_radio' => array (
+          'label' => t('Entity Item (Radiobuttons)'),
+          'description' => t('Allow set an entity\'s item value as the target date.'),
+          'field types' => array ('field_timer'),
+          'settings' => array (),
+          'weight' => 0
+      )
+  );
+}
+
+/**
+ * Implements hook_field_widget_form
+ */
+function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
+        $langcode, $items, $delta, $element) {
+  
+  switch ($instance['widget']['type']) {
+    case 'field_timer_simple_date': {
+      $widget = array (
+          '#type' => 'date_popup',
+          '#default_value' => isset($items[$delta]['timestamp']) ? 
+                  date('Y-m-d H:i:s', $items[$delta]['timestamp']) : NULL,
+          '#date_type' => DATE_UNIX
+      );
+      $element['timestamp'] = $widget;
+      break;
+    }
+    
+    case 'field_timer_entity_item_select': {
+      $options = array (
+          FIELD_TIMER_CREATED => t('Create date'),
+          FIELD_TIMER_CHANGED => t('Date of last change'),
+      );
+      $widget = array (
+          '#type' => 'select',
+          '#options' => $options,
+          '#multiple' => FALSE,
+          '#default_value' => isset($items[$delta]['entity_item']) ?
+                  $items[$delta]['entity_item'] : ''
+      );
+      $element['entity_item'] = $widget;
+      break;
+    }
+    case 'field_timer_entity_item_radio': {
+      $options = array (
+          FIELD_TIMER_CREATED => t('Create date'),
+          FIELD_TIMER_CHANGED => t('Date of last change')
+      );
+      $widget = array (
+          '#type' => 'radios',
+          '#options' => $options,
+          '#default_value' => isset($items[$delta]['entity_item']) ?
+                  $items[$delta]['entity_item'] : ''
+      );
+      $element['entity_item'] = $widget;
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_info
+ */
+function field_timer_field_formatter_info() {
+  $formatters = array (
+      'field_timer_text' => array (
+          'label' => t('Text'),
+          'description' => t('Simple text'),
+          'field types' => array ('field_timer'),
+          'settings' => array ()
+      )
+  );
+  
+  $path = libraries_get_path('jquery-countdown');
+  if ($path && file_exists($path . '/assets/countdown/jquery.countdown.js')) {
+    $formatters['field_timer_jquery_countdown'] = array (
+        'label' => t('jQuery Countdown'),
+        'description' => t('Use jQuery Countdown plugin.'),
+        'field types' => array ('field_timer'),
+        'settings' => array ()
+    );
+  }
+  
+  return $formatters;
+}
+
+/**
+ * Implements hook_field_formatter_view
+ */
+function field_timer_field_formatter_view($entity_type, $entity, $field, $instance,
+        $langcode, $items, $display) {
+  
+  $elements = array();
+  switch ($display['type']) {
+    case 'field_timer_text': {
+        foreach ($items as $delta => $item) {
+          $elements[$delta] = array (
+              '#type' => 'markup',
+              '#markup' => date(DATE_FORMAT_DATETIME, $item['timestamp'])
+          );
+        }
+      break;
+    }
+    case 'field_timer_jquery_countdown': {
+    }
+  }
+  return $elements;
+}
+
+/**
+ * Implements hook_field_is_empty
+ */
+function field_timer_field_is_empty($item, $field) {
+  return FALSE;
+}
