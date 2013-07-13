@@ -103,7 +103,11 @@ function field_timer_field_formatter_info() {
           'label' => t('Text'),
           'description' => t('Simple text'),
           'field types' => array ('field_timer'),
-          'settings' => array ()
+          'settings' => array (
+              'type' => 'timer',
+              'label' => '',
+              'granularity' => 2
+          )
       )
   );
   
@@ -127,12 +131,36 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
         $langcode, $items, $display) {
   
   $elements = array();
+  $settings = $display['settings'];
   switch ($display['type']) {
     case 'field_timer_text': {
+      
         foreach ($items as $delta => $item) {
+          switch ($settings['type']) {
+            case 'auto': {
+              $interval = time() - $item['timestamp'];
+              if ($interval > 0)
+                $sign = '+';
+              else
+                $sign = '-';
+              $time = $settings['label'].' '.$sign.
+                      format_interval(abs($interval), $settings['granularity']);
+              break;
+            }
+            case 'timer': {
+              $time = $settings['label'].' '.
+                      format_interval(time() - $item['timestamp'], $settings['granularity']);
+              break;
+            }
+            case 'countdown': {
+              $time = $settings['label'].' '.
+                    format_interval($item['timestamp'] - time(), $settings['granularity']);
+              break;
+            }
+          }
           $elements[$delta] = array (
               '#type' => 'markup',
-              '#markup' => date(DATE_FORMAT_DATETIME, $item['timestamp'])
+              '#markup' => $time
           );
         }
       break;
@@ -184,6 +212,71 @@ function field_timer_field_load($entity_type, $entities, $field, $instances,
       }
     }
   }
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary
+ */
+function field_timer_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $summary = array();
+  
+  switch ($settings['type']) {
+    case 'auto': {
+      $summary[] = t('Type: Auto');
+      break;
+    }
+    case 'timer': {
+      $summary[] = t('Type: Timer');
+      break;
+    }
+    case 'countdown': {
+      $summary[] = t('Type: Countdown');
+      break;
+    }
+  }
+  
+  $summary[] = t('Granularity: '.$settings['granularity']);
+  
+  $summary[] = t('Label: %label', array ('%label' => $settings['label']));
+  
+  return implode('<br/>', $summary);
+}
+
+/**
+ * Implements hook_field_formatter_settings_form
+ */
+function field_timer_field_formatter_settings_form($field, $instance, $view_mode,
+        $form, $form_state) {
+  
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  
+  $settings_form['type'] = array (
+      '#type' => 'select',
+      '#title' => t('Type'),
+      '#options' => array (
+          'auto' => t('Auto'),
+          'timer' => t('Timer'),
+          'countdown' => t('Countdown')
+      ),
+      '#default_value' => $settings['type'],
+  );
+  
+  $settings_form['granularity'] = array (
+      '#type' => 'select',
+      '#title' => t('Granularity'),
+      '#options' => array (1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7),
+      '#default_value' => $settings['granularity']
+  );
+  
+  $settings_form['label'] = array (
+      '#type' => 'textfield',
+      '#title' => t('Label'),
+      '#default_value' => $settings['label'],
+  );
+  return $settings_form;
 }
 
 /**
