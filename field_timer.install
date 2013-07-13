@@ -14,7 +14,7 @@ function field_timer_field_schema($field) {
             ),
             'entity_property' => array (
                 'type' => 'varchar',
-                'length' => 20,
+                'length' => 100,
                 'not null' => FALSE,
             ),
             'entity_property_name' => array (
