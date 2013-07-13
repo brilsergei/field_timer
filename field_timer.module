@@ -171,6 +171,22 @@ function field_timer_field_presave($entity_type, $entity, $field, $instance,
 }
 
 /**
+ * Implements hook_field_load
+ */
+function field_timer_field_load($entity_type, $entities, $field, $instances,
+        $langcode, &$items, $age) {
+  
+  foreach ($entities as $id => $entity) {
+    foreach ($items[$id] as $delta => $item) {
+      if (empty($item['timestamp']) && !empty($item['entity_property'])) {
+        if (isset($entity->{$item['entity_property']}))
+          $items[$id][$delta]['timestamp'] = $entity->{$item['entity_property']};
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_field_timer_entity_properties
  * Define properties for default drupal entities
  */
