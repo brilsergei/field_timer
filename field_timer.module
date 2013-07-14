@@ -133,7 +133,6 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
   $settings = $display['settings'];
   switch ($display['type']) {
     case 'field_timer_text': {
-      
         foreach ($items as $delta => $item) {
           switch ($settings['type']) {
             case 'auto': {
@@ -164,7 +163,25 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
         }
       break;
     }
+    
     case 'field_timer_jquery_countdown': {
+      $info = entity_get_info($entity_type);
+      $id_key = $info['entity keys']['id'];
+      $settings = array();
+      foreach ($items as $delta => $item) {
+        $elements[$delta] = array(
+            '#type' => 'markup',
+            '#markup' => '<div id="jquery-countdown-'.
+                $entity_type.'-'.$entity->{$id_key}.'-'.$delta.'"></div>'
+        );
+        $settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
+      }
+      
+      drupal_add_js(array ('field_timer' => $settings), 'setting');
+      $path = libraries_get_path('jquery-countdown');
+      drupal_add_js($path . '/assets/countdown/jquery.countdown.js', 'file');
+      drupal_add_js(drupal_get_path('module', 'field_timer').'/js/field_timer.js', 'file');
+      drupal_add_css($path . '/assets/countdown/jquery.countdown.css');
     }
   }
   return $elements;
@@ -221,24 +238,28 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
   $settings = $display['settings'];
   $summary = array();
   
-  switch ($settings['type']) {
-    case 'auto': {
-      $summary[] = t('Type: Auto');
-      break;
-    }
-    case 'timer': {
-      $summary[] = t('Type: Timer');
-      break;
-    }
-    case 'countdown': {
-      $summary[] = t('Type: Countdown');
-      break;
+  switch ($display['type']) {
+    case 'field_timer_text': {
+      switch ($settings['type']) {
+        case 'auto': {
+          $summary[] = t('Type: Auto');
+          break;
+        }
+        case 'timer': {
+          $summary[] = t('Type: Timer');
+          break;
+        }
+        case 'countdown': {
+          $summary[] = t('Type: Countdown');
+          break;
+        }
+      }
+
+      $summary[] = t('Granularity: '.$settings['granularity']);
+
+      return implode('<br/>', $summary);
     }
   }
-  
-  $summary[] = t('Granularity: '.$settings['granularity']);
-  
-  return implode('<br/>', $summary);
 }
 
 /**
@@ -250,25 +271,29 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
   
-  $settings_form['type'] = array (
-      '#type' => 'select',
-      '#title' => t('Type'),
-      '#options' => array (
-          'auto' => t('Auto'),
-          'timer' => t('Timer'),
-          'countdown' => t('Countdown')
-      ),
-      '#default_value' => $settings['type'],
-  );
-  
-  $settings_form['granularity'] = array (
-      '#type' => 'select',
-      '#title' => t('Granularity'),
-      '#options' => array (1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7),
-      '#default_value' => $settings['granularity']
-  );
-  
-  return $settings_form;
+  switch ($display['type']) {
+    case 'fild_timer_text': {
+      $settings_form['type'] = array (
+          '#type' => 'select',
+          '#title' => t('Type'),
+          '#options' => array (
+              'auto' => t('Auto'),
+              'timer' => t('Timer'),
+              'countdown' => t('Countdown')
+          ),
+          '#default_value' => $settings['type'],
+      );
+
+      $settings_form['granularity'] = array (
+          '#type' => 'select',
+          '#title' => t('Granularity'),
+          '#options' => array (1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7),
+          '#default_value' => $settings['granularity']
+      );
+
+      return $settings_form;
+    }
+  }
 }
 
 /**
