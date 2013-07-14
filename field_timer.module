@@ -104,8 +104,7 @@ function field_timer_field_formatter_info() {
           'description' => t('Simple text'),
           'field types' => array ('field_timer'),
           'settings' => array (
-              'type' => 'timer',
-              'label' => '',
+              'type' => 'auto',
               'granularity' => 2
           )
       )
@@ -239,8 +238,6 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
   
   $summary[] = t('Granularity: '.$settings['granularity']);
   
-  $summary[] = t('Label: %label', array ('%label' => $settings['label']));
-  
   return implode('<br/>', $summary);
 }
 
@@ -271,11 +268,6 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
       '#default_value' => $settings['granularity']
   );
   
-  $settings_form['label'] = array (
-      '#type' => 'textfield',
-      '#title' => t('Label'),
-      '#default_value' => $settings['label'],
-  );
   return $settings_form;
 }
 
