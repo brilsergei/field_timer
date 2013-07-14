@@ -120,6 +120,23 @@ function field_timer_field_formatter_info() {
     );
   }
   
+  $path = libraries_get_path('county');
+  if ($path && file_exists($path . '/js/county.js')) {
+    $formatters['field_timer_county'] = array (
+        'label' => t('County'),
+        'description' => t('Use County jQuery plugin.'),
+        'field types' => array ('field_timer'),
+        'settings' => array (
+            'animation' => 'fade',
+            'speed' => 500,
+            'theme' => 'blue',
+            'background' => '',
+            'reflection' => 1,
+            'reflectionOpacity' => 0.2,
+        )
+    );
+  }
+  
   return $formatters;
 }
 
@@ -176,12 +193,38 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
         );
         $settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
       }
+      $settings[$entity_type][$entity->{$id_key}]['plugin'] = 'jquery-countdown';
       
       drupal_add_js(array ('field_timer' => $settings), 'setting');
       $path = libraries_get_path('jquery-countdown');
       drupal_add_js($path . '/assets/countdown/jquery.countdown.js', 'file');
       drupal_add_js(drupal_get_path('module', 'field_timer').'/js/field_timer.js', 'file');
       drupal_add_css($path . '/assets/countdown/jquery.countdown.css');
+      break;
+    }
+    
+    case 'field_timer_county': {
+      $info = entity_get_info($entity_type);
+      $id_key = $info['entity keys']['id'];
+      $settings = array();
+      foreach ($items as $delta => $item) {
+        $elements[$delta] = array(
+            '#type' => 'markup',
+            '#markup' => '<div id="county-'.
+                $entity_type.'-'.$entity->{$id_key}.'-'.$delta.'" '.
+                'style="background: '.$settings['background'].';"></div>'
+        );
+        $settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
+      }
+      $settings[$entity_type][$entity->{$id_key}]['options'] = $display['settings'];
+      $settings[$entity_type][$entity->{$id_key}]['plugin'] = 'county';
+      
+      drupal_add_js(array ('field_timer' => $settings), 'setting');
+      $path = libraries_get_path('county');
+      drupal_add_js($path . '/js/county.js', 'file');
+      drupal_add_js(drupal_get_path('module', 'field_timer').'/js/field_timer.js', 'file');
+      drupal_add_css($path . '/css/county.css');
+      break;
     }
   }
   return $elements;
@@ -240,24 +283,41 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
   
   switch ($display['type']) {
     case 'field_timer_text': {
-      switch ($settings['type']) {
-        case 'auto': {
-          $summary[] = t('Type: Auto');
-          break;
-        }
-        case 'timer': {
-          $summary[] = t('Type: Timer');
-          break;
-        }
-        case 'countdown': {
-          $summary[] = t('Type: Countdown');
-          break;
-        }
-      }
+      $types = array (
+          'auto' => t('Auto'),
+          'timer' => t('Timer'),
+          'countdown' => t('Countdown')
+      );
+      $summary[] = t('Type: %type', array ('%type' => $types[$settings['type']]));
 
       $summary[] = t('Granularity: '.$settings['granularity']);
 
       return implode('<br/>', $summary);
+    }
+    
+    case 'field_timer_county': {
+      $animations = array(
+          'fade' => t('Fade'),
+          'scroll' => t('Scroll')
+      );
+      $summary[] = t('Animation: %animation', array ('%animation' => $animations[$settings['animation']]));
+      $summary[] = t('Speed: %speed', array ('%speed' => $settings['speed'].'ms'));
+      $themes = array (
+          'black' => t('Black'),
+          'gray' => t('Gray'),
+          'red' => t('Red'),
+          'blue' => t('Blue')
+      );
+      $summary[] = t('Theme: %theme', array ('%theme' => $themes[$settings['theme']]));
+      $summary[] = t('Background: %css', array ('%css' => $settings['background']));
+      $summary[] = t('Reflection: %state', array (
+          '%state' => $settings['reflection'] ? 'Enabled' : 'Disabled'
+      ));
+      if ($settings['reflection'])
+        $summary[] = t('Reflection opacity: %opacity', array (
+            '%opacity' => $settings['reflectionOpacity']
+        ));
+      return implode($summary, '<br />');
     }
   }
 }
@@ -272,7 +332,7 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
   $settings = $display['settings'];
   
   switch ($display['type']) {
-    case 'fild_timer_text': {
+    case 'field_timer_text': {
       $settings_form['type'] = array (
           '#type' => 'select',
           '#title' => t('Type'),
@@ -291,6 +351,57 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
           '#default_value' => $settings['granularity']
       );
 
+      return $settings_form;
+    }
+    
+    case 'field_timer_county': {
+      $settings_form['animation'] = array (
+          '#type' => 'select',
+          '#title' => t('Animation'),
+          '#options' => array (
+              'fade' => t('Fade'),
+              'scroll' => t('Scroll')
+          ),
+          '#default_value' => $settings['animation']
+      );
+      
+      $settings_form['speed'] = array (
+          '#type' => 'textfield',
+          '#title' => t('Speed'),
+          '#default_value' => $settings['speed']
+      );
+      
+      $settings_form['theme'] = array (
+          '#type' => 'select',
+          '#title' => t('Theme'),
+          '#options' => array (
+              'black' => t('Black'),
+              'gray' => t('Gray'),
+              'red' => t('Red'),
+              'blue' => t('Blue')
+          ),
+          '#default_value' => $settings['theme']
+      );
+      
+      $settings_form['background'] = array (
+          '#type' => 'textfield',
+          '#title' => t('Background'),
+          '#default_value' => $settings['background'],
+          '#description' => t('Data from this field will be added to css property \'background\'.')
+      );
+      
+      $settings_form['reflection'] = array (
+          '#type' => 'checkbox',
+          '#title' => t('Add reflection'),
+          '#default_value' => $settings['reflection']
+      );
+      
+      $settings_form['reflectionOpacity'] = array (
+          '#type' => 'textfield',
+          '#title' => t('Reflection opacity'),
+          '#default_value' => $settings['reflectionOpacity'],
+          '#description' => t('Float value between 0 and 1.')
+      );
       return $settings_form;
     }
   }
