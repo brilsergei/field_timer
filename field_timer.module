@@ -110,16 +110,6 @@ function field_timer_field_formatter_info() {
       )
   );
   
-  $path = libraries_get_path('jquery-countdown');
-  if ($path && file_exists($path . '/assets/countdown/jquery.countdown.js')) {
-    $formatters['field_timer_jquery_countdown'] = array (
-        'label' => t('jQuery Countdown'),
-        'description' => t('Use jQuery Countdown plugin.'),
-        'field types' => array ('field_timer'),
-        'settings' => array ()
-    );
-  }
-  
   $path = libraries_get_path('county');
   if ($path && file_exists($path . '/js/county.js')) {
     $formatters['field_timer_county'] = array (
@@ -136,7 +126,7 @@ function field_timer_field_formatter_info() {
         )
     );
   }
-  
+ 
   return $formatters;
 }
 
@@ -178,28 +168,6 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
               '#markup' => $time
           );
         }
-      break;
-    }
-    
-    case 'field_timer_jquery_countdown': {
-      $info = entity_get_info($entity_type);
-      $id_key = $info['entity keys']['id'];
-      $settings = array();
-      foreach ($items as $delta => $item) {
-        $elements[$delta] = array(
-            '#type' => 'markup',
-            '#markup' => '<div id="jquery-countdown-'.
-                $entity_type.'-'.$entity->{$id_key}.'-'.$delta.'"></div>'
-        );
-        $settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
-      }
-      $settings[$entity_type][$entity->{$id_key}]['plugin'] = 'jquery-countdown';
-      
-      drupal_add_js(array ('field_timer' => $settings), 'setting');
-      $path = libraries_get_path('jquery-countdown');
-      drupal_add_js($path . '/assets/countdown/jquery.countdown.js', 'file');
-      drupal_add_js(drupal_get_path('module', 'field_timer').'/js/field_timer.js', 'file');
-      drupal_add_css($path . '/assets/countdown/jquery.countdown.css');
       break;
     }
     
