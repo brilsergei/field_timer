@@ -1,0 +1,7 @@
+span.jquery-countdown {
+  float: left;
+}
+
+span.jquery-countdown .countdown_section {
+  padding: 0 3px;
+}
