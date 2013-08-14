@@ -213,18 +213,15 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
                 $sign = '+';
               else
                 $sign = '-';
-              $time = $settings['label'].' '.$sign.
-                      format_interval(abs($interval), $settings['granularity']);
+              $time = $sign.format_interval(abs($interval), $settings['granularity']);
               break;
             }
             case 'timer': {
-              $time = $settings['label'].' '.
-                      format_interval(time() - $item['timestamp'], $settings['granularity']);
+              $time = format_interval(time() - $item['timestamp'], $settings['granularity']);
               break;
             }
             case 'countdown': {
-              $time = $settings['label'].' '.
-                    format_interval($item['timestamp'] - time(), $settings['granularity']);
+              $time = format_interval($item['timestamp'] - time(), $settings['granularity']);
               break;
             }
           }
