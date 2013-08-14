@@ -12,11 +12,6 @@ function field_timer_field_schema($field) {
                 'not null' => FALSE,
                 'unsigned' => TRUE
             ),
-            'entity_property' => array (
-                'type' => 'varchar',
-                'length' => 100,
-                'not null' => FALSE,
-            ),
             'entity_property_name' => array (
                 'type' => 'varchar',
                 'length' => 100,
