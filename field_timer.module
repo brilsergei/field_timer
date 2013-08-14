@@ -1,6 +1,46 @@
 <?php
 
 /**
+ * Implements hook_libraries_info
+ */
+function field_timer_libraries_info() {
+  return array(
+      'county' => array (
+          'name' => t('County'),
+          'vendor url' => 'http://www.egrappler.com/free-jquery-count-down-plugin-county/',
+          'download url' => 'http://www.egrappler.com/free-jquery-count-down-plugin-county/',
+          'version' => '1.0',
+          'files' => array (
+              'js' => array (
+                  'js/county.js'
+              ),
+              'css' => array (
+                  'css/county.css'
+              )
+          )
+      ),
+      'jquery.countdown' => array (
+          'name' => t('jQuery Countdown'),
+          'vendor url' => 'http://keith-wood.name/countdown.html',
+          'download url' => 'http://keith-wood.name/countdown.html',
+          'version arguments' => array (
+              'file'=> 'jquery.countdown.js',
+              'pattern' => '/Countdown for jQuery v(1.6.[0-3])/',
+              'lines' => 2
+          ),
+          'files' => array (
+              'js' => array (
+                  'jquery.countdown.min.js'
+              ),
+              'css' => array (
+                  'jquery.countdown.css'
+              )
+          )
+      )
+  );
+}
+
+/**
  * Implements hook_field_info
  */
 function field_timer_field_info() {
@@ -117,8 +157,8 @@ function field_timer_field_formatter_info() {
       )
   );
   
-  $path = libraries_get_path('county');
-  if ($path && file_exists($path . '/js/county.js')) {
+  $library = libraries_detect('county');
+  if ($library && !empty($library['installed'])) {
     $formatters['field_timer_county'] = array (
         'label' => t('County'),
         'description' => t('Use County jQuery plugin.'),
@@ -134,8 +174,8 @@ function field_timer_field_formatter_info() {
     );
   }
   
-  $path = libraries_get_path('jquery.countdown.package');
-  if ($path && file_exists($path . '/jquery.countdown.min.js')) {
+  $library = libraries_detect('jquery.countdown');
+  if ($library && !empty($library['installed'])) {
     $formatters['field_timer_jquery_countdown'] = array (
         'label' => t('jQuery Countdown'),
         'description' => t('Use jQuery Countdown plugin.'),
@@ -212,11 +252,22 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       $js_settings[$entity_type][$entity->{$id_key}]['options'] = $settings;
       $js_settings[$entity_type][$entity->{$id_key}]['plugin'] = 'county';
       
+      $library = libraries_load('county');
+      $library_loaded = $library && !empty($library['loaded']);
+      $js_name = 'county.js';
+      $base_path = 'sites/all/libraries/county';
+      if (!$library_loaded) {
+        drupal_set_message(t('Can\'t load County library. Please download !url jQuery plugin and extract it to @path, so @js can be found at @full_path.', array(
+            '!url' => l(t('County'), 'http://www.egrappler.com/free-jquery-count-down-plugin-county/'),
+            '@path' => $base_path,
+            '@js' => $js_name,
+            '@full_path' => $base_path . '/js/' . $js_name,
+        )), 'error');
+        return array();
+      }
+      
       drupal_add_js(array ('field_timer' => $js_settings), 'setting');
-      $path = libraries_get_path('county');
-      drupal_add_js($path.'/js/county.js', 'file');
       drupal_add_js(drupal_get_path('module', 'field_timer').'/js/field_timer.js', 'file');
-      drupal_add_css($path.'/css/county.css');
       break;
     }
     
@@ -250,13 +301,28 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       }
       $js_settings[$entity_type][$entity->{$id_key}]['plugin'] = 'jquery.countdown';
       
+      $library = libraries_load('jquery.countdown');
+      $library_loaded = $library && !empty($library['loaded']);
+      $js_name = 'jquery.countdown.js';
+      $js_name_min = 'jquery.countdown.min.js';
+      $base_path = 'sites/all/libraries/jquery.countdown';
+      if (!$library_loaded) {
+        drupal_set_message(t('Can\'t load jQuery Countdown library. Please download !url plugin and extract it to @path, so @js and @js_min can be found at @full_path and @full_path_min.', array(
+            '!url' => l(t('jQuery Countdown'), 'http://keith-wood.name/countdown.html'),
+            '@path' => $base_path,
+            '@js' => $js_name,
+            '@js_min' => $js_name_min,
+            '@full_path' => $base_path . '/' . $js_name,
+            '@full_path_min' => $base_path . '/' . $js_name_min,
+        )), 'error');
+        return array();
+      }
+      
       drupal_add_js(array ('field_timer' => $js_settings), 'setting');
-      $path = libraries_get_path('jquery.countdown.package');
-      drupal_add_js($path.'/jquery.countdown.min.js', 'file');
+      $path = libraries_get_path('jquery.countdown');
       if (file_exists($path.'/jquery.countdown-'.$settings['regional'].'.js'))
         drupal_add_js($path.'/jquery.countdown-'.$settings['regional'].'.js');
       drupal_add_js(drupal_get_path('module', 'field_timer').'/js/field_timer.js', 'file');
-      drupal_add_css($path.'/jquery.countdown.css');
       drupal_add_css(drupal_get_path('module', 'field_timer').'/css/field_timer.css');
     }
   }
