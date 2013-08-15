@@ -1,23 +1,28 @@
 <?php
 
 /**
- * Implements hook_field_schema
+ * @file
+ * Install, update and uninstall functions for the Field Timer module.
+ */
+
+/**
+ * Implements hook_field_schema().
  */
 function field_timer_field_schema($field) {
   if ($field['type'] == 'field_timer') {
-    return array (
-        'columns' => array (
-            'timestamp' => array (
-                'type' => 'int',
-                'not null' => FALSE,
-                'unsigned' => TRUE
-            ),
-            'entity_property_name' => array (
-                'type' => 'varchar',
-                'length' => 100,
-                'not null' => FALSE,
-            ),
-        )
+    return array(
+      'columns' => array(
+        'timestamp' => array(
+          'type' => 'int',
+          'not null' => FALSE,
+          'unsigned' => TRUE,
+        ),
+        'entity_property_name' => array(
+          'type' => 'varchar',
+          'length' => 100,
+          'not null' => FALSE,
+        ),
+      ),
     );
   }
 }

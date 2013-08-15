@@ -8,7 +8,7 @@
             switch (settings[type][id].plugin) {
               case 'county': {
                 var options = settings[type][id].options;
-                $('#county-'+type+'-'+id+'-'+delta).not('.field-timer-processed').
+                $('#county-' + type + '-' + id + '-' + delta).not('.field-timer-processed').
                   county({
                     endDateTime: new Date(settings[type][id][delta] * 1000),
                     animation: options.animation,
@@ -18,10 +18,10 @@
                     reflectionOpacity: options.reflectionOpacity,
                   }).addClass('field-timer-processed');
               }
-              
+
               case 'jquery.countdown': {
                 var options = settings[type][id].options;
-                $('#jquery-countdown-'+type+'-'+id+'-'+delta).not('.field-timer-processed').
+                $('#jquery-countdown-' + type + '-' + id + '-' + delta).not('.field-timer-processed').
                   countdown({
                     until: options.until ? new Date(settings[type][id][delta] * 1000) : null,
                     since: options.since ? new Date(settings[type][id][delta] * 1000) : null,

@@ -1,260 +1,259 @@
 <?php
 
 /**
- * Implements hook_libraries_info
+ * @file
+ * Main module file.
+ */
+
+/**
+ * Implements hook_libraries_info().
  */
 function field_timer_libraries_info() {
   return array(
-      'county' => array (
-          'name' => t('County'),
-          'vendor url' => 'http://www.egrappler.com/free-jquery-count-down-plugin-county/',
-          'download url' => 'http://www.egrappler.com/free-jquery-count-down-plugin-county/',
-          'version' => '1.0',
-          'files' => array (
-              'js' => array (
-                  'js/county.js'
-              ),
-              'css' => array (
-                  'css/county.css'
-              )
-          )
+    'county' => array(
+      'name' => t('County'),
+      'vendor url' => 'http://www.egrappler.com/free-jquery-count-down-plugin-county/',
+      'download url' => 'http://www.egrappler.com/free-jquery-count-down-plugin-county/',
+      'version' => '1.0',
+      'files' => array(
+        'js' => array(
+          'js/county.js',
+        ),
+        'css' => array(
+          'css/county.css',
+        ),
       ),
-      'jquery.countdown' => array (
-          'name' => t('jQuery Countdown'),
-          'vendor url' => 'http://keith-wood.name/countdown.html',
-          'download url' => 'http://keith-wood.name/countdown.html',
-          'version arguments' => array (
-              'file'=> 'jquery.countdown.js',
-              'pattern' => '/Countdown for jQuery v(1.6.[0-3])/',
-              'lines' => 2
-          ),
-          'files' => array (
-              'js' => array (
-                  'jquery.countdown.min.js'
-              ),
-              'css' => array (
-                  'jquery.countdown.css'
-              )
-          )
-      )
+    ),
+    'jquery.countdown' => array(
+      'name' => t('jQuery Countdown'),
+      'vendor url' => 'http://keith-wood.name/countdown.html',
+      'download url' => 'http://keith-wood.name/countdown.html',
+      'version arguments' => array(
+        'file'  => 'jquery.countdown.js',
+        'pattern' => '/Countdown for jQuery v(1.6.[0-3])/',
+        'lines' => 2,
+      ),
+      'files' => array(
+        'js' => array(
+          'jquery.countdown.min.js',
+        ),
+        'css' => array(
+          'jquery.countdown.css',
+        ),
+      ),
+    ),
   );
 }
 
 /**
- * Implements hook_field_info
+ * Implements hook_field_info().
  */
 function field_timer_field_info() {
-  return array (
-      'field_timer' => array (
-          'label' => t('Timer Field'),
-          'description' => t('Timer or countdown.'),
-          'settings' => array (),
-          'instance_settings' => array (
-              // used only for jQuery Countdown plugin
-              'jquery-countdown' => array (
-                  'description' => '',
-                  'expiryText' => '',
-                  'expiryUrl' => '',
-              )
-          ),
-          'default_widget' => 'field_timer_simple_date',
-          'default_formatter' => 'field_timer_text'
-      )
+  return array(
+    'field_timer' => array(
+      'label' => t('Timer Field'),
+      'description' => t('Timer or countdown.'),
+      'settings' => array(),
+      'instance_settings' => array(
+        // Used only for jQuery Countdown plugin.
+        'jquery-countdown' => array(
+          'description' => '',
+          'expiryText' => '',
+          'expiryUrl' => '',
+        ),
+      ),
+      'default_widget' => 'field_timer_simple_date',
+      'default_formatter' => 'field_timer_text',
+    ),
   );
 }
 
 /**
- * Implements hook_field_widget_info
+ * Implements hook_field_widget_info().
  */
 function field_timer_field_widget_info() {
-  return array (
-      'field_timer_simple_date' => array (
-          'label' => t('Date Form'),
-          'field types' => array ('field_timer'),
-          'settings' => array (),
-          'weight' => -1
-      ),
-      'field_timer_entity_property_select' => array (
-          'label' => t('Entity Property (Select List)'),
-          'description' => t('Allow set an entity\'s property value as the target date.'),
-          'field types' => array ('field_timer'),
-          'settings' => array (),
-          'weight' => 0
-      ),
-      'field_timer_entity_property_radio' => array (
-          'label' => t('Entity Property (Radio Buttons)'),
-          'description' => t('Allow set an entity\'s property value as the target date.'),
-          'field types' => array ('field_timer'),
-          'settings' => array (),
-          'weight' => 0
-      )
+  return array(
+    'field_timer_simple_date' => array(
+      'label' => t('Date Form'),
+      'field types' => array('field_timer'),
+      'settings' => array(),
+      'weight' => -1,
+    ),
+    'field_timer_entity_property_select' => array(
+      'label' => t('Entity Property (Select List)'),
+      'description' => t("Allow set an entity's property value as the target date."),
+      'field types' => array('field_timer'),
+      'settings' => array(),
+      'weight' => 0,
+    ),
+    'field_timer_entity_property_radio' => array(
+      'label' => t('Entity Property (Radio Buttons)'),
+      'description' => t("Allow set an entity's property value as the target date."),
+      'field types' => array('field_timer'),
+      'settings' => array(),
+      'weight' => 0,
+    ),
   );
 }
 
 /**
- * Implements hook_field_widget_form
+ * Implements hook_field_widget_form().
  */
 function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
         $langcode, $items, $delta, $element) {
-  
+
   switch ($instance['widget']['type']) {
-    case 'field_timer_simple_date': {
-      $widget = array (
-          '#type' => 'date_popup',
-          '#title' => $element['#title'],
-          '#default_value' => isset($items[$delta]['timestamp']) ? 
-                  date('Y-m-d H:i:s', $items[$delta]['timestamp']) : NULL
+    case 'field_timer_simple_date':
+      $widget = array(
+        '#type' => 'date_popup',
+        '#title' => $element['#title'],
+        '#default_value' => isset($items[$delta]['timestamp']) ? date('Y-m-d H:i:s', $items[$delta]['timestamp']) : NULL,
       );
       $element['timestamp'] = $widget;
       break;
-    }
-    
-    case 'field_timer_entity_property_select': {
+
+    case 'field_timer_entity_property_select':
       $options = field_timer_entity_properties($instance['entity_type']);
-      $widget = array (
-          '#type' => 'select',
-          '#options' => $options,
-          '#multiple' => FALSE,
-          '#title' => $element['#title'],
-          '#default_value' => isset($items[$delta]['entity_property']) ?
-                  $items[$delta]['entity_property'] : 0,
-          '#description' => t('Choose an entity property which will be used as the target date.'),
-          '#empty_value' => 0
+      $widget = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#multiple' => FALSE,
+        '#title' => $element['#title'],
+        '#default_value' => isset($items[$delta]['entity_property']) ? $items[$delta]['entity_property'] : 0,
+        '#description' => t('Choose an entity property which will be used as the target date.'),
+        '#empty_value' => 0,
       );
       $element['entity_property'] = $widget;
       break;
-    }
-    case 'field_timer_entity_property_radio': {
+
+    case 'field_timer_entity_property_radio':
       $options = field_timer_entity_properties($instance['entity_type']);
-      $widget = array (
-          '#type' => 'radios',
-          '#options' => $options,
-          '#default_value' => isset($items[$delta]['entity_property']) ?
-                  $items[$delta]['entity_property'] : 0,
-          '#description' => t('Choose an entity property which will be used as the target date.')
+      $widget = array(
+        '#type' => 'radios',
+        '#options' => $options,
+        '#default_value' => isset($items[$delta]['entity_property']) ? $items[$delta]['entity_property'] : 0,
+        '#description' => t('Choose an entity property which will be used as the target date.'),
       );
       $element['entity_property'] = $widget;
       $element['#type'] = 'fieldset';
-    }
+
   }
 
   return $element;
 }
 
 /**
- * Implements hook_field_formatter_info
+ * Implements hook_field_formatter_info().
  */
 function field_timer_field_formatter_info() {
-  $formatters = array (
-      'field_timer_text' => array (
-          'label' => t('Text'),
-          'description' => t('Simple text'),
-          'field types' => array ('field_timer'),
-          'settings' => array (
-              'type' => 'auto',
-              'granularity' => 2
-          )
-      )
+  $formatters = array(
+    'field_timer_text' => array(
+      'label' => t('Text'),
+      'description' => t('Simple text'),
+      'field types' => array('field_timer'),
+      'settings' => array(
+        'type' => 'auto',
+        'granularity' => 2,
+      ),
+    ),
   );
-  
+
   $library = libraries_detect('county');
   if ($library && !empty($library['installed'])) {
-    $formatters['field_timer_county'] = array (
-        'label' => t('County'),
-        'description' => t('Use County jQuery plugin.'),
-        'field types' => array ('field_timer'),
-        'settings' => array (
-            'animation' => 'fade',
-            'speed' => 500,
-            'theme' => 'blue',
-            'background' => '',
-            'reflection' => 1,
-            'reflectionOpacity' => 0.2,
-        )
+    $formatters['field_timer_county'] = array(
+      'label' => t('County'),
+      'description' => t('Use County jQuery plugin.'),
+      'field types' => array('field_timer'),
+      'settings' => array(
+        'animation' => 'fade',
+        'speed' => 500,
+        'theme' => 'blue',
+        'background' => '',
+        'reflection' => 1,
+        'reflectionOpacity' => 0.2,
+      ),
     );
   }
-  
+
   $library = libraries_detect('jquery.countdown');
   if ($library && !empty($library['installed'])) {
-    $formatters['field_timer_jquery_countdown'] = array (
-        'label' => t('jQuery Countdown'),
-        'description' => t('Use jQuery Countdown plugin.'),
-        'field types' => array ('field_timer'),
-        'settings' => array (
-            'type' => 'auto',
-            'regional' => 'en',
-            'format' => 'dHMS',
-            'layout' => '',
-            'compact' => 0,
-            'significant' => 0,
-            'timeSeparator' => ':',
-        )
+    $formatters['field_timer_jquery_countdown'] = array(
+      'label' => t('jQuery Countdown'),
+      'description' => t('Use jQuery Countdown plugin.'),
+      'field types' => array('field_timer'),
+      'settings' => array(
+        'type' => 'auto',
+        'regional' => 'en',
+        'format' => 'dHMS',
+        'layout' => '',
+        'compact' => 0,
+        'significant' => 0,
+        'timeSeparator' => ':',
+      ),
     );
   }
- 
+
   return $formatters;
 }
 
 /**
- * Implements hook_field_formatter_view
+ * Implements hook_field_formatter_view().
  */
 function field_timer_field_formatter_view($entity_type, $entity, $field, $instance,
         $langcode, $items, $display) {
-  
+
   $elements = array();
   $settings = $display['settings'];
   switch ($display['type']) {
-    case 'field_timer_text': {
-        foreach ($items as $delta => $item) {
-          switch ($settings['type']) {
-            case 'auto': {
-              $interval = time() - $item['timestamp'];
-              if ($interval > 0)
-                $sign = '+';
-              else
-                $sign = '-';
-              $time = $sign.format_interval(abs($interval), $settings['granularity']);
-              break;
+    case 'field_timer_text':
+      foreach ($items as $delta => $item) {
+        switch ($settings['type']) {
+          case 'auto':
+            $interval = time() - $item['timestamp'];
+            if ($interval > 0) {
+              $sign = '+';
             }
-            case 'timer': {
-              $time = format_interval(time() - $item['timestamp'], $settings['granularity']);
-              break;
+            else {
+              $sign = '-';
             }
-            case 'countdown': {
-              $time = format_interval($item['timestamp'] - time(), $settings['granularity']);
-              break;
-            }
-          }
-          $elements[$delta] = array (
-              '#type' => 'markup',
-              '#markup' => $time
-          );
+            $time = $sign . format_interval(abs($interval), $settings['granularity']);
+            break;
+
+          case 'timer':
+            $time = format_interval(time() - $item['timestamp'], $settings['granularity']);
+            break;
+
+          case 'countdown':
+            $time = format_interval($item['timestamp'] - time(), $settings['granularity']);
+            break;
         }
+        $elements[$delta] = array(
+          '#type' => 'markup',
+          '#markup' => $time,
+        );
+      }
       break;
-    }
-    
-    case 'field_timer_county': {
+
+    case 'field_timer_county':
       $info = entity_get_info($entity_type);
       $id_key = $info['entity keys']['id'];
       $js_settings = array();
       foreach ($items as $delta => $item) {
         $elements[$delta] = array(
-            '#type' => 'markup',
-            '#markup' => '<div id="county-'.
-                $entity_type.'-'.$entity->{$id_key}.'-'.$delta.'" '.
-                'style="background: '.$settings['background'].';"></div>'
+          '#type' => 'markup',
+          '#markup' => '<div id="county-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" ' . 'style="background: ' . $settings['background'] . ';"></div>'
         );
         $js_settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
       }
       $js_settings[$entity_type][$entity->{$id_key}]['options'] = $settings;
       $js_settings[$entity_type][$entity->{$id_key}]['plugin'] = 'county';
-      
+
       $library = libraries_load('county');
       $library_loaded = $library && !empty($library['loaded']);
       $js_name = 'county.js';
       $base_path = 'sites/all/libraries/county';
       if (!$library_loaded) {
-        drupal_set_message(t('Can\'t load County library. Please download !url jQuery plugin and extract it to @path, so @js can be found at @full_path.', array(
+        drupal_set_message(t("Can't load County library. Please download !url jQuery plugin and extract it to @path, so @js can be found at @full_path.", array(
             '!url' => l(t('County'), 'http://www.egrappler.com/free-jquery-count-down-plugin-county/'),
             '@path' => $base_path,
             '@js' => $js_name,
@@ -262,49 +261,47 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
         )), 'error');
         return array();
       }
-      
-      drupal_add_js(array ('field_timer' => $js_settings), 'setting');
-      drupal_add_js(drupal_get_path('module', 'field_timer').'/js/field_timer.js', 'file');
+
+      drupal_add_js(array('field_timer' => $js_settings), 'setting');
+      drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
       break;
-    }
-    
-    case 'field_timer_jquery_countdown': {
+
+    case 'field_timer_jquery_countdown':
       $info = entity_get_info($entity_type);
       $id_key = $info['entity keys']['id'];
       $js_settings = array();
       foreach ($items as $delta => $item) {
         $elements[$delta] = array(
-            '#type' => 'markup',
-            '#markup' => '<span id="jquery-countdown-'.
-                $entity_type.'-'.$entity->{$id_key}.'-'.$delta.'" class="jquery-countdown"></span>'
+          '#type' => 'markup',
+          '#markup' => '<span id="jquery-countdown-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" class="jquery-countdown"></span>',
         );
         $js_settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
       }
-      
+
       $instance_settings = $instance['settings']['jquery-countdown'];
       $data = array($entity_type => $entity);
       $instance_settings['expiryUrl'] = token_replace($instance_settings['expiryUrl'], $data);
       $instance_settings['expiryText'] = token_replace($instance_settings['expiryText'], $data);
       $instance_settings['description'] = token_replace($instance_settings['description'], $data);
-      
+
       $js_settings[$entity_type][$entity->{$id_key}]['options'] = array_merge($settings, $instance_settings);
       if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] < time())) {
         $js_settings[$entity_type][$entity->{$id_key}]['options']['until'] = FALSE;
         $js_settings[$entity_type][$entity->{$id_key}]['options']['since'] = TRUE;
       }
-      elseif($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $item['timestamp'] > time())) {
+      elseif ($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $item['timestamp'] > time())) {
         $js_settings[$entity_type][$entity->{$id_key}]['options']['until'] = TRUE;
         $js_settings[$entity_type][$entity->{$id_key}]['options']['since'] = FALSE;
       }
       $js_settings[$entity_type][$entity->{$id_key}]['plugin'] = 'jquery.countdown';
-      
+
       $library = libraries_load('jquery.countdown');
       $library_loaded = $library && !empty($library['loaded']);
       $js_name = 'jquery.countdown.js';
       $js_name_min = 'jquery.countdown.min.js';
       $base_path = 'sites/all/libraries/jquery.countdown';
       if (!$library_loaded) {
-        drupal_set_message(t('Can\'t load jQuery Countdown library. Please download !url plugin and extract it to @path, so @js and @js_min can be found at @full_path and @full_path_min.', array(
+        drupal_set_message(t("Can't load jQuery Countdown library. Please download !url plugin and extract it to @path, so @js and @js_min can be found at @full_path and @full_path_min.", array(
             '!url' => l(t('jQuery Countdown'), 'http://keith-wood.name/countdown.html'),
             '@path' => $base_path,
             '@js' => $js_name,
@@ -314,33 +311,35 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
         )), 'error');
         return array();
       }
-      
-      drupal_add_js(array ('field_timer' => $js_settings), 'setting');
+
+      drupal_add_js(array('field_timer' => $js_settings), 'setting');
       $path = libraries_get_path('jquery.countdown');
-      if (file_exists($path.'/jquery.countdown-'.$settings['regional'].'.js'))
-        drupal_add_js($path.'/jquery.countdown-'.$settings['regional'].'.js');
-      drupal_add_js(drupal_get_path('module', 'field_timer').'/js/field_timer.js', 'file');
-      drupal_add_css(drupal_get_path('module', 'field_timer').'/css/field_timer.css');
-    }
+      if (file_exists($path . '/jquery.countdown-' . $settings['regional'] . '.js')) {
+        drupal_add_js($path . '/jquery.countdown-' . $settings['regional'] . '.js');
+      }
+      drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
+      drupal_add_css(drupal_get_path('module', 'field_timer') . '/css/field_timer.css');
+      break;
   }
   return $elements;
 }
 
 /**
- * Implements hook_field_is_empty
+ * Implements hook_field_is_empty().
  */
 function field_timer_field_is_empty($item, $field) {
-  if (empty($item['timestamp']) && empty ($item['entity_property']))
+  if (empty($item['timestamp']) && empty ($item['entity_property_name'])) {
     return TRUE;
+  }
   return FALSE;
 }
 
 /**
- * Implements hook_field_presave
+ * Implements hook_field_presave().
  */
 function field_timer_field_presave($entity_type, $entity, $field, $instance,
         $langcode, &$items) {
-  
+
   if ($field['type'] == 'field_timer') {
     foreach ($items as $delta => $item) {
       if (!empty($item['timestamp'])) {
@@ -354,277 +353,278 @@ function field_timer_field_presave($entity_type, $entity, $field, $instance,
 }
 
 /**
- * Implements hook_field_load
+ * Implements hook_field_load().
  */
 function field_timer_field_load($entity_type, $entities, $field, $instances,
         $langcode, &$items, $age) {
-  
+
   foreach ($entities as $id => $entity) {
     foreach ($items[$id] as $delta => $item) {
       if (empty($item['timestamp']) && !empty($item['entity_property'])) {
-        if (isset($entity->{$item['entity_property']}))
+        if (isset($entity->{$item['entity_property']})) {
           $items[$id][$delta]['timestamp'] = $entity->{$item['entity_property']};
+        }
       }
     }
   }
 }
 
 /**
- * Implements hook_field_formatter_settings_summary
+ * Implements hook_field_formatter_settings_summary().
  */
 function field_timer_field_formatter_settings_summary($field, $instance, $view_mode) {
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
   $summary = array();
-  
-  switch ($display['type']) {
-    case 'field_timer_text': {
-      $types = array (
-          'auto' => t('Auto'),
-          'timer' => t('Timer'),
-          'countdown' => t('Countdown')
-      );
-      $summary[] = t('Type: %type', array ('%type' => $types[$settings['type']]));
 
-      $summary[] = t('Granularity: '.$settings['granularity']);
+  switch ($display['type']) {
+    case 'field_timer_text':
+      $types = array(
+        'auto' => t('Auto'),
+        'timer' => t('Timer'),
+        'countdown' => t('Countdown'),
+      );
+      $summary[] = t('Type: %type', array('%type' => $types[$settings['type']]));
+      $summary[] = t('Granularity: %granularity', array('%granularity' => $settings['granularity']));
 
       return implode('<br/>', $summary);
-    }
-    
-    case 'field_timer_county': {
+
+    case 'field_timer_county':
       $animations = array(
-          'fade' => t('Fade'),
-          'scroll' => t('Scroll')
+        'fade' => t('Fade'),
+        'scroll' => t('Scroll'),
       );
-      $summary[] = t('Animation: %animation', array ('%animation' => $animations[$settings['animation']]));
-      $summary[] = t('Speed: %speed', array ('%speed' => $settings['speed'].'ms'));
-      $themes = array (
-          'black' => t('Black'),
-          'gray' => t('Gray'),
-          'red' => t('Red'),
-          'blue' => t('Blue')
+      $summary[] = t('Animation: %animation', array('%animation' => $animations[$settings['animation']]));
+      $summary[] = t('Speed: %speed', array('%speed' => $settings['speed'] . 'ms'));
+      $themes = array(
+        'black' => t('Black'),
+        'gray' => t('Gray'),
+        'red' => t('Red'),
+        'blue' => t('Blue'),
       );
-      $summary[] = t('Theme: %theme', array ('%theme' => $themes[$settings['theme']]));
-      $summary[] = t('Background: %css', array ('%css' => $settings['background']));
-      $summary[] = t('Reflection: %state', array (
-          '%state' => $settings['reflection'] ? 'Enabled' : 'Disabled'
+      $summary[] = t('Theme: %theme', array('%theme' => $themes[$settings['theme']]));
+
+      $summary[] = t('Background: %css', array('%css' => $settings['background']));
+
+      $summary[] = t('Reflection: %state', array(
+        '%state' => $settings['reflection'] ? 'Enabled' : 'Disabled',
       ));
-      if ($settings['reflection'])
-        $summary[] = t('Reflection opacity: %opacity', array (
-            '%opacity' => $settings['reflectionOpacity']
+
+      if ($settings['reflection']) {
+        $summary[] = t('Reflection opacity: %opacity', array(
+            '%opacity' => $settings['reflectionOpacity'],
         ));
+      }
+
       return implode($summary, '<br />');
-    }
-    
-    case 'field_timer_jquery_countdown': {
-      $types = array (
-          'auto' => t('Auto'),
-          'timer' => t('Timer'),
-          'countdown' => t('Countdown')
+
+    case 'field_timer_jquery_countdown':
+      $types = array(
+        'auto' => t('Auto'),
+        'timer' => t('Timer'),
+        'countdown' => t('Countdown'),
       );
-      $summary[] = t('Type: %type', array ('%type' => $types[$settings['type']]));
-      
+      $summary[] = t('Type: %type', array('%type' => $types[$settings['type']]));
+
       $regions = _field_timer_jquery_countdown_regions();
-      $summary[] = t('Region: %regional', array ('%regional' => $regions[$settings['regional']]));
-      
-      $summary[] = t('Format: %format', array ('%format' => $settings['format']));
-      $summary[] = t('Layout: %layout', array ('%layout' => $settings['layout']));
-      $summary[] = t('Compact: %compact', array ('%compact' => $settings['compact'] ? t('Yes') : t('No')));
-      $summary[] = t('Significant: %significant', array ('%significant' => $settings['significant']));
-      $summary[] = t('Time separator: %timeSeparator', array ('%timeSeparator' => $settings['timeSeparator']));
+      $summary[] = t('Region: %regional', array('%regional' => $regions[$settings['regional']]));
+
+      $summary[] = t('Format: %format', array('%format' => $settings['format']));
+      $summary[] = t('Layout: %layout', array('%layout' => $settings['layout']));
+      $summary[] = t('Compact: %compact', array('%compact' => $settings['compact'] ? t('Yes') : t('No')));
+      $summary[] = t('Significant: %significant', array('%significant' => $settings['significant']));
+      $summary[] = t('Time separator: %timeSeparator', array('%timeSeparator' => $settings['timeSeparator']));
+
       return implode($summary, '<br />');
-    }
   }
 }
 
 /**
- * Implements hook_field_formatter_settings_form
+ * Implements hook_field_formatter_settings_form().
  */
 function field_timer_field_formatter_settings_form($field, $instance, $view_mode,
         $form, $form_state) {
-  
+
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
-  
+
   switch ($display['type']) {
-    case 'field_timer_text': {
-      $settings_form['type'] = array (
-          '#type' => 'select',
-          '#title' => t('Type'),
-          '#options' => array (
-              'auto' => t('Auto'),
-              'timer' => t('Timer'),
-              'countdown' => t('Countdown')
-          ),
-          '#default_value' => $settings['type'],
+    case 'field_timer_text':
+      $settings_form['type'] = array(
+        '#type' => 'select',
+        '#title' => t('Type'),
+        '#options' => array(
+          'auto' => t('Auto'),
+          'timer' => t('Timer'),
+          'countdown' => t('Countdown'),
+        ),
+        '#default_value' => $settings['type'],
       );
 
-      $settings_form['granularity'] = array (
-          '#type' => 'select',
-          '#title' => t('Granularity'),
-          '#options' => array (1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7),
-          '#default_value' => $settings['granularity']
+      $settings_form['granularity'] = array(
+        '#type' => 'select',
+        '#title' => t('Granularity'),
+        '#options' => array(1 => 1,2 => 2,3 => 3,4 => 4,5 => 5,6 => 6,7 => 7),
+        '#default_value' => $settings['granularity'],
       );
 
       return $settings_form;
-    }
-    
-    case 'field_timer_county': {
-      $settings_form['animation'] = array (
-          '#type' => 'select',
-          '#title' => t('Animation'),
-          '#options' => array (
-              'fade' => t('Fade'),
-              'scroll' => t('Scroll')
-          ),
-          '#default_value' => $settings['animation']
+
+    case 'field_timer_county':
+      $settings_form['animation'] = array(
+        '#type' => 'select',
+        '#title' => t('Animation'),
+        '#options' => array(
+          'fade' => t('Fade'),
+          'scroll' => t('Scroll'),
+        ),
+        '#default_value' => $settings['animation'],
       );
-      
-      $settings_form['speed'] = array (
-          '#type' => 'textfield',
-          '#title' => t('Speed'),
-          '#default_value' => $settings['speed']
+
+      $settings_form['speed'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Speed'),
+        '#default_value' => $settings['speed'],
       );
-      
-      $settings_form['theme'] = array (
-          '#type' => 'select',
-          '#title' => t('Theme'),
-          '#options' => array (
-              'black' => t('Black'),
-              'gray' => t('Gray'),
-              'red' => t('Red'),
-              'blue' => t('Blue')
-          ),
-          '#default_value' => $settings['theme']
+
+      $settings_form['theme'] = array(
+        '#type' => 'select',
+        '#title' => t('Theme'),
+        '#options' => array(
+          'black' => t('Black'),
+          'gray' => t('Gray'),
+          'red' => t('Red'),
+          'blue' => t('Blue'),
+        ),
+        '#default_value' => $settings['theme'],
       );
-      
-      $settings_form['background'] = array (
-          '#type' => 'textfield',
-          '#title' => t('Background'),
-          '#default_value' => $settings['background'],
-          '#description' => t('Data from this field will be added to css property \'background\'.')
+
+      $settings_form['background'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Background'),
+        '#default_value' => $settings['background'],
+        '#description' => t("Data from this field will be added to css property 'background'."),
       );
-      
-      $settings_form['reflection'] = array (
-          '#type' => 'checkbox',
-          '#title' => t('Add reflection'),
-          '#default_value' => $settings['reflection']
+
+      $settings_form['reflection'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Add reflection'),
+        '#default_value' => $settings['reflection'],
       );
-      
-      $settings_form['reflectionOpacity'] = array (
-          '#type' => 'textfield',
-          '#title' => t('Reflection opacity'),
-          '#default_value' => $settings['reflectionOpacity'],
-          '#description' => t('Float value between 0 and 1.')
+
+      $settings_form['reflectionOpacity'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Reflection opacity'),
+        '#default_value' => $settings['reflectionOpacity'],
+        '#description' => t('Float value between 0 and 1.'),
       );
+
       return $settings_form;
-    }
-    
-    case 'field_timer_jquery_countdown': {
-      $settings_form['type'] = array (
-          '#type' => 'select',
-          '#title' => t('Type'),
-          '#options' => array (
-              'auto' => t('Auto'),
-              'timer' => t('Timer'),
-              'countdown' => t('Countdown')
-          ),
-          '#default_value' => $settings['type'],
+
+    case 'field_timer_jquery_countdown':
+      $settings_form['type'] = array(
+        '#type' => 'select',
+        '#title' => t('Type'),
+        '#options' => array(
+          'auto' => t('Auto'),
+          'timer' => t('Timer'),
+          'countdown' => t('Countdown'),
+        ),
+        '#default_value' => $settings['type'],
       );
-      
-      $settings_form['regional'] = array (
-          '#type' => 'select',
-          '#title' => t('Region'),
-          '#default_value' => $settings['regional'],
-          '#options' => _field_timer_jquery_countdown_regions()
+
+      $settings_form['regional'] = array(
+        '#type' => 'select',
+        '#title' => t('Region'),
+        '#default_value' => $settings['regional'],
+        '#options' => _field_timer_jquery_countdown_regions(),
       );
-      
-      $settings_form['format'] = array (
-          '#type' => 'textfield',
-          '#title' => t('Format'),
-          '#default_value' => $settings['format'],
-          '#description' => t('Use \'Y\' for years, \'O\' for months, \'W\' for weeks, \'D\' for days, \'H\' for hours, \'M\' for minutes, \'S\' for seconds.'.
-                  ' Use upper-case characters for mandatory periods, or lower-case characters for optional periods.')
+
+      $settings_form['format'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Format'),
+        '#default_value' => $settings['format'],
+        '#description' => t("Use 'Y' for years, 'O' for months, 'W' for weeks, 'D' for days, 'H' for hours, 'M' for minutes, 'S' for seconds. Use upper-case characters for mandatory periods, or lower-case characters for optional periods."),
       );
-      
-      $settings_form['layout'] = array (
-          '#type' => 'textfield',
-          '#title' => t('Layout'),
-          '#defualt_value' => $settings['layout']
+
+      $settings_form['layout'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Layout'),
+        '#defualt_value' => $settings['layout'],
       );
-      
-      $settings_form['compact'] = array (
-          '#type' => 'checkbox',
-          '#title' => t('Display in compact format'),
-          '#default_value' => $settings['compact']
+
+      $settings_form['compact'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Display in compact format'),
+        '#default_value' => $settings['compact'],
       );
-      
-      $settings_form['significant'] = array (
-          '#type' => 'select',
-          '#title' => t('Significant'),
-          '#options' => array (
-              0 => 0,
-              1 => 1,
-              2 => 2,
-              3 => 3,
-              4 => 4,
-              5 => 5,
-              6 => 6,
-              7 => 7
-          ),
-          '#default_value' => $settings['significant']
+
+      $settings_form['significant'] = array(
+        '#type' => 'select',
+        '#title' => t('Significant'),
+        '#options' => array(
+          0 => 0,
+          1 => 1,
+          2 => 2,
+          3 => 3,
+          4 => 4,
+          5 => 5,
+          6 => 6,
+          7 => 7,
+        ),
+        '#default_value' => $settings['significant'],
       );
-      
-      $settings_form['timeSeparator'] = array (
-          '#type' => 'textfield',
-          '#title' => t('Time separator'),
-          '#default_value' => $settings['timeSeparator']
+
+      $settings_form['timeSeparator'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Time separator'),
+        '#default_value' => $settings['timeSeparator'],
       );
+
       return $settings_form;
-    }
   }
 }
 
 /**
- * Implemtents hook_field_instance_settings_form
+ * Implemtents hook_field_instance_settings_form().
  */
 function field_timer_field_instance_settings_form($field, $instance) {
   $settings_form = array();
   $settings = $instance['settings'];
   foreach ($instance['display'] as $name => $display) {
     if ($display['type'] == 'field_timer_jquery_countdown') {
-      $settings_form['jquery-countdown'] = array (
-          '#type' => 'fieldset',
-          '#title'=> t('jQuery Countdown options'),
-          '#description' => t('This settings effect only on jQuery Countdown formatter.'),
-          '#collapsed' => TRUE,
-          '#collapsible' => TRUE
+      $settings_form['jquery-countdown'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('jQuery Countdown options'),
+        '#description' => t('This settings effect only on jQuery Countdown formatter.'),
+        '#collapsed' => TRUE,
+        '#collapsible' => TRUE,
       );
-      $token_description = module_exists('token') ? t('<br />This field supports tokens.') : '';
-      $settings_form['jquery-countdown']['expiryUrl'] = array (
-          '#type' => 'textfield',
-          '#title' => t('Expiry URL'),
-          '#default_value' => $settings['jquery-countdown']['expiryUrl'],
-          '#description' => t('A URL to load when the countdown reaches zero, replacing the current page.').$token_description
+      $token_description = module_exists('token') ? '<br />' . t('This field supports tokens.') : '';
+      $settings_form['jquery-countdown']['expiryUrl'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Expiry URL'),
+        '#default_value' => $settings['jquery-countdown']['expiryUrl'],
+        '#description' => t('A URL to load when the countdown reaches zero, replacing the current page.') . $token_description,
       );
-      $settings_form['jquery-countdown']['expiryText'] = array (
-          '#type' => 'textarea',
-          '#title' => t('Expiry text'),
-          '#default_value' => $settings['jquery-countdown']['expiryText'],
-          '#description' => t('A message to display when the countdown reaches zero, replacing the countdown periods. It may contain HTML markup.').$token_description
+      $settings_form['jquery-countdown']['expiryText'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Expiry text'),
+        '#default_value' => $settings['jquery-countdown']['expiryText'],
+        '#description' => t('A message to display when the countdown reaches zero, replacing the countdown periods. It may contain HTML markup.') . $token_description,
       );
-      $settings_form['jquery-countdown']['description'] = array (
-          '#type' => 'textarea',
-          '#title' => t('Description'),
-          '#default_value' => $settings['jquery-countdown']['description'],
-          '#description' => t('The descriptive text shown below the countdown timer. This value can contain HTML markup.').$token_description
+      $settings_form['jquery-countdown']['description'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Description'),
+        '#default_value' => $settings['jquery-countdown']['description'],
+        '#description' => t('The descriptive text shown below the countdown timer. This value can contain HTML markup.') . $token_description,
       );
       if (module_exists('token')) {
-        $settings_form['jquery-countdown']['token'] = array (
-            '#theme' => 'token_tree',
-            '#token_types' => array($instance['entity_type']),
-            '#global_types' => TRUE,
-            '#click_insert' => FALSE,
+        $settings_form['jquery-countdown']['token'] = array(
+          '#theme' => 'token_tree',
+          '#token_types' => array($instance['entity_type']),
+          '#global_types' => TRUE,
+          '#click_insert' => FALSE,
         );
       }
       break;
@@ -634,40 +634,44 @@ function field_timer_field_instance_settings_form($field, $instance) {
 }
 
 /**
- * Implements hook_field_timer_entity_properties
- * Define properties for default drupal entities
+ * Implements hook_field_timer_entity_properties().
+ * Define properties for default drupal entities.
  */
 function field_timer_field_timer_entity_properties() {
-  $properties = array (
-      'node' => array (
-          'created' => t('Node create date'),
-          'changed' => t('Node last change date')
-      ),
-      'comment' => array (
-          'created' => t('Comment create date'),
-          'changed' => t('Comment last change date')
-      ),
-      'file' => array (
-          'timestamp' => t('File upload date')
-      ),
-      'taxanomy_term' => array(),
-      'taxanomy_vocabulary' => array(),
-      'user' => array (
-          'created' => t('User create date'),
-          'access' => t('User last access date'),
-          'login' => t('User last login date')
-      )
+  $properties = array(
+    'node' => array(
+      'created' => t('Node create date'),
+      'changed' => t('Node last change date'),
+    ),
+    'comment' => array(
+      'created' => t('Comment create date'),
+      'changed' => t('Comment last change date'),
+    ),
+    'file' => array(
+      'timestamp' => t('File upload date'),
+    ),
+    'taxanomy_term' => array(),
+    'taxanomy_vocabulary' => array(),
+    'user' => array(
+      'created' => t('User create date'),
+      'access' => t('User last access date'),
+      'login' => t('User last login date'),
+    ),
   );
-  
+
   return $properties;
 }
 
 /**
  * Load entity properties which represent a date.
+ * 
  * @param string $entity_type
- * @return array of entity's properties which represent a date keyed 
- * by entity types if $entity_type is empty, array of properties of given 
- * entity type otherwise.
+ *   Entity type machine name or empty string.
+ * 
+ * @return array 
+ *   Returns an array of entity's properties which represent a date keyed by 
+ * entity types if $entity_type is empty, array of properties of given entity 
+ * type otherwise.
  */
 function field_timer_entity_properties($entity_type = '') {
   $properties = module_invoke_all('field_timer_entity_properties');
@@ -679,59 +683,59 @@ function field_timer_entity_properties($entity_type = '') {
 }
 
 /**
- * Help function. Get all available regions for jquery.countdown
+ * Help function. Get all available regions for jquery.countdown.
  */
 function _field_timer_jquery_countdown_regions() {
-  return array (
-      'sq' => t('Albanian'),
-      'ar' => t('Arabic'),
-      'hy' => t('Armenian'),
-      'bn' => t('Bengali/Bangla'),
-      'bs' => t('Bosnian'),
-      'bg' => t('Bulgarian'),
-      'my' => t('Burmese'),
-      'ca' => t('Catalan'),
-      'zh-CN' => t('Chinese/Simplified'),
-      'zh-TW' => t('Chinese/Traditional'),
-      'hr' => t('Croatian'),
-      'cs' => t('Czech'),
-      'da' => t('Danish'),
-      'nl' => t('Dutch'),
-      'et' => t('Estonian'),
-      'en' => t('English'),
-      'fa' => t('Farsi/Persian'),
-      'fi' => t('Finnish'),
-      'fr' => t('French'),
-      'gl' => t('Galician'),
-      'de' => t('German'),
-      'el' => t('Greek'),
-      'gu' => t('Gujarati'),
-      'he' => t('Hebrew'),
-      'hu' => t('Hungarian'),
-      'id' => t('Indonesian'),
-      'it' => t('Italian'),
-      'ja' => t('Japanese'),
-      'kn' => t('Kannada'),
-      'ko' => t('Korean'),
-      'lv' => t('Latvian'),
-      'lt' => t('Lithuanian'),
-      'ml' => t('Malayalam'),
-      'ms' => t('Malaysian'),
-      'nb' => t('Norvegian'),
-      'pl' => t('Polish'),
-      'pt-BR' => t('Portuguese/Brazilian'),
-      'ro' => t('Romanian'),
-      'ru' => t('Russian'),
-      'sr' => t('Serbian'),
-      'sk' => t('Slovak'),
-      'sl' => t('Slovenian'),
-      'es' => t('Spanish'),
-      'sv' => t('Swedish'),
-      'th' => t('Thai'),
-      'tr' => t('Turkish'),
-      'uk' => t('Ukrainian'),
-      'uz' => t('Uzbek'),
-      'vi' => t('Vietnamese'),
-      'cy' => t('Welsh')
+  return array(
+    'sq' => t('Albanian'),
+    'ar' => t('Arabic'),
+    'hy' => t('Armenian'),
+    'bn' => t('Bengali/Bangla'),
+    'bs' => t('Bosnian'),
+    'bg' => t('Bulgarian'),
+    'my' => t('Burmese'),
+    'ca' => t('Catalan'),
+    'zh-CN' => t('Chinese/Simplified'),
+    'zh-TW' => t('Chinese/Traditional'),
+    'hr' => t('Croatian'),
+    'cs' => t('Czech'),
+    'da' => t('Danish'),
+    'nl' => t('Dutch'),
+    'et' => t('Estonian'),
+    'en' => t('English'),
+    'fa' => t('Farsi/Persian'),
+    'fi' => t('Finnish'),
+    'fr' => t('French'),
+    'gl' => t('Galician'),
+    'de' => t('German'),
+    'el' => t('Greek'),
+    'gu' => t('Gujarati'),
+    'he' => t('Hebrew'),
+    'hu' => t('Hungarian'),
+    'id' => t('Indonesian'),
+    'it' => t('Italian'),
+    'ja' => t('Japanese'),
+    'kn' => t('Kannada'),
+    'ko' => t('Korean'),
+    'lv' => t('Latvian'),
+    'lt' => t('Lithuanian'),
+    'ml' => t('Malayalam'),
+    'ms' => t('Malaysian'),
+    'nb' => t('Norvegian'),
+    'pl' => t('Polish'),
+    'pt-BR' => t('Portuguese/Brazilian'),
+    'ro' => t('Romanian'),
+    'ru' => t('Russian'),
+    'sr' => t('Serbian'),
+    'sk' => t('Slovak'),
+    'sl' => t('Slovenian'),
+    'es' => t('Spanish'),
+    'sv' => t('Swedish'),
+    'th' => t('Thai'),
+    'tr' => t('Turkish'),
+    'uk' => t('Ukrainian'),
+    'uz' => t('Uzbek'),
+    'vi' => t('Vietnamese'),
+    'cy' => t('Welsh'),
   );
 }
