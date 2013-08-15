@@ -241,14 +241,14 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       foreach ($items as $delta => $item) {
         $elements[$delta] = array(
           '#type' => 'markup',
-          '#markup' => '<div id="county-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" ' . 'style="background: ' . $settings['background'] . ';"></div>'
+          '#markup' => '<div id="county-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" ' . 'style="background: ' . $settings['background'] . ';"></div>',
         );
         $js_settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
       }
       $js_settings[$entity_type][$entity->{$id_key}]['options'] = $settings;
       $js_settings[$entity_type][$entity->{$id_key}]['plugin'] = 'county';
 
-      // Load library files
+      // Load library files.
       $library = libraries_load('county');
       $library_loaded = $library && !empty($library['loaded']);
       $js_name = 'county.js';
@@ -279,7 +279,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
         $js_settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
       }
 
-      // Add description, expiry text and url
+      // Add description, expiry text and url.
       $instance_settings = $instance['settings']['jquery-countdown'];
       $data = array($entity_type => $entity);
       $instance_settings['expiryUrl'] = token_replace($instance_settings['expiryUrl'], $data);
@@ -297,7 +297,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       }
       $js_settings[$entity_type][$entity->{$id_key}]['plugin'] = 'jquery.countdown';
 
-      // Load library files
+      // Load library files.
       $library = libraries_load('jquery.countdown');
       $library_loaded = $library && !empty($library['loaded']);
       $js_name = 'jquery.countdown.js';
@@ -638,7 +638,6 @@ function field_timer_field_instance_settings_form($field, $instance) {
 
 /**
  * Implements hook_field_timer_entity_properties().
- * Define properties for default drupal entities.
  */
 function field_timer_field_timer_entity_properties() {
   $properties = array(
