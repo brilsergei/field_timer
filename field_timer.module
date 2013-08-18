@@ -467,7 +467,7 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
       $settings_form['granularity'] = array(
         '#type' => 'select',
         '#title' => t('Granularity'),
-        '#options' => array(1 => 1,2 => 2,3 => 3,4 => 4,5 => 5,6 => 6,7 => 7),
+        '#options' => range(0, 7),
         '#default_value' => $settings['granularity'],
       );
 
@@ -565,16 +565,7 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
       $settings_form['significant'] = array(
         '#type' => 'select',
         '#title' => t('Significant'),
-        '#options' => array(
-          0 => 0,
-          1 => 1,
-          2 => 2,
-          3 => 3,
-          4 => 4,
-          5 => 5,
-          6 => 6,
-          7 => 7,
-        ),
+        '#options' => range(0, 7),
         '#default_value' => $settings['significant'],
       );
 
