@@ -3,4 +3,3 @@ description = Provides a basic field to create timer or countdown.
 core = 7.x
 dependencies[] = libraries
 dependencies[] = date_popup
-dependencies[] = field

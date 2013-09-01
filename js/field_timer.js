@@ -17,6 +17,7 @@
                     reflection: options.reflection,
                     reflectionOpacity: options.reflectionOpacity,
                   }).addClass('field-timer-processed');
+                break;
               }
 
               case 'jquery.countdown': {

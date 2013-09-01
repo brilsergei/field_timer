@@ -585,7 +585,7 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
 function field_timer_field_instance_settings_form($field, $instance) {
   $settings_form = array();
   $settings = $instance['settings'];
-  foreach ($instance['display'] as $name => $display) {
+  foreach ($instance['display'] as $display) {
     if ($display['type'] == 'field_timer_jquery_countdown') {
       $settings_form['jquery-countdown'] = array(
         '#type' => 'fieldset',
