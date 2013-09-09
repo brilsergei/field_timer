@@ -6,7 +6,7 @@
         for (var id in settings[type]) {
           for (var delta in settings[type][id]) {
             switch (settings[type][id].plugin) {
-              case 'county': {
+              case 'county':
                 var options = settings[type][id].options;
                 $('#county-' + type + '-' + id + '-' + delta).not('.field-timer-processed').
                   county({
@@ -18,9 +18,8 @@
                     reflectionOpacity: options.reflectionOpacity,
                   }).addClass('field-timer-processed');
                 break;
-              }
 
-              case 'jquery.countdown': {
+              case 'jquery.countdown':
                 var options = settings[type][id].options;
                 $('#jquery-countdown-' + type + '-' + id + '-' + delta).not('.field-timer-processed').
                   countdown({
@@ -35,7 +34,6 @@
                     expiryText: options.expiryText,
                     expiryUrl: options.expiryUrl,
                   }).addClass('field-timer-processed');
-              }
             }
           }
         }

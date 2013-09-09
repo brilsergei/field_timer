@@ -209,7 +209,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       foreach ($items as $delta => $item) {
         switch ($settings['type']) {
           case 'auto':
-            $interval = time() - $item['timestamp'];
+            $interval = REQUEST_TIME - $item['timestamp'];
             if ($interval > 0) {
               $sign = '+';
             }
@@ -220,11 +220,11 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
             break;
 
           case 'timer':
-            $time = format_interval(time() - $item['timestamp'], $settings['granularity']);
+            $time = format_interval(REQUEST_TIME - $item['timestamp'], $settings['granularity']);
             break;
 
           case 'countdown':
-            $time = format_interval($item['timestamp'] - time(), $settings['granularity']);
+            $time = format_interval($item['timestamp'] - REQUEST_TIME, $settings['granularity']);
             break;
         }
         $elements[$delta] = array(
@@ -255,7 +255,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       $base_path = 'sites/all/libraries/county';
       if (!$library_loaded) {
         drupal_set_message(t("Can't load County library. Please download !url jQuery plugin and extract it to @path, so @js can be found at @full_path.", array(
-            '!url' => l(t('County'), 'http://www.egrappler.com/free-jquery-count-down-plugin-county/'),
+            '!url' => l(t('County'), 'http://www.egrappler.com/free-jquery-count-down-plugin-county/', array('absolute' => TRUE)),
             '@path' => $base_path,
             '@js' => $js_name,
             '@full_path' => $base_path . '/js/' . $js_name,
@@ -287,11 +287,11 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       $instance_settings['description'] = token_replace($instance_settings['description'], $data);
 
       $js_settings[$entity_type][$entity->{$id_key}]['options'] = array_merge($settings, $instance_settings);
-      if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] < time())) {
+      if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] < REQUEST_TIME)) {
         $js_settings[$entity_type][$entity->{$id_key}]['options']['until'] = FALSE;
         $js_settings[$entity_type][$entity->{$id_key}]['options']['since'] = TRUE;
       }
-      elseif ($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $item['timestamp'] > time())) {
+      elseif ($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $item['timestamp'] > REQUEST_TIME)) {
         $js_settings[$entity_type][$entity->{$id_key}]['options']['until'] = TRUE;
         $js_settings[$entity_type][$entity->{$id_key}]['options']['since'] = FALSE;
       }
@@ -305,7 +305,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       $base_path = 'sites/all/libraries/jquery.countdown';
       if (!$library_loaded) {
         drupal_set_message(t("Can't load jQuery Countdown library. Please download !url plugin and extract it to @path, so @js and @js_min can be found at @full_path and @full_path_min.", array(
-            '!url' => l(t('jQuery Countdown'), 'http://keith-wood.name/countdown.html'),
+            '!url' => l(t('jQuery Countdown'), 'http://keith-wood.name/countdown.html', array('absolute' => TRUE)),
             '@path' => $base_path,
             '@js' => $js_name,
             '@js_min' => $js_name_min,
@@ -599,19 +599,19 @@ function field_timer_field_instance_settings_form($field, $instance) {
         '#type' => 'textfield',
         '#title' => t('Expiry URL'),
         '#default_value' => $settings['jquery-countdown']['expiryUrl'],
-        '#description' => t('A URL to load when the countdown reaches zero, replacing the current page.') . $token_description,
+        '#description' => t('A URL to load when the countdown reaches zero, replacing the current page. !token_description', array ('!token_desccription' => $token_description)),
       );
       $settings_form['jquery-countdown']['expiryText'] = array(
         '#type' => 'textarea',
         '#title' => t('Expiry text'),
         '#default_value' => $settings['jquery-countdown']['expiryText'],
-        '#description' => t('A message to display when the countdown reaches zero, replacing the countdown periods. It may contain HTML markup.') . $token_description,
+        '#description' => t('A message to display when the countdown reaches zero, replacing the countdown periods. It may contain HTML markup. !token_description', array ('!token_desccription' => $token_description)),
       );
       $settings_form['jquery-countdown']['description'] = array(
         '#type' => 'textarea',
         '#title' => t('Description'),
         '#default_value' => $settings['jquery-countdown']['description'],
-        '#description' => t('The descriptive text shown below the countdown timer. This value can contain HTML markup.') . $token_description,
+        '#description' => t('The descriptive text shown below the countdown timer. This value can contain HTML markup. !token_description', array ('!token_desccription' => $token_description)),
       );
       if (module_exists('token')) {
         $settings_form['jquery-countdown']['token'] = array(
