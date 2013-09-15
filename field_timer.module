@@ -232,7 +232,7 @@ function field_timer_field_presave($entity_type, $entity, $field, $instance,
         $langcode, &$items) {
 
   // Date popup widget return date as formatted string. We need to convert it to
-  // timestamp
+  // timestamp.
   if ($field['type'] == 'field_timer') {
     foreach ($items as $delta => $item) {
       if (!empty($item['timestamp'])) {
@@ -567,7 +567,9 @@ function field_timer_entity_properties($entity_type = '') {
 }
 
 /**
- * Help function. Get all available regions for jquery.countdown.
+ * Help function. 
+ * 
+ * Get all available regions for jquery.countdown.
  */
 function _field_timer_jquery_countdown_regions() {
   return array(
@@ -625,7 +627,9 @@ function _field_timer_jquery_countdown_regions() {
 }
 
 /**
- * Help function. Build renderable array for Text formatter.
+ * Help function. 
+ * 
+ * Build renderable array for Text formatter.
  */
 function _field_timer_text_formatter($items, $settings) {
   $elements = array();
@@ -662,8 +666,9 @@ function _field_timer_text_formatter($items, $settings) {
 }
 
 /**
- * Help function. Build renderable array and load neccessary files for County 
- * formatter.
+ * Help function.
+ * 
+ * Build renderable array and load neccessary files for County formatter.
  */
 function _field_timer_county_formatter($items, $settings, $entity_type, $entity) {
   $info = entity_get_info($entity_type);
@@ -703,8 +708,10 @@ function _field_timer_county_formatter($items, $settings, $entity_type, $entity)
 }
 
 /**
- * Help function. Build renderable array and load neccessary files for 
- * jQuery Countdown formatter.
+ * Help function.
+ * 
+ * Build renderable array and load neccessary files for jQuery Countdown 
+ * formatter.
  */
 function _field_timer_countdown_formatter($items, $settings, $entity_type, $entity, $instance) {
   $info = entity_get_info($entity_type);
