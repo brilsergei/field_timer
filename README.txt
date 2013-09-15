@@ -5,7 +5,8 @@ h2. Description
 This module provides field wich can be displayed as a timer/countdown. 
 A start/target date can be any date or an entity property which represent a 
 date (for example, created date of a node). Module provides 3 field formatters: 
-simple text and 2 formatters based on jQuery plugins County and jQuery Countdown.
+simple text and 2 formatters based on jQuery plugins County and 
+jQuery Countdown.
 
 h2. Requirements
 Libraries (http://drupal.org/project/libraries)
