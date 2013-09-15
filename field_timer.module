@@ -622,15 +622,15 @@ function _field_timer_jquery_countdown_regions() {
 }
 
 /**
- * Help function
+ * Help function.
  * 
- * Build renderable array for Text formatter
+ * Build renderable array for Text formatter.
  */
 function _field_timer_text_formatter($items, $settings) {
   $elements = array();
-  
+
   foreach ($items as $delta => $item) {
-    // check what we should display - timer or countdown.
+    // Check what we should display - timer or countdown.
     switch ($settings['type']) {
       case 'auto':
         $interval = REQUEST_TIME - $item['timestamp'];
@@ -656,21 +656,21 @@ function _field_timer_text_formatter($items, $settings) {
       '#markup' => $time,
     );
   }
-  
+
   return $elements;
 }
 
 /**
- * Help function
+ * Help function.
  * 
- * Build renderable array and load neccessary files for County formatter
+ * Build renderable array and load neccessary files for County formatter.
  */
 function _field_timer_county_formatter($items, $settings, $entity_type, $entity) {
   $info = entity_get_info($entity_type);
   $id_key = $info['entity keys']['id'];
   $js_settings = array();
   $elements = array();
-  
+
   foreach ($items as $delta => $item) {
     $elements[$delta] = array(
       '#type' => 'markup',
@@ -698,21 +698,22 @@ function _field_timer_county_formatter($items, $settings, $entity_type, $entity)
 
   drupal_add_js(array('field_timer' => $js_settings), 'setting');
   drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
-  
+
   return $elements;
 }
 
 /**
- * Help function
+ * Help function.
  * 
- * Build renderable array and load neccessary files for jQuery Countdown formatter
+ * Build renderable array and load neccessary files for jQuery Countdown 
+ * formatter.
  */
 function _field_timer_countdown_formatter($items, $settings, $entity_type, $entity, $instance) {
   $info = entity_get_info($entity_type);
   $id_key = $info['entity keys']['id'];
   $js_settings = array();
   $elements = array();
-  
+
   foreach ($items as $delta => $item) {
     $elements[$delta] = array(
       '#type' => 'markup',
@@ -757,7 +758,7 @@ function _field_timer_countdown_formatter($items, $settings, $entity_type, $enti
     return array();
   }
 
-  // add neccessary js and css   files
+  // Add neccessary js and css files.
   drupal_add_js(array('field_timer' => $js_settings), 'setting');
   $path = libraries_get_path('jquery.countdown');
   if (file_exists($path . '/jquery.countdown-' . $settings['regional'] . '.js')) {
@@ -765,6 +766,6 @@ function _field_timer_countdown_formatter($items, $settings, $entity_type, $enti
   }
   drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
   drupal_add_css(drupal_get_path('module', 'field_timer') . '/css/field_timer.css');
-  
+
   return $elements;
 }
