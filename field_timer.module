@@ -231,6 +231,8 @@ function field_timer_field_is_empty($item, $field) {
 function field_timer_field_presave($entity_type, $entity, $field, $instance,
         $langcode, &$items) {
 
+  // Date popup widget return date as formatted string. We need to convert it to
+  // timestamp
   if ($field['type'] == 'field_timer') {
     foreach ($items as $delta => $item) {
       if (!empty($item['timestamp'])) {
@@ -249,6 +251,7 @@ function field_timer_field_presave($entity_type, $entity, $field, $instance,
 function field_timer_field_load($entity_type, $entities, $field, $instances,
         $langcode, &$items, $age) {
 
+  // Set timestamp for field item if an entity property used as target/end date.
   foreach ($entities as $id => $entity) {
     foreach ($items[$id] as $delta => $item) {
       if (empty($item['timestamp']) && !empty($item['entity_property_name'])) {
@@ -622,9 +625,7 @@ function _field_timer_jquery_countdown_regions() {
 }
 
 /**
- * Help function.
- * 
- * Build renderable array for Text formatter.
+ * Help function. Build renderable array for Text formatter.
  */
 function _field_timer_text_formatter($items, $settings) {
   $elements = array();
@@ -661,9 +662,8 @@ function _field_timer_text_formatter($items, $settings) {
 }
 
 /**
- * Help function.
- * 
- * Build renderable array and load neccessary files for County formatter.
+ * Help function. Build renderable array and load neccessary files for County 
+ * formatter.
  */
 function _field_timer_county_formatter($items, $settings, $entity_type, $entity) {
   $info = entity_get_info($entity_type);
@@ -703,10 +703,8 @@ function _field_timer_county_formatter($items, $settings, $entity_type, $entity)
 }
 
 /**
- * Help function.
- * 
- * Build renderable array and load neccessary files for jQuery Countdown 
- * formatter.
+ * Help function. Build renderable array and load neccessary files for 
+ * jQuery Countdown formatter.
  */
 function _field_timer_countdown_formatter($items, $settings, $entity_type, $entity, $instance) {
   $info = entity_get_info($entity_type);
