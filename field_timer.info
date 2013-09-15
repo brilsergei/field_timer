@@ -1,5 +1,9 @@
 name = Timer Field
 description = Provides a basic field to create timer or countdown.
 core = 7.x
+package = Fields
+
 dependencies[] = libraries
 dependencies[] = date_popup
+
+files[] = includes/field_timer.inc
