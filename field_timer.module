@@ -104,10 +104,21 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
 
   switch ($instance['widget']['type']) {
     case 'field_timer_simple_date':
+      $default_value = NULL;
+      // Default value from database is timestamp, default value set by admin
+      // at field configuration page id formatted date string.
+      if (isset($items[$delta]['timestamp'])) {
+        if (is_numeric($items[$delta]['timestamp'])){
+          $default_value = date('Y-m-d H:i:s', $items[$delta]['timestamp']);
+        }
+        else {
+          $default_value = $items[$delta]['timestamp'];
+        }
+      }
       $widget = array(
         '#type' => 'date_popup',
         '#title' => $element['#title'],
-        '#default_value' => isset($items[$delta]['timestamp']) ? date('Y-m-d H:i:s', $items[$delta]['timestamp']) : NULL,
+        '#default_value' => $default_value,
       );
       $element['timestamp'] = $widget;
       break;
