@@ -106,9 +106,9 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
     case 'field_timer_simple_date':
       $default_value = NULL;
       // Default value from database is timestamp, default value set by admin
-      // at field configuration page id formatted date string.
+      // at field configuration page is formatted date string.
       if (isset($items[$delta]['timestamp'])) {
-        if (is_numeric($items[$delta]['timestamp'])){
+        if (is_numeric($items[$delta]['timestamp'])) {
           $default_value = date('Y-m-d H:i:s', $items[$delta]['timestamp']);
         }
         else {
