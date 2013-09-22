@@ -1,4 +1,4 @@
-name = Timer Field
+name = Field Timer
 description = Provides a basic field to create timer or countdown.
 core = 7.x
 package = Fields
