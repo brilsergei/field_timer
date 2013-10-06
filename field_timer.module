@@ -160,7 +160,7 @@ function field_timer_field_formatter_info() {
   $formatters = array(
     'field_timer_text' => array(
       'label' => t('Text'),
-      'description' => t('Simple text'),
+      'description' => t('Simple text timer and countdown.'),
       'field types' => array('field_timer'),
       'settings' => array(
         'type' => 'auto',
@@ -173,7 +173,7 @@ function field_timer_field_formatter_info() {
   if ($library && !empty($library['installed'])) {
     $formatters['field_timer_county'] = array(
       'label' => t('County'),
-      'description' => t('Use County jQuery plugin.'),
+      'description' => t('Use County jQuery plugin to display countdown.'),
       'field types' => array('field_timer'),
       'settings' => array(
         'animation' => 'fade',
@@ -190,7 +190,7 @@ function field_timer_field_formatter_info() {
   if ($library && !empty($library['installed'])) {
     $formatters['field_timer_jquery_countdown'] = array(
       'label' => t('jQuery Countdown'),
-      'description' => t('Use jQuery Countdown plugin.'),
+      'description' => t('Use jQuery Countdown plugin to display countdown and timer.'),
       'field types' => array('field_timer'),
       'settings' => array(
         'type' => 'auto',
@@ -449,13 +449,16 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
         '#type' => 'textfield',
         '#title' => t('Format'),
         '#default_value' => $settings['format'],
-        '#description' => t("Use 'Y' for years, 'O' for months, 'W' for weeks, 'D' for days, 'H' for hours, 'M' for minutes, 'S' for seconds. Use upper-case characters for mandatory periods, or lower-case characters for optional periods."),
+        '#description' => t("See !documentation for this parameter.", array('!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'format')))),
       );
 
       $settings_form['layout'] = array(
-        '#type' => 'textfield',
+        '#type' => 'textarea',
+        '#rows' => 3,
+        '#cols' => 60,
         '#title' => t('Layout'),
         '#defualt_value' => $settings['layout'],
+        '#description' => t("See !documentation for this parameter.", array('!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout')))),
       );
 
       $settings_form['compact'] = array(
