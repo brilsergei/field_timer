@@ -1,7 +1,51 @@
 span.jquery-countdown {
   float: left;
 }
-
 span.jquery-countdown .countdown_section {
   padding: 0 3px;
 }
+.jquery-countdown-led span {
+  display: block;
+  float: left;
+  width: 10px;
+  height: 21px; 
+} 
+.jquery-countdown-led span.led-image0 {
+  background-position: -0px 0px;
+} 
+.jquery-countdown-led span.led-image1 {
+  background-position: -10px 0px;
+} 
+.jquery-countdown-led span.led-image2 {
+  background-position: -20px 0px;
+} 
+.jquery-countdown-led span.led-image3 {
+  background-position: -30px 0px;
+} 
+.jquery-countdown-led span.led-image4 {
+  background-position: -40px 0px;
+} 
+.jquery-countdown-led span.led-image5 {
+  background-position: -50px 0px;
+} 
+.jquery-countdown-led span.led-image6 {
+  background-position: -60px 0px;
+} 
+.jquery-countdown-led span.led-image7 {
+  background-position: -70px 0px;
+} 
+.jquery-countdown-led span.led-image8 {
+  background-position: -80px 0px;
+} 
+.jquery-countdown-led span.led-image9 {
+  background-position: -90px 0px;
+} 
+.jquery-countdown-led span.led-imageDay {
+  background-position: -100px 0px;
+} 
+.jquery-countdown-led span.led-imageSep {
+  background-position: -110px 0px;
+} 
+.jquery-countdown-led span.led-imageSpace {
+  background-position: -120px 0px;
+} 

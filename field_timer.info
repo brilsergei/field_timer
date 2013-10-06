@@ -5,3 +5,5 @@ package = Fields
 
 dependencies[] = libraries
 dependencies[] = date_popup
+
+files[] = includes/field_timer.formatters.inc
