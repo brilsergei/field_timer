@@ -209,6 +209,7 @@ function field_timer_field_formatter_info() {
       'field types' => array('field_timer'),
       'settings' => array(
         'type' => 'auto',
+        'theme' => 'green',
         'max_count_of_days' => 2,
         'display_days' => 1,
         'display_hours' => 1,

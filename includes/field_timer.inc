@@ -178,33 +178,33 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
     $layout = '<div class="jquery-countdown-led-display-wrapper">';
     if ($settings['display_days']) {
       for ($i = $settings['max_count_of_days']; $i > 0; $i--) {
-        $layout .= '<span class="led-image{d1' . substr('000', 0, $i - 1) . '}"></span>';
+        $layout .= '<span class="%t% image{d1' . substr('000', 0, $i - 1) . '}"></span>';
       }
-      $layout .= '<span class="led-imageDay"></span><span class="led-imageSpace"></span>';
+      $layout .= '<span class="%t% imageDay"></span><span class="%t% imageSpace"></span>';
     }
     if ($settings['display_hours']) {
-      $layout .= '<span class="led-image{h10}"></span><span class="led-image{h1}"></span>';
+      $layout .= '<span class="%t% image{h10}"></span><span class="%t% image{h1}"></span>';
       if ($settings['display_minutes'] || $settings['display_seconds']) {
-        $layout .= '<span class="led-imageSep"></span>';
+        $layout .= '<span class="%t% imageSep"></span>';
       }
     }
     if ($settings['display_minutes']) {
-      $layout .= '<span class="led-image{m10}"></span><span class="led-image{m1}"></span>';
+      $layout .= '<span class="%t% image{m10}"></span><span class="%t% image{m1}"></span>';
       if ($settings['display_seconds']) {
-        $layout .= '<span class="led-imageSep"></span>';
+        $layout .= '<span class="%t% imageSep"></span>';
       }
     }
     if ($settings['display_seconds']) {
-      $layout .= '<span class="led-image{s10}"></span><span class="led-image{s1}"></span>';
+      $layout .= '<span class="%t% image{s10}"></span><span class="%t% image{s1}"></span>';
     }
     $layout .= '</div>';
     if (!empty($instance_settings['description'])) {
       $layout .= '<div class="jquery-countdown-led-description">{desc}</div>';
     }
-    
+
     $elements[$delta] = array(
       '#type' => 'markup',
-      '#markup' => '<span id="jquery-countdown-led-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" class="jquery-countdown-led">' . $layout . '</span>',
+      '#markup' => '<span id="jquery-countdown-led-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" class="jquery-countdown-led ' . $settings['theme'] . '">' . str_replace('%t%', $settings['theme'], $layout) . '</span>',
     );
     $js_settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
   }
@@ -243,7 +243,8 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
   drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
   drupal_add_css(drupal_get_path('module', 'field_timer') . '/css/field_timer.css');
   // Since we can't get path to image from CSS file, we add this rule here
-  drupal_add_css('.jquery-countdown-led span{background: url(/' . libraries_get_path('jquery.countdown') . '/countdownLED.png) no-repeat 0px 0px;}', 'inline');
+  $path = libraries_get_path('jquery.countdown');
+  drupal_add_css('.jquery-countdown-led.green span{background: url(/' . $path . '/countdownLED.png) no-repeat 0px 0px;} .jquery-countdown-led.blue span{background: url(/' . $path . '/countdownGlowing.gif) no-repeat 0px 0px;}', 'inline');
 
   return $elements;
 }
@@ -338,6 +339,12 @@ function _field_timer_jquery_countdown_led_summary($settings) {
     'countdown' => t('Countdown'),
   );
   $summary[] = t('Type: %type', array('%type' => $types[$settings['type']]));
+
+  $themes = array(
+    'green' => t('Green'),
+    'blue' => t('Blue'),
+  );
+  $summary[] = t('Theme: %theme', array('%theme' => $themes[$settings['theme']]));
 
   $summary[] = t('Display days: %display_days', array('%display_days' => $settings['display_days'] ? t('Yes') : t('No')));
   if ($settings['display_days']) {
@@ -522,6 +529,16 @@ function _field_timer_jquery_countdown_led_settings_form($settings) {
       'countdown' => t('Countdown'),
     ),
     '#default_value' => $settings['type'],
+  );
+  
+  $settings_form['theme'] = array(
+    '#type' => 'select',
+    '#title' => t('Theme'),
+    '#options' => array(
+      'green' => t('Green'),
+      'blue' => t('Blue'),
+    ),
+    '#default_value' => $settings['theme'],
   );
 
   $settings_form['display_days'] = array(
