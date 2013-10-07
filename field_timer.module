@@ -323,191 +323,20 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
 
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
+  module_load_include('inc', 'field_timer', 'includes/field_timer');
 
   switch ($display['type']) {
     case 'field_timer_text':
-      $settings_form['type'] = array(
-        '#type' => 'select',
-        '#title' => t('Type'),
-        '#options' => array(
-          'auto' => t('Auto'),
-          'timer' => t('Timer'),
-          'countdown' => t('Countdown'),
-        ),
-        '#default_value' => $settings['type'],
-      );
-
-      $settings_form['granularity'] = array(
-        '#type' => 'select',
-        '#title' => t('Granularity'),
-        '#options' => range(0, 7),
-        '#default_value' => $settings['granularity'],
-      );
-
-      return $settings_form;
+      return _field_timer_text_settings_form($settings);
 
     case 'field_timer_county':
-      $settings_form['animation'] = array(
-        '#type' => 'select',
-        '#title' => t('Animation'),
-        '#options' => array(
-          'fade' => t('Fade'),
-          'scroll' => t('Scroll'),
-        ),
-        '#default_value' => $settings['animation'],
-      );
-
-      $settings_form['speed'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Speed'),
-        '#default_value' => $settings['speed'],
-      );
-
-      $settings_form['theme'] = array(
-        '#type' => 'select',
-        '#title' => t('Theme'),
-        '#options' => array(
-          'black' => t('Black'),
-          'gray' => t('Gray'),
-          'red' => t('Red'),
-          'blue' => t('Blue'),
-        ),
-        '#default_value' => $settings['theme'],
-      );
-
-      $settings_form['background'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Background'),
-        '#default_value' => $settings['background'],
-        '#description' => t("Data from this field will be added to css property 'background'."),
-      );
-
-      $settings_form['reflection'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Add reflection'),
-        '#default_value' => $settings['reflection'],
-      );
-
-      $settings_form['reflectionOpacity'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Reflection opacity'),
-        '#default_value' => $settings['reflectionOpacity'],
-        '#description' => t('Float value between 0 and 1.'),
-      );
-
-      return $settings_form;
+      return _field_timer_county_settings_form($settings);
 
     case 'field_timer_jquery_countdown':
-      $settings_form['type'] = array(
-        '#type' => 'select',
-        '#title' => t('Type'),
-        '#options' => array(
-          'auto' => t('Auto'),
-          'timer' => t('Timer'),
-          'countdown' => t('Countdown'),
-        ),
-        '#default_value' => $settings['type'],
-      );
-
-      $settings_form['regional'] = array(
-        '#type' => 'select',
-        '#title' => t('Region'),
-        '#default_value' => $settings['regional'],
-        '#options' => _field_timer_jquery_countdown_regions(),
-      );
-
-      $settings_form['format'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Format'),
-        '#default_value' => $settings['format'],
-        '#description' => t("See !documentation for this parameter.", array('!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'format')))),
-      );
-
-      $settings_form['layout'] = array(
-        '#type' => 'textarea',
-        '#rows' => 3,
-        '#cols' => 60,
-        '#title' => t('Layout'),
-        '#defualt_value' => $settings['layout'],
-        '#description' => t("See !documentation for this parameter.", array('!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout')))),
-      );
-
-      $settings_form['compact'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Display in compact format'),
-        '#default_value' => $settings['compact'],
-      );
-
-      $settings_form['significant'] = array(
-        '#type' => 'select',
-        '#title' => t('Significant'),
-        '#options' => range(0, 7),
-        '#default_value' => $settings['significant'],
-      );
-
-      $settings_form['timeSeparator'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Time separator'),
-        '#default_value' => $settings['timeSeparator'],
-      );
-
-      return $settings_form;
+      return _field_timer_jquery_countdown_settings_form($settings);
       
     case 'field_timer_jquery_countdown_led':
-      $settings_form['type'] = array(
-        '#type' => 'select',
-        '#title' => t('Type'),
-        '#options' => array(
-          'auto' => t('Auto'),
-          'timer' => t('Timer'),
-          'countdown' => t('Countdown'),
-        ),
-        '#default_value' => $settings['type'],
-      );
-      
-      $settings_form['display_days'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Display days'),
-        '#default_value' => $settings['display_days'],
-        '#attributes' => array('class' => array('field-timer-dislay-days')),
-      );
-      
-      $settings_form['max_count_of_days'] = array(
-        '#type' => 'select',
-        '#title' => t('Max count of days'),
-        '#options' => array(
-          1 => 9,
-          2 => 99,
-          3 => 999,
-          4 => 9999,
-        ),
-        '#default_value' => $settings['max_count_of_days'],
-        '#states' => array(
-          'invisible' => array(
-            'input.field-timer-dislay-days' => array('checked' => FALSE),
-          ),
-        ),
-      );
-      
-      $settings_form['display_hours'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Display hours'),
-        '#default_value' => $settings['display_hours'],
-      );
-      
-      $settings_form['display_minutes'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Display minutes'),
-        '#default_value' => $settings['display_minutes'],
-      );
-      
-      $settings_form['display_seconds'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Display seconds'),
-        '#default_value' => $settings['display_seconds'],
-      );
-      
-      return $settings_form;
+      return _field_timer_jquery_countdown_led_settings_form($settings);
   }
 }
 
