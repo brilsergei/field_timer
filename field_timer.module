@@ -227,7 +227,7 @@ function field_timer_field_formatter_info() {
 function field_timer_field_formatter_view($entity_type, $entity, $field, $instance,
         $langcode, $items, $display) {
 
-  module_load_include('inc', 'field_timer', 'includes/field_timer.formatters');
+  module_load_include('inc', 'field_timer', 'includes/field_timer');
   $settings = $display['settings'];
   switch ($display['type']) {
     case 'field_timer_text':
@@ -298,92 +298,20 @@ function field_timer_field_load($entity_type, $entities, $field, $instances,
 function field_timer_field_formatter_settings_summary($field, $instance, $view_mode) {
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
-  $summary = array();
+  module_load_include('inc', 'field_timer', 'includes/field_timer');
 
   switch ($display['type']) {
     case 'field_timer_text':
-      $types = array(
-        'auto' => t('Auto'),
-        'timer' => t('Timer'),
-        'countdown' => t('Countdown'),
-      );
-      $summary[] = t('Type: %type', array('%type' => $types[$settings['type']]));
-      $summary[] = t('Granularity: %granularity', array('%granularity' => $settings['granularity']));
-
-      return implode('<br/>', $summary);
+      return _field_timer_text_summary($settings);
 
     case 'field_timer_county':
-      $animations = array(
-        'fade' => t('Fade'),
-        'scroll' => t('Scroll'),
-      );
-      $summary[] = t('Animation: %animation', array('%animation' => $animations[$settings['animation']]));
-      $summary[] = t('Speed: %speed', array('%speed' => $settings['speed'] . 'ms'));
-      $themes = array(
-        'black' => t('Black'),
-        'gray' => t('Gray'),
-        'red' => t('Red'),
-        'blue' => t('Blue'),
-      );
-      $summary[] = t('Theme: %theme', array('%theme' => $themes[$settings['theme']]));
-
-      $summary[] = t('Background: %css', array('%css' => $settings['background']));
-
-      $summary[] = t('Reflection: %state', array(
-        '%state' => $settings['reflection'] ? 'Enabled' : 'Disabled',
-      ));
-
-      if ($settings['reflection']) {
-        $summary[] = t('Reflection opacity: %opacity', array(
-            '%opacity' => $settings['reflectionOpacity'],
-        ));
-      }
-
-      return implode($summary, '<br />');
+      return _field_timer_county_summary($settings);
 
     case 'field_timer_jquery_countdown':
-      $types = array(
-        'auto' => t('Auto'),
-        'timer' => t('Timer'),
-        'countdown' => t('Countdown'),
-      );
-      $summary[] = t('Type: %type', array('%type' => $types[$settings['type']]));
-
-      $regions = _field_timer_jquery_countdown_regions();
-      $summary[] = t('Region: %regional', array('%regional' => $regions[$settings['regional']]));
-
-      $summary[] = t('Format: %format', array('%format' => $settings['format']));
-      $summary[] = t('Layout: %layout', array('%layout' => $settings['layout']));
-      $summary[] = t('Compact: %compact', array('%compact' => $settings['compact'] ? t('Yes') : t('No')));
-      $summary[] = t('Significant: %significant', array('%significant' => $settings['significant']));
-      $summary[] = t('Time separator: %timeSeparator', array('%timeSeparator' => $settings['timeSeparator']));
-
-      return implode($summary, '<br />');
+      return _field_timer_jquery_countdown_summary($settings);
       
     case 'field_timer_jquery_countdown_led':
-      $types = array(
-        'auto' => t('Auto'),
-        'timer' => t('Timer'),
-        'countdown' => t('Countdown'),
-      );
-      $summary[] = t('Type: %type', array('%type' => $types[$settings['type']]));
-      
-      $summary[] = t('Display days: %display_days', array('%display_days' => $settings['display_days'] ? t('Yes') : t('No')));
-      if ($settings['display_days']) {
-        $options = array(
-          1 => 9,
-          2 => 99,
-          3 => 999,
-          4 => 9999,
-        );
-        $summary[] = t('Maximum count of days: %max_count_of_days', array('%max_count_of_days' => $options[$settings['max_count_of_days']]));
-      }
-      
-      $summary[] = t('Display hours: %display_hours', array('%display_hours' => $settings['display_hours'] ? t('Yes') : t('No')));
-      $summary[] = t('Display minutes: %display_minutes', array('%display_minutes' => $settings['display_minutes'] ? t('Yes') : t('No')));
-      $summary[] = t('Display seconds: %display_seconds', array('%display_seconds' => $settings['display_seconds'] ? t('Yes') : t('No')));
-      
-      return implode($summary, '<br />');
+      return _field_timer_jquery_countdown_led_summary($settings);
   }
 }
 
