@@ -237,7 +237,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       return _field_timer_jquery_county_formatter($items, $settings, $entity_type, $entity);
 
     case 'field_timer_jquery_countdown':
-      return _field_timer_countdown_formatter($items, $settings, $entity_type, $entity, $instance);
+      return _field_timer_jquery_countdown_formatter($items, $settings, $entity_type, $entity, $instance);
       
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_type, $entity, $instance);
@@ -588,7 +588,7 @@ function field_timer_field_instance_settings_form($field, $instance) {
   $settings_form = array();
   $settings = $instance['settings'];
   foreach ($instance['display'] as $display) {
-    if ($display['type'] == 'field_timer_jquery_countdown') {
+    if ($display['type'] == 'field_timer_jquery_countdown' || $display['type'] == 'field_timer_jquery_countdown') {
       $settings_form['jquery-countdown'] = array(
         '#type' => 'fieldset',
         '#title' => t('jQuery Countdown options'),
@@ -601,19 +601,37 @@ function field_timer_field_instance_settings_form($field, $instance) {
         '#type' => 'textfield',
         '#title' => t('Expiry URL'),
         '#default_value' => $settings['jquery-countdown']['expiryUrl'],
-        '#description' => t('A URL to load when the countdown reaches zero, replacing the current page. !token_description', array('!token_desccription' => $token_description)),
+        '#description' => t('A URL to load when the countdown reaches zero.!brSee !link for this parameter.!token_description', 
+              array(
+                '!token_description' => $token_description,
+                '!br' => '<br />',
+                '!link' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'expiryUrl')),
+              )
+        ),
       );
       $settings_form['jquery-countdown']['expiryText'] = array(
         '#type' => 'textarea',
         '#title' => t('Expiry text'),
         '#default_value' => $settings['jquery-countdown']['expiryText'],
-        '#description' => t('A message to display when the countdown reaches zero, replacing the countdown periods. It may contain HTML markup. !token_description', array('!token_desccription' => $token_description)),
+        '#description' => t('A message to display when the countdown reaches zero.!brSee !link for this parameter.!token_description', 
+              array(
+                '!token_description' => $token_description,
+                '!br' => '<br />',
+                '!link' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'expiryText')),
+              )
+        ),
       );
       $settings_form['jquery-countdown']['description'] = array(
         '#type' => 'textarea',
         '#title' => t('Description'),
         '#default_value' => $settings['jquery-countdown']['description'],
-        '#description' => t('The descriptive text shown below the countdown timer. This value can contain HTML markup. !token_description', array('!token_desccription' => $token_description)),
+        '#description' => t('The descriptive text shown below the countdown timer.!brSee !link for this parameter.!token_description',
+              array(
+                '!token_description' => $token_description,
+                '!br' => '<br />',
+                '!link' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'description')),
+              )
+        ),
       );
       if (module_exists('token')) {
         $settings_form['jquery-countdown']['token'] = array(
