@@ -374,6 +374,7 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
           1 => 9,
           2 => 99,
           3 => 999,
+          4 => 9999,
         );
         $summary[] = t('Maximum count of days: %max_count_of_days', array('%max_count_of_days' => $options[$settings['max_count_of_days']]));
       }
@@ -550,6 +551,7 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
           1 => 9,
           2 => 99,
           3 => 999,
+          4 => 9999,
         ),
         '#default_value' => $settings['max_count_of_days'],
         '#states' => array(
@@ -588,7 +590,7 @@ function field_timer_field_instance_settings_form($field, $instance) {
   $settings_form = array();
   $settings = $instance['settings'];
   foreach ($instance['display'] as $display) {
-    if ($display['type'] == 'field_timer_jquery_countdown' || $display['type'] == 'field_timer_jquery_countdown') {
+    if ($display['type'] == 'field_timer_jquery_countdown' || $display['type'] == 'field_timer_jquery_countdown_led') {
       $settings_form['jquery-countdown'] = array(
         '#type' => 'fieldset',
         '#title' => t('jQuery Countdown options'),

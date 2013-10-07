@@ -167,11 +167,18 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
   $js_settings = array();
   $elements = array();
   
+  // Add description, expiry text and url.
+  $instance_settings = $instance['settings']['jquery-countdown'];
+  $data = array($entity_type => $entity);
+  $instance_settings['expiryUrl'] = token_replace($instance_settings['expiryUrl'], $data);
+  $instance_settings['expiryText'] = token_replace($instance_settings['expiryText'], $data);
+  $instance_settings['description'] = token_replace($instance_settings['description'], $data);
+  
   foreach ($items as $delta => $item) {
-    $layout = '';
+    $layout = '<div class="jquery-countdown-led-display-wrapper">';
     if ($settings['display_days']) {
       for ($i = $settings['max_count_of_days']; $i > 0; $i--) {
-        $layout .= '<span class="led-image{d1' . substr('00', 0, $i - 1) . '}"></span>';
+        $layout .= '<span class="led-image{d1' . substr('000', 0, $i - 1) . '}"></span>';
       }
       $layout .= '<span class="led-imageDay"></span><span class="led-imageSpace"></span>';
     }
@@ -190,19 +197,17 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
     if ($settings['display_seconds']) {
       $layout .= '<span class="led-image{s10}"></span><span class="led-image{s1}"></span>';
     }
+    $layout .= '</div>';
+    if (!empty($instance_settings['description'])) {
+      $layout .= '<div class="jquery-countdown-led-description">{desc}</div>';
+    }
+    
     $elements[$delta] = array(
       '#type' => 'markup',
       '#markup' => '<span id="jquery-countdown-led-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" class="jquery-countdown-led">' . $layout . '</span>',
     );
     $js_settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
   }
-  
-  // Add description, expiry text and url.
-  $instance_settings = $instance['settings']['jquery-countdown'];
-  $data = array($entity_type => $entity);
-  $instance_settings['expiryUrl'] = token_replace($instance_settings['expiryUrl'], $data);
-  $instance_settings['expiryText'] = token_replace($instance_settings['expiryText'], $data);
-  $instance_settings['description'] = token_replace($instance_settings['description'], $data);
   
   $js_settings[$entity_type][$entity->{$id_key}]['options'] = array_merge($settings, $instance_settings);
   if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] < REQUEST_TIME)) {

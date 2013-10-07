@@ -4,12 +4,19 @@ span.jquery-countdown {
 span.jquery-countdown .countdown_section {
   padding: 0 3px;
 }
+.jquery-countdown-led.hasCountdown {
+  border: none;
+  background: none;
+}
 .jquery-countdown-led span {
   display: block;
   float: left;
   width: 10px;
   height: 21px; 
-} 
+}
+.jquery-countdown-led .jquery-countdown-led-display-wrapper {
+  height: 21px;
+}
 .jquery-countdown-led span.led-image0 {
   background-position: -0px 0px;
 } 
