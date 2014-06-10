@@ -9,6 +9,7 @@ simple text and 2 formatters based on jQuery plugins County and
 jQuery Countdown.
 
 h2. Requirements
+
 Libraries (http://drupal.org/project/libraries)
 Date Popup from package of modules Date (http://drupal.org/project/date)
 County (http://www.egrappler.com/free-jquery-count-down-plugin-county/)
