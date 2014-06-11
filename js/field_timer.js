@@ -13,7 +13,7 @@
                     endDateTime: new Date(settings[type][id][delta] * 1000),
                     animation: options.animation,
                     speed: options.speed,
-                    theme: options.theme,
+                    theme: options.county_theme,
                     reflection: options.reflection,
                     reflectionOpacity: options.reflectionOpacity,
                   }).addClass('field-timer-processed');

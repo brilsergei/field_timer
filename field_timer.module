@@ -178,7 +178,7 @@ function field_timer_field_formatter_info() {
       'settings' => array(
         'animation' => 'fade',
         'speed' => 500,
-        'theme' => 'blue',
+        'county_theme' => 'blue',
         'background' => '',
         'reflection' => 1,
         'reflectionOpacity' => 0.2,
@@ -202,14 +202,14 @@ function field_timer_field_formatter_info() {
         'timeSeparator' => ':',
       ),
     );
-        
+
     $formatters['field_timer_jquery_countdown_led'] = array(
       'label' => 'jQuery Countdown LED',
       'description' => t('Display timer and countdown as a LED.'),
       'field types' => array('field_timer'),
       'settings' => array(
         'type' => 'auto',
-        'theme' => 'green',
+        'countdown_theme' => 'green',
         'max_count_of_days' => 2,
         'display_days' => 1,
         'display_hours' => 1,
@@ -239,7 +239,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
 
     case 'field_timer_jquery_countdown':
       return _field_timer_jquery_countdown_formatter($items, $settings, $entity_type, $entity, $instance);
-      
+
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_type, $entity, $instance);
   }
@@ -310,7 +310,7 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
 
     case 'field_timer_jquery_countdown':
       return _field_timer_jquery_countdown_summary($settings);
-      
+
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_summary($settings);
   }
@@ -335,7 +335,7 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
 
     case 'field_timer_jquery_countdown':
       return _field_timer_jquery_countdown_settings_form($settings);
-      
+
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_settings_form($settings);
   }
@@ -361,7 +361,7 @@ function field_timer_field_instance_settings_form($field, $instance) {
         '#type' => 'textfield',
         '#title' => t('Expiry URL'),
         '#default_value' => $settings['jquery-countdown']['expiryUrl'],
-        '#description' => t('A URL to load when the countdown reaches zero.!brSee !link for this parameter.!token_description', 
+        '#description' => t('A URL to load when the countdown reaches zero.!brSee !link for this parameter.!token_description',
               array(
                 '!token_description' => $token_description,
                 '!br' => '<br />',
@@ -373,7 +373,7 @@ function field_timer_field_instance_settings_form($field, $instance) {
         '#type' => 'textarea',
         '#title' => t('Expiry text'),
         '#default_value' => $settings['jquery-countdown']['expiryText'],
-        '#description' => t('A message to display when the countdown reaches zero.!brSee !link for this parameter.!token_description', 
+        '#description' => t('A message to display when the countdown reaches zero.!brSee !link for this parameter.!token_description',
               array(
                 '!token_description' => $token_description,
                 '!br' => '<br />',
@@ -437,13 +437,13 @@ function field_timer_field_timer_entity_properties() {
 
 /**
  * Loads entity properties which represent a date.
- * 
+ *
  * @param string $entity_type
  *   Entity type machine name or empty string.
- * 
- * @return array 
- *   Returns an array of entity's properties which represent a date keyed by 
- * entity types if $entity_type is empty, array of properties of given entity 
+ *
+ * @return array
+ * Returns an array of entity's properties which represent a date keyed by
+ * entity types if $entity_type is empty, array of properties of given entity
  * type otherwise.
  */
 function field_timer_entity_properties($entity_type = '') {
@@ -456,8 +456,8 @@ function field_timer_entity_properties($entity_type = '') {
 }
 
 /**
- * Help function. 
- * 
+ * Help function.
+ *
  * Get all available regions for jquery.countdown.
  */
 function _field_timer_jquery_countdown_regions() {

@@ -6,8 +6,8 @@
  */
 
 /**
- * Help function. 
- * 
+ * Help function.
+ *
  * Build renderable array for Text formatter.
  */
 function _field_timer_text_formatter($items, $settings) {
@@ -46,7 +46,7 @@ function _field_timer_text_formatter($items, $settings) {
 
 /**
  * Help function.
- * 
+ *
  * Build renderable array and load neccessary files for County formatter.
  */
 function _field_timer_county_formatter($items, $settings, $entity_type, $entity) {
@@ -88,8 +88,8 @@ function _field_timer_county_formatter($items, $settings, $entity_type, $entity)
 
 /**
  * Help function.
- * 
- * Build renderable array and load neccessary files for jQuery Countdown 
+ *
+ * Build renderable array and load neccessary files for jQuery Countdown
  * formatter.
  */
 function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type, $entity, $instance) {
@@ -156,24 +156,24 @@ function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type
 
 /**
  * Help function.
- * 
+ *
  * Build renderable array and load neccessary files for jQuery Countdown LED
  * formatter.
  */
 function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_type, $entity, $instance) {
-  
+
   $info = entity_get_info($entity_type);
   $id_key = $info['entity keys']['id'];
   $js_settings = array();
   $elements = array();
-  
+
   // Add description, expiry text and url.
   $instance_settings = $instance['settings']['jquery-countdown'];
   $data = array($entity_type => $entity);
   $instance_settings['expiryUrl'] = token_replace($instance_settings['expiryUrl'], $data);
   $instance_settings['expiryText'] = token_replace($instance_settings['expiryText'], $data);
   $instance_settings['description'] = token_replace($instance_settings['description'], $data);
-  
+
   foreach ($items as $delta => $item) {
     $layout = '<div class="jquery-countdown-led-display-wrapper">';
     if ($settings['display_days']) {
@@ -204,11 +204,11 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
 
     $elements[$delta] = array(
       '#type' => 'markup',
-      '#markup' => '<span id="jquery-countdown-led-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" class="jquery-countdown-led ' . $settings['theme'] . '">' . str_replace('%t%', $settings['theme'], $layout) . '</span>',
+      '#markup' => '<span id="jquery-countdown-led-' . $entity_type . '-' . $entity->{$id_key} . '-' . $delta . '" class="jquery-countdown-led ' . $settings['countdown_theme'] . '">' . str_replace('%t%', $settings['countdown_theme'], $layout) . '</span>',
     );
     $js_settings[$entity_type][$entity->{$id_key}][$delta] = $item['timestamp'];
   }
-  
+
   $js_settings[$entity_type][$entity->{$id_key}]['options'] = array_merge($settings, $instance_settings);
   if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] < REQUEST_TIME)) {
     $js_settings[$entity_type][$entity->{$id_key}]['options']['until'] = FALSE;
@@ -242,7 +242,7 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
   drupal_add_js(array('field_timer' => $js_settings), 'setting');
   drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
   drupal_add_css(drupal_get_path('module', 'field_timer') . '/css/field_timer.css');
-  // Since we can't get path to image from CSS file, we add this rule here
+  // Since we can't get path to image from CSS file, we add this rule here.
   $path = libraries_get_path('jquery.countdown');
   drupal_add_css('.jquery-countdown-led.green span{background: url(/' . $path . '/countdownLED.png) no-repeat 0px 0px;} .jquery-countdown-led.blue span{background: url(/' . $path . '/countdownGlowing.gif) no-repeat 0px 0px;}', 'inline');
 
@@ -251,7 +251,7 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
 
 /**
  * Help function.
- * 
+ *
  * Build summary for field_timer_text formatter.
  */
 function _field_timer_text_summary($settings) {
@@ -269,7 +269,7 @@ function _field_timer_text_summary($settings) {
 
 /**
  * Help function.
- * 
+ *
  * Build summary for field_timer_county formatter.
  */
 function _field_timer_county_summary($settings) {
@@ -286,7 +286,7 @@ function _field_timer_county_summary($settings) {
     'red' => t('Red'),
     'blue' => t('Blue'),
   );
-  $summary[] = t('Theme: %theme', array('%theme' => $themes[$settings['theme']]));
+  $summary[] = t('Theme: %theme', array('%theme' => $themes[$settings['county_theme']]));
   $summary[] = t('Background: %css', array('%css' => $settings['background']));
   $summary[] = t('Reflection: %state', array(
     '%state' => $settings['reflection'] ? 'Enabled' : 'Disabled',
@@ -302,7 +302,7 @@ function _field_timer_county_summary($settings) {
 
 /**
  * Help function.
- * 
+ *
  * Build summary for field_timer_jquery_countdown formatter.
  */
 function _field_timer_jquery_countdown_summary($settings) {
@@ -328,7 +328,7 @@ function _field_timer_jquery_countdown_summary($settings) {
 
 /**
  * Help function.
- * 
+ *
  * Build summary for field_timer_jquery_countdown_led formatter.
  */
 function _field_timer_jquery_countdown_led_summary($settings) {
@@ -344,7 +344,7 @@ function _field_timer_jquery_countdown_led_summary($settings) {
     'green' => t('Green'),
     'blue' => t('Blue'),
   );
-  $summary[] = t('Theme: %theme', array('%theme' => $themes[$settings['theme']]));
+  $summary[] = t('Theme: %theme', array('%theme' => $themes[$settings['countdown_theme']]));
 
   $summary[] = t('Display days: %display_days', array('%display_days' => $settings['display_days'] ? t('Yes') : t('No')));
   if ($settings['display_days']) {
@@ -366,7 +366,7 @@ function _field_timer_jquery_countdown_led_summary($settings) {
 
 /**
  * Help function.
- * 
+ *
  * Build settings form for field_timer_text formatter.
  */
 function _field_timer_text_settings_form($settings) {
@@ -394,7 +394,7 @@ function _field_timer_text_settings_form($settings) {
 
 /**
  * Help function.
- * 
+ *
  * Build settings form for field_timer_county formatter.
  */
 function _field_timer_county_settings_form($settings) {
@@ -415,7 +415,7 @@ function _field_timer_county_settings_form($settings) {
     '#default_value' => $settings['speed'],
   );
 
-  $settings_form['theme'] = array(
+  $settings_form['county_theme'] = array(
     '#type' => 'select',
     '#title' => t('Theme'),
     '#options' => array(
@@ -424,7 +424,7 @@ function _field_timer_county_settings_form($settings) {
       'red' => t('Red'),
       'blue' => t('Blue'),
     ),
-    '#default_value' => $settings['theme'],
+    '#default_value' => $settings['county_theme'],
   );
 
   $settings_form['background'] = array(
@@ -452,7 +452,7 @@ function _field_timer_county_settings_form($settings) {
 
 /**
  * Help function.
- * 
+ *
  * Build settings form for field_timer_jquery_countdown formatter.
  */
 function _field_timer_jquery_countdown_settings_form($settings) {
@@ -479,7 +479,9 @@ function _field_timer_jquery_countdown_settings_form($settings) {
     '#type' => 'textfield',
     '#title' => t('Format'),
     '#default_value' => $settings['format'],
-    '#description' => t("See !documentation for this parameter.", array('!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'format')))),
+    '#description' => t("See !documentation for this parameter.", array(
+      '!documentation' => l(t('documentation'),'http://keith-wood.name/countdownRef.html', array('fragment' => 'format'))
+    )),
   );
 
   $settings_form['layout'] = array(
@@ -488,7 +490,9 @@ function _field_timer_jquery_countdown_settings_form($settings) {
     '#cols' => 60,
     '#title' => t('Layout'),
     '#defualt_value' => $settings['layout'],
-    '#description' => t("See !documentation for this parameter.", array('!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout')))),
+    '#description' => t("See !documentation for this parameter.", array(
+      '!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout'))
+    )),
   );
 
   $settings_form['compact'] = array(
@@ -515,7 +519,7 @@ function _field_timer_jquery_countdown_settings_form($settings) {
 
 /**
  * Help function.
- * 
+ *
  * Build settings form for field_timer_jquery_countdown_led formatter.
  */
 function _field_timer_jquery_countdown_led_settings_form($settings) {
@@ -530,15 +534,15 @@ function _field_timer_jquery_countdown_led_settings_form($settings) {
     ),
     '#default_value' => $settings['type'],
   );
-  
-  $settings_form['theme'] = array(
+
+  $settings_form['countdown_theme'] = array(
     '#type' => 'select',
     '#title' => t('Theme'),
     '#options' => array(
       'green' => t('Green'),
       'blue' => t('Blue'),
     ),
-    '#default_value' => $settings['theme'],
+    '#default_value' => $settings['countdown_theme'],
   );
 
   $settings_form['display_days'] = array(

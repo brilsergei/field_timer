@@ -2,7 +2,7 @@ h1. Field Timer
 
 h2. Description
 
-This module provides field wich can be displayed as a timer/countdown. 
+This module provides field which can be displayed as a timer/countdown. 
 A start/target date can be any date or an entity property which represent a 
 date (for example, created date of a node). Module provides 3 field formatters: 
 simple text and 2 formatters based on jQuery plugins County and 
