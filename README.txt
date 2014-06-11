@@ -20,7 +20,7 @@ h2. Installation
 1. Download the module.
 2. To be able to use County and jQuery Countdown plugins download them to
 sites/all/libraries/county and sites/all/libraries/jquery.countdown. This module
-supports jQuery Countdown 1.6.0-1.6.3 versions.
+supports jQuery Countdown 2.0.0.
 3. Remove first css rule from sites/all/libraries/county/css/county.css. It
 changes font size on the site. Plugin author was notified about this problem.
 I hope he fix it.
@@ -34,4 +34,4 @@ https://drupal.org/project/issues/2040519.
 h2. Creators
 
 This module was created by Sergei Brill 
-("Drupal user sergei_brill":http://drupal.org/user/2306590/)
+("Drupal user sergei_brill": http://drupal.org/user/2306590/)

@@ -33,6 +33,7 @@
                     description: options.description,
                     expiryText: options.expiryText,
                     expiryUrl: options.expiryUrl,
+                    padZeroes: options.padZeroes,
                   }).addClass('field-timer-processed');
                 break;
                 

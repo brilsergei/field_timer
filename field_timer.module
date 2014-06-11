@@ -30,11 +30,12 @@ function field_timer_libraries_info() {
       'download url' => 'http://keith-wood.name/countdown.html',
       'version arguments' => array(
         'file'  => 'jquery.countdown.js',
-        'pattern' => '/Countdown for jQuery v(1.6.[0-3])/',
+        'pattern' => '/Countdown for jQuery v(2.0.0)/',
         'lines' => 2,
       ),
       'files' => array(
         'js' => array(
+          'jquery.plugin.min.js',
           'jquery.countdown.min.js',
         ),
         'css' => array(
@@ -200,6 +201,7 @@ function field_timer_field_formatter_info() {
         'compact' => 0,
         'significant' => 0,
         'timeSeparator' => ':',
+        'padZeroes' => 0,
       ),
     );
 

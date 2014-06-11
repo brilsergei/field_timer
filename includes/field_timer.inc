@@ -129,13 +129,17 @@ function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type
   $library_loaded = $library && !empty($library['loaded']);
   $js_name = 'jquery.countdown.js';
   $js_name_min = 'jquery.countdown.min.js';
+  $js_plugin_name = 'jquery.plugin.js';
+  $js_plugin_name_min = 'jquery.plugin.min.js';
   $base_path = 'sites/all/libraries/jquery.countdown';
   if (!$library_loaded) {
-    drupal_set_message(t("Can't load jQuery Countdown library. Please download !url plugin and extract it to @path, so @js and @js_min can be found at @full_path and @full_path_min.", array(
+    drupal_set_message(t("Can't load jQuery Countdown library. Please download !url plugin and extract it to @path, so @js, @js_min, @plugin and @plugin_min can be found at @full_path and @full_path_min.", array(
         '!url' => l(t('jQuery Countdown'), 'http://keith-wood.name/countdown.html', array('absolute' => TRUE)),
         '@path' => $base_path,
         '@js' => $js_name,
         '@js_min' => $js_name_min,
+        '@plugin' => $js_plugin_name,
+        '@plugin_min' => $js_plugin_name_min,
         '@full_path' => $base_path . '/' . $js_name,
         '@full_path_min' => $base_path . '/' . $js_name_min,
     )), 'error');
@@ -322,6 +326,7 @@ function _field_timer_jquery_countdown_summary($settings) {
   $summary[] = t('Compact: %compact', array('%compact' => $settings['compact'] ? t('Yes') : t('No')));
   $summary[] = t('Significant: %significant', array('%significant' => $settings['significant']));
   $summary[] = t('Time separator: %timeSeparator', array('%timeSeparator' => $settings['timeSeparator']));
+  $summary[] = t('Pad with zeroes: %padZeroes', array('%padZeroes' => $settings['padZeroes'] ? t('Yes') : t('No')));
 
   return implode($summary, '<br />');
 }
@@ -512,6 +517,12 @@ function _field_timer_jquery_countdown_settings_form($settings) {
     '#type' => 'textfield',
     '#title' => t('Time separator'),
     '#default_value' => $settings['timeSeparator'],
+  );
+  
+  $settings_form['padZeroes'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Pad with zeroes'),
+    '#default_value' => $settings['padZeroes'],
   );
 
   return $settings_form;
