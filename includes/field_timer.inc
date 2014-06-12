@@ -54,6 +54,7 @@ function _field_timer_county_formatter($items, $settings, $entity_type, $entity)
   $id_key = $info['entity keys']['id'];
   $js_settings = array();
   $elements = array();
+  $js_settings[$entity_type][$entity->{$id_key}]['nid'] = $entity->{$id_key};
 
   foreach ($items as $delta => $item) {
     $elements[$delta] = array(
@@ -97,6 +98,7 @@ function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type
   $id_key = $info['entity keys']['id'];
   $js_settings = array();
   $elements = array();
+  $js_settings[$entity_type][$entity->{$id_key}]['nid'] = $entity->{$id_key};
 
   foreach ($items as $delta => $item) {
     $elements[$delta] = array(
@@ -170,6 +172,7 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
   $id_key = $info['entity keys']['id'];
   $js_settings = array();
   $elements = array();
+  $js_settings[$entity_type][$entity->{$id_key}]['nid'] = $entity->{$id_key};
 
   // Add description, expiry text and url.
   $instance_settings = $instance['settings']['jquery-countdown'];

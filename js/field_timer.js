@@ -8,7 +8,7 @@
             switch (settings[type][id].plugin) {
               case 'county':
                 var options = settings[type][id].options;
-                $('#county-' + type + '-' + id + '-' + delta).not('.field-timer-processed').
+                $('#county-' + type + '-' + settings[type][id].nid + '-' + delta).not('.field-timer-processed').
                   county({
                     endDateTime: new Date(settings[type][id][delta] * 1000),
                     animation: options.animation,
@@ -21,7 +21,7 @@
 
               case 'jquery.countdown':
                 var options = settings[type][id].options;
-                $('#jquery-countdown-' + type + '-' + id + '-' + delta).not('.field-timer-processed').
+                $('#jquery-countdown-' + type + '-' + settings[type][id].nid + '-' + delta).not('.field-timer-processed').
                   countdown({
                     until: options.until ? new Date(settings[type][id][delta] * 1000) : null,
                     since: options.since ? new Date(settings[type][id][delta] * 1000) : null,
@@ -39,11 +39,11 @@
                 
               case 'jquery.countdown.led':
                 var options = settings[type][id].options;
-                $('#jquery-countdown-led-' + type + '-' + id + '-' + delta).not('.field-timer-processed').
+                $('#jquery-countdown-led-' + type + '-' + settings[type][id].nid + '-' + delta).not('.field-timer-processed').
                   countdown({
                     until: options.until ? new Date(settings[type][id][delta] * 1000) : null,
                     since: options.since ? new Date(settings[type][id][delta] * 1000) : null,
-                    layout: $('#jquery-countdown-led-' + type + '-' + id + '-' + delta).html(),
+                    layout: $('#jquery-countdown-led-' + type + '-' + settings[type][id].nid + '-' + delta).html(),
                     description: options.description,
                     expiryText: options.expiryText,
                     expiryUrl: options.expiryUrl,
