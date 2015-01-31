@@ -1,9 +1,13 @@
-span.jquery-countdown {
-  float: left;
+span.jquery-countdown,
+span.jquery-countdown-led {
+  display: inline-block;
 }
 span.jquery-countdown .countdown-section {
   padding: 0 3px;
   width: auto;
+}
+span.jquery-countdown .countdown-row {
+  padding: 0;
 }
 
 .jquery-countdown-led.hasCountdown {
