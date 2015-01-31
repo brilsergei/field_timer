@@ -30,7 +30,7 @@ function field_timer_libraries_info() {
       'download url' => 'http://keith-wood.name/countdown.html',
       'version arguments' => array(
         'file'  => 'jquery.countdown.js',
-        'pattern' => '/Countdown for jQuery v(2.0.0)/',
+        'pattern' => '/Countdown for jQuery v(2.0.[0-2])/',
         'lines' => 2,
       ),
       'files' => array(
@@ -482,6 +482,7 @@ function _field_timer_jquery_countdown_regions() {
     'en' => t('English'),
     'fa' => t('Farsi/Persian'),
     'fi' => t('Finnish'),
+	'fo' => t('Faroese'),
     'fr' => t('French'),
     'gl' => t('Galician'),
     'de' => t('German'),
@@ -490,6 +491,7 @@ function _field_timer_jquery_countdown_regions() {
     'he' => t('Hebrew'),
     'hu' => t('Hungarian'),
     'id' => t('Indonesian'),
+	'is' => t('Icelandic'),
     'it' => t('Italian'),
     'ja' => t('Japanese'),
     'kn' => t('Kannada'),
