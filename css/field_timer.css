@@ -1,9 +1,11 @@
 span.jquery-countdown {
   float: left;
 }
-span.jquery-countdown .countdown_section {
+span.jquery-countdown .countdown-section {
   padding: 0 3px;
+  width: auto;
 }
+
 .jquery-countdown-led.hasCountdown {
   border: none;
   background: none;
@@ -100,4 +102,7 @@ span.jquery-countdown .countdown_section {
 } 
 .jquery-countdown-led span.blue.imageSpace {
   background-position: -408px 0px;
-} 
+}
+.jquery-countdown-led.is-countdown {
+  border: none;
+}
