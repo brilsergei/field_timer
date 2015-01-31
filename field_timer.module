@@ -80,21 +80,22 @@ function field_timer_field_widget_info() {
       'settings' => array(),
       'weight' => -1,
     ),
-    'field_timer_entity_property_select' => array(
-      'label' => t('Entity Property (Select List)'),
-      'description' => t("Allow set an entity's property value as the target date."),
-      'field types' => array('field_timer'),
-      'settings' => array(),
-      'weight' => 0,
-    ),
-    'field_timer_entity_property_radio' => array(
-      'label' => t('Entity Property (Radio Buttons)'),
-      'description' => t("Allow set an entity's property value as the target date."),
-      'field types' => array('field_timer'),
-      'settings' => array(),
-      'weight' => 0,
-    ),
   );
+}
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function field_timer_field_widget_info_alter(&$info) {
+  $info['options_select']['field types'][] = 'field_timer';
+  $info['options_buttons']['field types'][] = 'field_timer';
+}
+
+/**
+ * Implements hook_options_list().
+ */
+function field_timer_options_list($field, $instance, $entity_type, $entity) {
+  return field_timer_entity_properties($entity_type);
 }
 
 /**
@@ -123,32 +124,6 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
       );
       $element['timestamp'] = $widget;
       break;
-
-    case 'field_timer_entity_property_select':
-      $options = field_timer_entity_properties($instance['entity_type']);
-      $widget = array(
-        '#type' => 'select',
-        '#options' => $options,
-        '#multiple' => FALSE,
-        '#title' => $element['#title'],
-        '#default_value' => isset($items[$delta]['entity_property_name']) ? $items[$delta]['entity_property_name'] : 0,
-        '#description' => t('Choose an entity property which will be used as the target date.'),
-        '#empty_value' => 0,
-      );
-      $element['entity_property_name'] = $widget;
-      break;
-
-    case 'field_timer_entity_property_radio':
-      $options = field_timer_entity_properties($instance['entity_type']);
-      $widget = array(
-        '#type' => 'radios',
-        '#options' => $options,
-        '#default_value' => isset($items[$delta]['entity_property_name']) ? $items[$delta]['entity_property_name'] : 0,
-        '#description' => t('Choose an entity property which will be used as the target date.'),
-      );
-      $element['entity_property_name'] = $widget;
-      $element['#type'] = 'fieldset';
-
   }
 
   return $element;
