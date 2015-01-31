@@ -116,7 +116,7 @@ function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type
   $instance_settings['description'] = token_replace($instance_settings['description'], $data);
 
   $js_settings[$entity_type][$entity->{$id_key}]['options'] = array_merge($settings, $instance_settings);
-  if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] < REQUEST_TIME)) {
+  if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] <= REQUEST_TIME)) {
     $js_settings[$entity_type][$entity->{$id_key}]['options']['until'] = FALSE;
     $js_settings[$entity_type][$entity->{$id_key}]['options']['since'] = TRUE;
   }
@@ -217,7 +217,7 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
   }
 
   $js_settings[$entity_type][$entity->{$id_key}]['options'] = array_merge($settings, $instance_settings);
-  if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] < REQUEST_TIME)) {
+  if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] <= REQUEST_TIME)) {
     $js_settings[$entity_type][$entity->{$id_key}]['options']['until'] = FALSE;
     $js_settings[$entity_type][$entity->{$id_key}]['options']['since'] = TRUE;
   }
