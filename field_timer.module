@@ -133,17 +133,23 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
  * Implements hook_field_formatter_info().
  */
 function field_timer_field_formatter_info() {
-  $formatters = array(
-    'field_timer_text' => array(
-      'label' => t('Text'),
-      'description' => t('Simple text timer and countdown.'),
-      'field types' => array('field_timer'),
-      'settings' => array(
-        'type' => 'auto',
-        'granularity' => 2,
-      ),
-    ),
-  );
+  module_load_include('inc', 'field_timer', 'includes/field_timer');
+  $field_types = array('field_timer', 'datestamp', 'date', 'datetime');
+  $formatter_types = array('field_timer_text');
+  $formatters = array();
+  foreach ($formatter_types as $formatter) {
+    foreach ($field_types as $field) {
+      $class = $formatter . '_' . $field;
+      $handler = new $class();
+      if (!isset($formatters[$formatter])) {
+        $formatters[$formatter] = $handler->getFormatterDefinition();
+        $formatters[$formatter]['field types'] = array();
+        $formatters[$formatter]['settings'] = array();
+      }
+      $formatters[$formatter]['field types'][] = $field;
+      $formatters[$formatter]['settings'] += $handler->getDefaultSettings();
+    }
+  }
 
   $library = libraries_detect('county');
   if ($library && !empty($library['installed'])) {
@@ -209,7 +215,9 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
   $settings = $display['settings'];
   switch ($display['type']) {
     case 'field_timer_text':
-      return _field_timer_text_formatter($items, $settings);
+      $class = $display['type'] . '_' . $field['type'];
+      $handler = new $class();
+      return $handler->renderItems($entity_type, $entity, $field, $items, $settings);
 
     case 'field_timer_county':
       return _field_timer_county_formatter($items, $settings, $entity_type, $entity);
@@ -280,7 +288,9 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
 
   switch ($display['type']) {
     case 'field_timer_text':
-      return _field_timer_text_summary($settings);
+      $class = $display['type'] . '_' . $field['type'];
+      $handler = new $class();
+      return implode('<br/>', $handler->getSettingsSummary($settings, $field));
 
     case 'field_timer_county':
       return _field_timer_county_summary($settings);
@@ -305,7 +315,9 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
 
   switch ($display['type']) {
     case 'field_timer_text':
-      return _field_timer_text_settings_form($settings);
+      $class = $display['type'] . '_' . $field['type'];
+      $handler = new $class();
+      return $handler->getSettingsForm($settings, $field);
 
     case 'field_timer_county':
       return _field_timer_county_settings_form($settings);
