@@ -135,37 +135,22 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
 function field_timer_field_formatter_info() {
   module_load_include('inc', 'field_timer', 'includes/field_timer');
   $field_types = array('field_timer', 'datestamp', 'date', 'datetime');
-  $formatter_types = array('field_timer_text');
+  $formatter_types = array('field_timer_text', 'field_timer_county');
   $formatters = array();
   foreach ($formatter_types as $formatter) {
     foreach ($field_types as $field) {
       $class = $formatter . '_' . $field;
       $handler = new $class();
-      if (!isset($formatters[$formatter])) {
-        $formatters[$formatter] = $handler->getFormatterDefinition();
-        $formatters[$formatter]['field types'] = array();
-        $formatters[$formatter]['settings'] = array();
+      if ($handler->enableFormatter()) {
+        if (!isset($formatters[$formatter])) {
+          $formatters[$formatter] = $handler->getFormatterDefinition();
+          $formatters[$formatter]['field types'] = array();
+          $formatters[$formatter]['settings'] = array();
+        }
+        $formatters[$formatter]['field types'][] = $field;
+        $formatters[$formatter]['settings'] += $handler->getDefaultSettings();
       }
-      $formatters[$formatter]['field types'][] = $field;
-      $formatters[$formatter]['settings'] += $handler->getDefaultSettings();
     }
-  }
-
-  $library = libraries_detect('county');
-  if ($library && !empty($library['installed'])) {
-    $formatters['field_timer_county'] = array(
-      'label' => t('County'),
-      'description' => t('Use County jQuery plugin to display countdown.'),
-      'field types' => array('field_timer'),
-      'settings' => array(
-        'animation' => 'fade',
-        'speed' => 500,
-        'county_theme' => 'blue',
-        'background' => '',
-        'reflection' => 1,
-        'reflectionOpacity' => 0.2,
-      ),
-    );
   }
 
   $library = libraries_detect('jquery.countdown');
@@ -214,19 +199,16 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
   module_load_include('inc', 'field_timer', 'includes/field_timer');
   $settings = $display['settings'];
   switch ($display['type']) {
-    case 'field_timer_text':
-      $class = $display['type'] . '_' . $field['type'];
-      $handler = new $class();
-      return $handler->renderItems($entity_type, $entity, $field, $items, $settings);
-
-    case 'field_timer_county':
-      return _field_timer_county_formatter($items, $settings, $entity_type, $entity);
-
     case 'field_timer_jquery_countdown':
       return _field_timer_jquery_countdown_formatter($items, $settings, $entity_type, $entity, $instance);
 
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_type, $entity, $instance);
+      
+    default:
+      $class = $display['type'] . '_' . $field['type'];
+      $handler = new $class();
+      return $handler->renderItems($entity_type, $entity, $field, $items, $settings);
   }
 }
 
@@ -287,19 +269,16 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
   module_load_include('inc', 'field_timer', 'includes/field_timer');
 
   switch ($display['type']) {
-    case 'field_timer_text':
-      $class = $display['type'] . '_' . $field['type'];
-      $handler = new $class();
-      return implode('<br/>', $handler->getSettingsSummary($settings, $field));
-
-    case 'field_timer_county':
-      return _field_timer_county_summary($settings);
-
     case 'field_timer_jquery_countdown':
       return _field_timer_jquery_countdown_summary($settings);
 
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_summary($settings);
+      
+    default:
+      $class = $display['type'] . '_' . $field['type'];
+      $handler = new $class();
+      return implode('<br/>', $handler->getSettingsSummary($settings, $field));
   }
 }
 
@@ -314,19 +293,16 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
   module_load_include('inc', 'field_timer', 'includes/field_timer');
 
   switch ($display['type']) {
-    case 'field_timer_text':
-      $class = $display['type'] . '_' . $field['type'];
-      $handler = new $class();
-      return $handler->getSettingsForm($settings, $field);
-
-    case 'field_timer_county':
-      return _field_timer_county_settings_form($settings);
-
     case 'field_timer_jquery_countdown':
       return _field_timer_jquery_countdown_settings_form($settings);
 
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_settings_form($settings);
+
+    default:
+      $class = $display['type'] . '_' . $field['type'];
+      $handler = new $class();
+      return $handler->getSettingsForm($settings, $field);
   }
 }
 
