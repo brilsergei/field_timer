@@ -208,7 +208,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
     default:
       $class = $display['type'] . '_' . $field['type'];
       $handler = new $class();
-      return $handler->renderItems($entity_type, $entity, $field, $items, $settings);
+      return $handler->renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display);
   }
 }
 

@@ -54,7 +54,7 @@ interface field_timer_formatter_interface {
    * @param array $settings Formatter settings.
    * @return array Drupal renderable array.
    */
-  public function renderItems($entity_type, $entity, $field, $items, $settings);
+  public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display);
   
   /**
    * Get formatter name.
@@ -149,8 +149,9 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
     return $settings_form;
   }
   
-  public function renderItems($entity_type, $entity, $field, $items, $settings) {
+  public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     $elements = array();
+    $settings = $display['settings'];
 
     foreach ($items as $delta => $item) {
       // Check what we should display - timer or countdown.
@@ -311,8 +312,10 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
   /**
    * @inheritdoc
    */
-  public function renderItems($entity_type, $entity, $field, $items, $settings) {
+  public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     $elements = ($settings['fromto'] != 'to') ? parent::renderItems($entity_type, $entity, $field, $items, $settings) : array();
+    $settings = $display['settings'];
+
     foreach ($items as $delta => $item) {
       if (!empty($settings['title']) && $settings['fromto'] != 'to') {
         $elements[$delta]['#markup'] = '<span class="field-timer-start-date-title">'
@@ -450,8 +453,8 @@ abstract class field_timer_formatter_js_base extends field_timer_formatter_base 
   /**
    * Load custom JS files and JS settings.
    */
-  protected function loadJS($entity_type, $entity, $field, $items, $settings) {
-    $js_settings = $this->generateJSSettings($entity_type, $entity, $field, $items, $settings);
+  protected function loadJS($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+    $js_settings = $this->generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display);
 
     drupal_add_js(array('field_timer' => $js_settings), 'setting');
     drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
@@ -460,7 +463,7 @@ abstract class field_timer_formatter_js_base extends field_timer_formatter_base 
   /**
    * Generate JS settings.
    */
-  abstract protected function generateJSSettings($entity_type, $entity, $field, $items, $settings);
+  abstract protected function generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display);
 
 }
 
@@ -576,7 +579,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
   /**
    * @inheritdoc
    */
-  public function renderItems($entity_type, $entity, $field, $items, $settings) {
+  public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     if (!$this->loadLibrary()) {
       return array();
     }
@@ -584,6 +587,8 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
     $info = entity_get_info($entity_type);
     $id_key = $info['entity keys']['id'];
     $elements = array();
+    $settings = $display['settings'];
+
     foreach ($items as $delta => $item) {
       $elements[$delta] = array(
         '#type' => 'markup',
@@ -592,7 +597,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       );
     }
 
-    $this->loadJS($entity_type, $entity, $field, $items, $settings);
+    $this->loadJS($entity_type, $entity, $field, $instance, $langcode, $items, $display);
 
     return $elements;
   }
@@ -636,11 +641,12 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
   /**
    * @inheritdoc
    */
-  protected function generateJSSettings($entity_type, $entity, $field, $items, $settings) {
+  protected function generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     $info = entity_get_info($entity_type);
     $id_key = $info['entity keys']['id'];
     $js_settings = array();
-    
+    $settings = $display['settings'];
+
     foreach ($items as $delta => $item) {
       $key = $entity_type . '_' . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta;
       $js_settings[$key]['timestamp'] = $this->getTimestamp($item, $field);
@@ -836,10 +842,12 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
   /**
    * @inheritdoc
    */
-  public function renderItems($entity_type, $entity, $field, $items, $settings) {
-    $elements = ($settings['fromto'] != 'to') ? parent::renderItems($entity_type, $entity, $field, $items, $settings) : array();
+  public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+    $settings = $display['settings'];
+    $elements = ($settings['fromto'] != 'to') ? parent::renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) : array();
     $info = entity_get_info($entity_type);
     $id_key = $info['entity keys']['id'];
+
     foreach ($items as $delta => $item) {
       if (!empty($settings['title']) && $settings['fromto'] != 'to') {
         $elements[$delta]['#markup'] = '<span class="field-timer-start-date-title">'
@@ -867,11 +875,12 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
   /**
    * @inheritdoc
    */
-  protected function generateJSSettings($entity_type, $entity, $field, $items, $settings) {
-    $js_settings = parent::generateJSSettings($entity_type, $entity, $field, $items, $settings);
+  protected function generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+    $js_settings = parent::generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display);
     if (!empty($field['settings']['todate'])) {
       $info = entity_get_info($entity_type);
       $id_key = $info['entity keys']['id'];
+      $settings = $display['settings'];
 
       $settings2 = array();
       foreach ($settings as $name => $value) {
@@ -884,7 +893,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
         $key = $entity_type . '_' . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta . '_2';
         $js_settings[$key]['timestamp'] = $this->getTimestamp($item, $field, 'value2');
         $js_settings[$key]['options'] = $settings2;
-        $js_settings[$key]['plugin'] = 'county';
+        $js_settings[$key]['plugin'] = $this->getPluginName();
       }
     }
     
