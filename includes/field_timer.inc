@@ -55,6 +55,16 @@ interface field_timer_formatter_interface {
    * @return array Drupal renderable array.
    */
   public function renderItems($entity_type, $entity, $field, $items, $settings);
+  
+  /**
+   * Get formatter name.
+   */
+  public function getFormatterName();
+  
+  /**
+   * Get field type.
+   */
+  public function getFieldType();
 }
 
 /**
@@ -173,6 +183,13 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
     return $elements;
   }
   
+  /**
+   * @inheritdoc
+   */
+  public function getFormatterName() {
+    return 'field_timer_text';
+  }
+  
   protected function formatterTypes() {
     return array(
       'auto' => t('Auto'),
@@ -186,6 +203,13 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
  * Class for field_timer_text formatter and field_timer field type.
  */
 class field_timer_text_field_timer extends field_timer_text_base {
+
+  /**
+   * @inheritdoc
+   */
+  public function getFieldType() {
+    return 'field_timer';
+  }
 
   /**
    * @inheritdoc
@@ -348,6 +372,12 @@ class field_timer_text_datestamp extends field_timer_text_date_field_base {
   /**
    * @inheritdoc
    */
+  public function getFieldType() {
+    return 'datestamp';
+  }
+  /**
+   * @inheritdoc
+   */
   protected function getTimestamp($item, $field, $key = 'value') {
     return $item[$key];
   }
@@ -358,6 +388,13 @@ class field_timer_text_datestamp extends field_timer_text_date_field_base {
  */
 class field_timer_text_date extends field_timer_text_date_field_base {
   
+  /**
+   * @inheritdoc
+   */
+  public function getFieldType() {
+    return 'date';
+  }
+
   /**
    * @inheritdoc
    */
@@ -377,6 +414,13 @@ class field_timer_text_datetime extends field_timer_text_date_field_base {
   /**
    * @inheritdoc
    */
+  public function getFieldType() {
+    return 'datetime';
+  }
+
+  /**
+   * @inheritdoc
+   */
   protected function getTimestamp($item, $field, $key = 'value') {
     $timezone_db = date_get_timezone_db($field['settings']['tz_handling']);
     $db_format = date_type_format($field['type']);
@@ -391,6 +435,11 @@ class field_timer_text_datetime extends field_timer_text_date_field_base {
 abstract class field_timer_formatter_js_base extends field_timer_formatter_base implements field_timer_formatter_interface {
   
   protected $library_loaded = FALSE;
+  
+  /**
+   * Get jQuery plugin name.
+   */
+  abstract public function getPluginName();
 
   /**
    * Load library files.
@@ -401,7 +450,12 @@ abstract class field_timer_formatter_js_base extends field_timer_formatter_base 
   /**
    * Load custom JS files and JS settings.
    */
-  abstract protected function loadJS($entity_type, $entity, $field, $items, $settings);
+  protected function loadJS($entity_type, $entity, $field, $items, $settings) {
+    $js_settings = $this->generateJSSettings($entity_type, $entity, $field, $items, $settings);
+
+    drupal_add_js(array('field_timer' => $js_settings), 'setting');
+    drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
+  }
   
   /**
    * Generate JS settings.
@@ -546,6 +600,20 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
   /**
    * @inheritdoc
    */
+  public function getFormatterName() {
+    return 'field_timer_county';
+  }
+  
+  /**
+   * @inheritdoc
+   */
+  public function getPluginName() {
+    return 'county';
+  }
+  
+  /**
+   * @inheritdoc
+   */
   protected function loadLibrary() {
     if (!$this->library_loaded) {
       $library = libraries_load('county');
@@ -568,16 +636,6 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
   /**
    * @inheritdoc
    */
-  protected function loadJS($entity_type, $entity, $field, $items, $settings) {
-    $js_settings = $this->generateJSSettings($entity_type, $entity, $field, $items, $settings);
-
-    drupal_add_js(array('field_timer' => $js_settings), 'setting');
-    drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
-  }
-  
-  /**
-   * @inheritdoc
-   */
   protected function generateJSSettings($entity_type, $entity, $field, $items, $settings) {
     $info = entity_get_info($entity_type);
     $id_key = $info['entity keys']['id'];
@@ -587,7 +645,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       $key = $entity_type . '_' . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta;
       $js_settings[$key]['timestamp'] = $this->getTimestamp($item, $field);
       $js_settings[$key]['options'] = $settings;
-      $js_settings[$key]['plugin'] = 'county';
+      $js_settings[$key]['plugin'] = $this->getPluginName();
     }
     
     return $js_settings;
@@ -615,6 +673,13 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
  */
 class field_timer_county_field_timer extends field_timer_county_base {
   
+  /**
+   * @inheritdoc
+   */
+  public function getFieldType() {
+    return 'field_timer';
+  }
+
   /**
    * @inheritdoc
    */
@@ -843,6 +908,13 @@ class field_timer_county_datestamp extends field_timer_county_date_field_base {
   /**
    * @inheritdoc
    */
+  public function getFieldType() {
+    return 'datestamp';
+  }
+
+  /**
+   * @inheritdoc
+   */
   protected function getTimestamp($item, $field, $key = 'value') {
     return $item[$key];
   }
@@ -853,6 +925,13 @@ class field_timer_county_datestamp extends field_timer_county_date_field_base {
  */
 class field_timer_county_date extends field_timer_county_date_field_base {
   
+  /**
+   * @inheritdoc
+   */
+  public function getFieldType() {
+    return 'date';
+  }
+
   /**
    * @inheritdoc
    */
@@ -869,6 +948,13 @@ class field_timer_county_date extends field_timer_county_date_field_base {
  */
 class field_timer_county_datetime extends field_timer_county_date_field_base {
   
+  /**
+   * @inheritdoc
+   */
+  public function getFieldType() {
+    return 'datetime';
+  }
+
   /**
    * @inheritdoc
    */
