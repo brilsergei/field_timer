@@ -18,19 +18,16 @@
 						break;
 
 					case 'jquery.countdown':
-						var options = settings[type][id].options;
-						$('#jquery-countdown-' + type + '-' + settings[type][id].nid + '-' + delta).not('.field-timer-processed').
+						var options = settings[key].options;
+						$('#jquery-countdown-' + key).not('.field-timer-processed').
 							countdown({
-								until: options.until ? new Date(settings[type][id][delta] * 1000) : null,
-								since: options.since ? new Date(settings[type][id][delta] * 1000) : null,
+								until: options.until ? new Date(settings[key].timestamp * 1000) : null,
+								since: options.since ? new Date(settings[key].timestamp * 1000) : null,
 								format: options.format,
 								layout: options.layout,
 								compact: options.compact,
 								significant: options.significant,
 								timeSeparator: options.timeSeparator,
-								description: options.description,
-								expiryText: options.expiryText,
-								expiryUrl: options.expiryUrl,
 								padZeroes: options.padZeroes,
 							}).addClass('field-timer-processed');
 						break;

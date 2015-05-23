@@ -55,14 +55,6 @@ function field_timer_field_info() {
       'label' => t('Timer Field'),
       'description' => t('Timer or countdown.'),
       'settings' => array(),
-      'instance_settings' => array(
-        // Used only for jQuery Countdown plugin.
-        'jquery-countdown' => array(
-          'description' => '',
-          'expiryText' => '',
-          'expiryUrl' => '',
-        ),
-      ),
       'default_widget' => 'field_timer_simple_date',
       'default_formatter' => 'field_timer_text',
     ),
@@ -135,7 +127,7 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
 function field_timer_field_formatter_info() {
   module_load_include('inc', 'field_timer', 'includes/field_timer');
   $field_types = array('field_timer', 'datestamp', 'date', 'datetime');
-  $formatter_types = array('field_timer_text', 'field_timer_county');
+  $formatter_types = array('field_timer_text', 'field_timer_county', 'field_timer_jquery_countdown');
   $formatters = array();
   foreach ($formatter_types as $formatter) {
     foreach ($field_types as $field) {
@@ -155,22 +147,6 @@ function field_timer_field_formatter_info() {
 
   $library = libraries_detect('jquery.countdown');
   if ($library && !empty($library['installed'])) {
-    $formatters['field_timer_jquery_countdown'] = array(
-      'label' => t('jQuery Countdown'),
-      'description' => t('Use jQuery Countdown plugin to display countdown and timer.'),
-      'field types' => array('field_timer'),
-      'settings' => array(
-        'type' => 'auto',
-        'regional' => 'en',
-        'format' => 'dHMS',
-        'layout' => '',
-        'compact' => 0,
-        'significant' => 0,
-        'timeSeparator' => ':',
-        'padZeroes' => 0,
-      ),
-    );
-
     $formatters['field_timer_jquery_countdown_led'] = array(
       'label' => 'jQuery Countdown LED',
       'description' => t('Display timer and countdown as a LED.'),
@@ -199,9 +175,6 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
   module_load_include('inc', 'field_timer', 'includes/field_timer');
   $settings = $display['settings'];
   switch ($display['type']) {
-    case 'field_timer_jquery_countdown':
-      return _field_timer_jquery_countdown_formatter($items, $settings, $entity_type, $entity, $instance);
-
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_type, $entity, $instance);
       
@@ -269,9 +242,6 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
   module_load_include('inc', 'field_timer', 'includes/field_timer');
 
   switch ($display['type']) {
-    case 'field_timer_jquery_countdown':
-      return _field_timer_jquery_countdown_summary($settings);
-
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_summary($settings);
       
@@ -293,9 +263,6 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
   module_load_include('inc', 'field_timer', 'includes/field_timer');
 
   switch ($display['type']) {
-    case 'field_timer_jquery_countdown':
-      return _field_timer_jquery_countdown_settings_form($settings);
-
     case 'field_timer_jquery_countdown_led':
       return _field_timer_jquery_countdown_led_settings_form($settings);
 
@@ -309,7 +276,7 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
 /**
  * Implemtents hook_field_instance_settings_form().
  */
-function field_timer_field_instance_settings_form($field, $instance) {
+/*function field_timer_field_instance_settings_form($field, $instance) {
   $settings_form = array();
   $settings = $instance['settings'];
   foreach ($instance['display'] as $display) {
@@ -370,7 +337,7 @@ function field_timer_field_instance_settings_form($field, $instance) {
     }
   }
   return $settings_form;
-}
+}*/
 
 /**
  * Implements hook_field_timer_entity_properties().
@@ -418,67 +385,4 @@ function field_timer_entity_properties($entity_type = '') {
     return $properties[$entity_type];
   }
   return $properties;
-}
-
-/**
- * Help function.
- *
- * Get all available regions for jquery.countdown.
- */
-function _field_timer_jquery_countdown_regions() {
-  return array(
-    'sq' => t('Albanian'),
-    'ar' => t('Arabic'),
-    'hy' => t('Armenian'),
-    'bn' => t('Bengali/Bangla'),
-    'bs' => t('Bosnian'),
-    'bg' => t('Bulgarian'),
-    'my' => t('Burmese'),
-    'ca' => t('Catalan'),
-    'zh-CN' => t('Chinese/Simplified'),
-    'zh-TW' => t('Chinese/Traditional'),
-    'hr' => t('Croatian'),
-    'cs' => t('Czech'),
-    'da' => t('Danish'),
-    'nl' => t('Dutch'),
-    'et' => t('Estonian'),
-    'en' => t('English'),
-    'fa' => t('Farsi/Persian'),
-    'fi' => t('Finnish'),
-	'fo' => t('Faroese'),
-    'fr' => t('French'),
-    'gl' => t('Galician'),
-    'de' => t('German'),
-    'el' => t('Greek'),
-    'gu' => t('Gujarati'),
-    'he' => t('Hebrew'),
-    'hu' => t('Hungarian'),
-    'id' => t('Indonesian'),
-	'is' => t('Icelandic'),
-    'it' => t('Italian'),
-    'ja' => t('Japanese'),
-    'kn' => t('Kannada'),
-    'ko' => t('Korean'),
-    'lv' => t('Latvian'),
-    'lt' => t('Lithuanian'),
-    'ml' => t('Malayalam'),
-    'ms' => t('Malaysian'),
-    'nb' => t('Norvegian'),
-    'pl' => t('Polish'),
-    'pt-BR' => t('Portuguese/Brazilian'),
-    'ro' => t('Romanian'),
-    'ru' => t('Russian'),
-    'sr' => t('Serbian'),
-    'sk' => t('Slovak'),
-    'sl' => t('Slovenian'),
-    'es' => t('Spanish'),
-    'sv' => t('Swedish'),
-    'th' => t('Thai'),
-    'tr' => t('Turkish'),
-    'uk' => t('Ukrainian'),
-    'ur' => t('Urdu'),
-    'uz' => t('Uzbek'),
-    'vi' => t('Vietnamese'),
-    'cy' => t('Welsh'),
-  );
 }
