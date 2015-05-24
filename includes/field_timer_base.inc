@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains help classes to perform field formatter related actions.
+ * Contains base help classes to perform field formatter related actions.
  */
 
 /**
@@ -47,22 +47,20 @@ interface field_timer_formatter_interface {
   
   /**
    * Render field items.
-   * @param string $entity_type Entity type.
-   * @param object $entity Entity object.
-   * @param array $field Field definition.
-   * @param array $items Field items.
-   * @param array $settings Formatter settings.
+   * @param @see hook_field_formatter_view().
    * @return array Drupal renderable array.
    */
   public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display);
   
   /**
    * Get formatter name.
+   * @return string Formatter name.
    */
   public function getFormatterName();
   
   /**
    * Get field type.
+   * @return string Field type.
    */
   public function getFieldType();
 }
@@ -76,7 +74,7 @@ abstract class field_timer_formatter_base implements field_timer_formatter_inter
    * Convert field item value to timstamp.
    * @param array $item Field item.
    * @param array $field Field definition.
-   * @param mixed $key Array key to get timestamp from.
+   * @param mixed $key Key to get timestamp from field item.
    * @return int Timestamp.
    */
   abstract protected function getTimestamp($item, $field, $key = '');
@@ -91,6 +89,7 @@ abstract class field_timer_formatter_js_base extends field_timer_formatter_base 
   
   /**
    * Get jQuery plugin name.
+   * @return string Plugin name.
    */
   abstract public function getPluginName();
 
@@ -101,17 +100,20 @@ abstract class field_timer_formatter_js_base extends field_timer_formatter_base 
   abstract protected function loadLibrary();
   
   /**
-   * Load custom JS files and JS settings.
+   * Load custom JS and CSS files and JS settings.
+   * @return void.
    */
   protected function loadJSandCSS($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     $js_settings = $this->generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display);
 
     drupal_add_js(array('field_timer' => $js_settings), 'setting');
-    drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
+    drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js');
   }
   
   /**
    * Generate JS settings.
+   * @param @see hook_field_formatter_view().
+   * @return array Drupal JS settings array.
    */
   abstract protected function generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display);
 
