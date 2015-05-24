@@ -65,7 +65,7 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
     $settings_form['granularity'] = array(
       '#type' => 'select',
       '#title' => t('Granularity'),
-      '#options' => range(0, 7),
+      '#options' => $this->formatterGranularity(),
       '#default_value' => $settings['granularity'],
     );
 
@@ -77,30 +77,9 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
     $settings = $display['settings'];
 
     foreach ($items as $delta => $item) {
-      // Check what we should display - timer or countdown.
-      switch ($settings['type']) {
-        case 'auto':
-          $interval = REQUEST_TIME - $this->getTimestamp($item, $field);
-          if ($interval > 0) {
-            $sign = '+';
-          }
-          else {
-            $sign = '-';
-          }
-          $time = $sign . format_interval(abs($interval), $settings['granularity']);
-          break;
-
-        case 'timer':
-          $time = format_interval(REQUEST_TIME - $this->getTimestamp($item, $field), $settings['granularity']);
-          break;
-
-        case 'countdown':
-          $time = format_interval($this->getTimestamp($item, $field) - REQUEST_TIME, $settings['granularity']);
-          break;
-      }
       $elements[$delta] = array(
         '#type' => 'markup',
-        '#markup' => $time,
+        '#markup' => $this->renderItem($settings['type'], $settings['granularity'], $this->getTimestamp($item, $field)),
       );
     }
 
@@ -114,12 +93,43 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
     return 'field_timer_text';
   }
   
+  /**
+   * Render field item.
+   * @return type
+   */
+  protected function renderItem($type, $granularity, $timestamp) {
+    // Check what we should display - timer or countdown.
+    switch ($type) {
+      case 'auto':
+        $interval = REQUEST_TIME - $timestamp;
+        $sign = ($interval > 0) ? '+' : '-';
+        $time = $sign . format_interval(abs($interval), $granularity);
+        break;
+
+      case 'timer':
+        $time = format_interval(REQUEST_TIME - $timestamp, $granularity);
+        break;
+
+      case 'countdown':
+        $time = format_interval($timestamp - REQUEST_TIME, $granularity);
+        break;
+    }
+    
+    return $time;
+  }
+  
   protected function formatterTypes() {
     return array(
       'auto' => t('Auto'),
       'timer' => t('Timer'),
       'countdown' => t('Countdown'),
     );
+  }
+  
+  protected function formatterGranularity() {
+    $options = range(0, 7);
+    unset($options[0]);
+    return $options;
   }
 }
 
@@ -217,7 +227,7 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
       $settings_form['granularity2'] = array(
         '#type' => 'select',
         '#title' => t('Granularity for End date'),
-        '#options' => range(0, 7),
+        '#options' => $this->formatterGranularity(),
         '#default_value' => $settings['granularity2'],
       );
 
@@ -236,36 +246,21 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
    * @inheritdoc
    */
   public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-    $elements = ($settings['fromto'] != 'to') ? parent::renderItems($entity_type, $entity, $field, $items, $settings) : array();
     $settings = $display['settings'];
+    $elements = ($settings['fromto'] != 'to') ? parent::renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) : array();
 
     foreach ($items as $delta => $item) {
-      if (!empty($settings['title']) && $settings['fromto'] != 'to') {
+      if ($settings['fromto'] != 'to' && !empty($settings['title'])) {
         $elements[$delta]['#markup'] = '<span class="field-timer-start-date-title">'
         . $settings['title'] . '</span> ' . $elements[$delta]['#markup'];
       }
+      if ($settings['fromto'] == 'both' && !empty($field['settings']['todate'])) {
+        $elements[$delta]['#markup'] = '<div class="field-timer-start-date">'
+        . $elements[$delta]['#markup'] . '</div>';
+      }
       if ($settings['fromto'] != 'from' && !empty($field['settings']['todate'])) {
-        switch ($settings['type2']) {
-          case 'auto':
-            $interval = REQUEST_TIME - $this->getTimestamp($item, $field, 'value2');
-            if ($interval > 0) {
-              $sign = '+';
-            }
-            else {
-              $sign = '-';
-            }
-            $time = $sign . format_interval(abs($interval), $settings['granularity2']);
-            break;
-
-          case 'timer':
-            $time = format_interval(REQUEST_TIME - $this->getTimestamp($item, $field, 'value2'), $settings['granularity2']);
-            break;
-
-          case 'countdown':
-            $time = format_interval($this->getTimestamp($item, $field, 'value2') - REQUEST_TIME, $settings['granularity2']);
-            break;
-        }
         $title = (!empty($settings['title2'])) ? '<span class="field-timer-end-date-title">' . $settings['title2'] . '</span> ' : '';
+        $time = $this->renderItem($settings['type2'], $settings['granularity2'], $this->getTimestamp($item, $field, 'value2'));
         if ($settings['fromto'] == 'to') {
           $elements[$delta] = array(
             '#type' => 'markup',
@@ -273,7 +268,8 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
           );
         }
         else {
-          $elements[$delta]['#markup'] .= ' ' . $title . $time;
+          $elements[$delta]['#markup'] .= '<div class="field-timer-end-date">'
+          . $title . $time . '</div>';
         }
       }
     }
@@ -354,4 +350,3 @@ class field_timer_text_datetime extends field_timer_text_date_field_base {
     return $date->getTimestamp();
   }
 }
-
