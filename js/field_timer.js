@@ -33,16 +33,14 @@
 						break;
 
 					case 'jquery.countdown.led':
-						var options = settings[type][id].options;
-						$('#jquery-countdown-led-' + type + '-' + settings[type][id].nid + '-' + delta).not('.field-timer-processed').
+						var options = settings[key].options;
+						$('#jquery-countdown-led-' + key).not('.field-timer-processed').
 							countdown({
-								until: options.until ? new Date(settings[type][id][delta] * 1000) : null,
-								since: options.since ? new Date(settings[type][id][delta] * 1000) : null,
-								layout: $('#jquery-countdown-led-' + type + '-' + settings[type][id].nid + '-' + delta).html(),
-								description: options.description,
-								expiryText: options.expiryText,
-								expiryUrl: options.expiryUrl,
+								until: options.until ? new Date(settings[key].timestamp * 1000) : null,
+								since: options.since ? new Date(settings[key].timestamp * 1000) : null,
+								layout: $('#jquery-countdown-led-' + key).html(),
 							}).addClass('field-timer-processed');
+						break;
 				}
 			}
     }

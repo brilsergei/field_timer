@@ -127,8 +127,9 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
 function field_timer_field_formatter_info() {
   module_load_include('inc', 'field_timer', 'includes/field_timer');
   $field_types = array('field_timer', 'datestamp', 'date', 'datetime');
-  $formatter_types = array('field_timer_text', 'field_timer_county', 'field_timer_jquery_countdown');
+  $formatter_types = array('field_timer_text', 'field_timer_county', 'field_timer_jquery_countdown', 'field_timer_jquery_countdown_led');
   $formatters = array();
+
   foreach ($formatter_types as $formatter) {
     foreach ($field_types as $field) {
       $class = $formatter . '_' . $field;
@@ -145,24 +146,6 @@ function field_timer_field_formatter_info() {
     }
   }
 
-  $library = libraries_detect('jquery.countdown');
-  if ($library && !empty($library['installed'])) {
-    $formatters['field_timer_jquery_countdown_led'] = array(
-      'label' => 'jQuery Countdown LED',
-      'description' => t('Display timer and countdown as a LED.'),
-      'field types' => array('field_timer'),
-      'settings' => array(
-        'type' => 'auto',
-        'countdown_theme' => 'green',
-        'max_count_of_days' => 2,
-        'display_days' => 1,
-        'display_hours' => 1,
-        'display_minutes' => 1,
-        'display_seconds' => 1,
-      ),
-    );
-  }
-
   return $formatters;
 }
 
@@ -173,16 +156,9 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
         $langcode, $items, $display) {
 
   module_load_include('inc', 'field_timer', 'includes/field_timer');
-  $settings = $display['settings'];
-  switch ($display['type']) {
-    case 'field_timer_jquery_countdown_led':
-      return _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_type, $entity, $instance);
-      
-    default:
-      $class = $display['type'] . '_' . $field['type'];
-      $handler = new $class();
-      return $handler->renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display);
-  }
+  $class = $display['type'] . '_' . $field['type'];
+  $handler = new $class();
+  return $handler->renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display);
 }
 
 /**
@@ -241,15 +217,9 @@ function field_timer_field_formatter_settings_summary($field, $instance, $view_m
   $settings = $display['settings'];
   module_load_include('inc', 'field_timer', 'includes/field_timer');
 
-  switch ($display['type']) {
-    case 'field_timer_jquery_countdown_led':
-      return _field_timer_jquery_countdown_led_summary($settings);
-      
-    default:
-      $class = $display['type'] . '_' . $field['type'];
-      $handler = new $class();
-      return implode('<br/>', $handler->getSettingsSummary($settings, $field));
-  }
+  $class = $display['type'] . '_' . $field['type'];
+  $handler = new $class();
+  return implode('<br/>', $handler->getSettingsSummary($settings, $field));
 }
 
 /**
@@ -262,15 +232,9 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
   $settings = $display['settings'];
   module_load_include('inc', 'field_timer', 'includes/field_timer');
 
-  switch ($display['type']) {
-    case 'field_timer_jquery_countdown_led':
-      return _field_timer_jquery_countdown_led_settings_form($settings);
-
-    default:
-      $class = $display['type'] . '_' . $field['type'];
-      $handler = new $class();
-      return $handler->getSettingsForm($settings, $field);
-  }
+  $class = $display['type'] . '_' . $field['type'];
+  $handler = new $class();
+  return $handler->getSettingsForm($settings, $field);
 }
 
 /**
