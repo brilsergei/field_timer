@@ -103,6 +103,9 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       '#type' => 'checkbox',
       '#title' => t('Add reflection'),
       '#default_value' => $settings['reflection'],
+      '#attributes' => array(
+        'class' => array('field-timer-county-reflection'),
+      )
     );
 
     $settings_form['reflectionOpacity'] = array(
@@ -110,6 +113,11 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       '#title' => t('Reflection opacity'),
       '#default_value' => $settings['reflectionOpacity'],
       '#description' => t('Float value between 0 and 1.'),
+      '#states' => array(
+        'invisible' => array(
+          'input.field-timer-county-reflection' => array('checked' => FALSE),
+        ),
+      ),
     );
 
     return $settings_form;
@@ -322,10 +330,10 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
       $settings_form['reflectionOpacity']['#title'] = t('Reflection opacity for Start date');
       
       $settings_form['title2'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Title for End date'),
-      '#default_value' => $settings['title2'],
-    );
+        '#type' => 'textfield',
+        '#title' => t('Title for End date'),
+        '#default_value' => $settings['title2'],
+      );
       
       $settings_form['animation2'] = array(
         '#type' => 'select',
@@ -358,6 +366,9 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
         '#type' => 'checkbox',
         '#title' => t('Add reflection for End date'),
         '#default_value' => $settings['reflection2'],
+        '#attributes' => array(
+          'class' => array('field-timer-county-reflection-2'),
+        )
       );
 
       $settings_form['reflectionOpacity2'] = array(
@@ -365,6 +376,11 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
         '#title' => t('Reflection opacity for End date'),
         '#default_value' => $settings['reflectionOpacity2'],
         '#description' => t('Float value between 0 and 1.'),
+        '#states' => array(
+          'invisible' => array(
+            'input.field-timer-county-reflection-2' => array('checked' => FALSE),
+          ),
+        ),
       );
       
       $settings_form['fromto'] = array(
@@ -392,6 +408,10 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
         $elements[$delta]['#markup'] = '<span class="field-timer-start-date-title">'
         . $settings['title'] . '</span> ' . $elements[$delta]['#markup'];
       }
+      if ($settings['fromto'] == 'both' && !empty($field['settings']['todate'])) {
+        $elements[$delta]['#markup'] = '<div class="field-timer-start-date">'
+        . $elements[$delta]['#markup'] . '</div>';
+      }
       if ($settings['fromto'] != 'from' && !empty($field['settings']['todate'])) {
         $title = (!empty($settings['title2'])) ? '<span class="field-timer-end-date-title">' . $settings['title2'] . '</span> ' : '';
         $time = '<div id="county-' . $entity_type . '_' . $entity->{$id_key}
@@ -403,7 +423,8 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
           );
         }
         else {
-          $elements[$delta]['#markup'] .= ' ' . $title . $time;
+          $elements[$delta]['#markup'] .= '<div class="field-timer-end-date">'
+          . $title . $time . '</div>';
         }
       }
     }
@@ -513,4 +534,3 @@ class field_timer_county_datetime extends field_timer_county_date_field_base {
     return $date->getTimestamp();
   }
 }
-
