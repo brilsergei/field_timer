@@ -132,35 +132,17 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
     $settings = $display['settings'];
 
     foreach ($items as $delta => $item) {
-      $layout = '<div class="jquery-countdown-led-display-wrapper">';
-      if ($settings['display_days']) {
-        for ($i = $settings['max_count_of_days']; $i > 0; $i--) {
-          $layout .= '<span class="%t% image{d1' . substr('000', 0, $i - 1) . '}"></span>';
-        }
-        $layout .= '<span class="%t% imageDay"></span><span class="%t% imageSpace"></span>';
-      }
-      if ($settings['display_hours']) {
-        $layout .= '<span class="%t% image{h10}"></span><span class="%t% image{h1}"></span>';
-        if ($settings['display_minutes'] || $settings['display_seconds']) {
-          $layout .= '<span class="%t% imageSep"></span>';
-        }
-      }
-      if ($settings['display_minutes']) {
-        $layout .= '<span class="%t% image{m10}"></span><span class="%t% image{m1}"></span>';
-        if ($settings['display_seconds']) {
-          $layout .= '<span class="%t% imageSep"></span>';
-        }
-      }
-      if ($settings['display_seconds']) {
-        $layout .= '<span class="%t% image{s10}"></span><span class="%t% image{s1}"></span>';
-      }
+      $layout = $this->renderLayout($settings['display_days'],
+          $settings['max_count_of_days'], $settings['display_hours'],
+          $settings['display_minutes'], $settings['display_seconds'],
+          $settings['countdown_theme']);
 
       $elements[$delta] = array(
         '#type' => 'markup',
         '#markup' => '<span id="jquery-countdown-led-' . $entity_type . '_'
         . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta
         . '" class="jquery-countdown-led ' . $settings['countdown_theme'] . '">'
-        . str_replace('%t%', $settings['countdown_theme'], $layout) . '</span>',
+        . $layout . '</span>',
       );
     }
 
@@ -191,6 +173,33 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
    */
   public function getPluginName() {
     return 'jquery.countdown.led';
+  }
+  
+  /**
+   * Render field item.
+   * @return type
+   */
+  protected function renderLayout($display_days, $max_count_of_days, $display_hours, $display_minutes, $display_seconds, $countdown_theme) {
+    $layout = '<div class="jquery-countdown-led-display-wrapper">';
+    if ($display_days) {
+      for ($i = $max_count_of_days; $i > 0; $i--) {
+        $layout .= '<span class="%t% image{d1' . substr('000', 0, $i - 1) . '}"></span>';
+      }
+      $layout .= '<span class="%t% imageDay"></span><span class="%t% imageSpace"></span>';
+    }
+    if ($display_hours) {
+      $layout .= '<span class="%t% image{h10}"></span><span class="%t% image{h1}"></span>';
+    }
+    if ($display_minutes) {
+      $layout .= '<span class="%t% imageSep"></span>'
+      . '<span class="%t% image{m10}"></span><span class="%t% image{m1}"></span>';
+    }
+    if ($display_seconds) {
+      $layout .= '<span class="%t% imageSep"></span>'
+      . '<span class="%t% image{s10}"></span><span class="%t% image{s1}"></span>';
+    }
+    
+    return str_replace('%t%', $countdown_theme, $layout) . '</div>';
   }
   
   protected function formatterThemes() {
@@ -398,35 +407,20 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
         $elements[$delta]['#markup'] = '<span class="field-timer-start-date-title">'
         . $settings['title'] . '</span> ' . $elements[$delta]['#markup'];
       }
+      if ($settings['fromto'] == 'both' && !empty($field['settings']['todate'])) {
+        $elements[$delta]['#markup'] = '<div class="field-timer-start-date">'
+        . $elements[$delta]['#markup'] . '</div>';
+      }
       if ($settings['fromto'] != 'from' && !empty($field['settings']['todate'])) {
         $title = (!empty($settings['title2'])) ? '<span class="field-timer-end-date-title">' . $settings['title2'] . '</span> ' : '';
-        $layout = '<div class="jquery-countdown-led-display-wrapper">';
-        if ($settings['display_days2']) {
-          for ($i = $settings['max_count_of_days2']; $i > 0; $i--) {
-            $layout .= '<span class="%t% image{d1' . substr('000', 0, $i - 1) . '}"></span>';
-          }
-          $layout .= '<span class="%t% imageDay"></span><span class="%t% imageSpace"></span>';
-        }
-        if ($settings['display_hours2']) {
-          $layout .= '<span class="%t% image{h10}"></span><span class="%t% image{h1}"></span>';
-          if ($settings['display_minutes2'] || $settings['display_seconds2']) {
-            $layout .= '<span class="%t% imageSep"></span>';
-          }
-        }
-        if ($settings['display_minutes2']) {
-          $layout .= '<span class="%t% image{m10}"></span><span class="%t% image{m1}"></span>';
-          if ($settings['display_seconds2']) {
-            $layout .= '<span class="%t% imageSep"></span>';
-          }
-        }
-        if ($settings['display_seconds2']) {
-          $layout .= '<span class="%t% image{s10}"></span><span class="%t% image{s1}"></span>';
-        }
-        $layout .= '</div>';
+        $layout = $this->renderLayout($settings['display_days2'],
+            $settings['max_count_of_days2'], $settings['display_hours2'],
+            $settings['display_minutes2'], $settings['display_seconds2'],
+            $settings['countdown_theme2']);
         $time = '<span id="jquery-countdown-led-' . $entity_type . '_'
         . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta
         . '_2" class="jquery-countdown-led ' . $settings['countdown_theme2'] . '">'
-        . str_replace('%t%', $settings['countdown_theme2'], $layout) . '</span>';
+        . $layout . '</span>';
         if ($settings['fromto'] == 'to') {
           $elements[$delta] = array(
             '#type' => 'markup',
@@ -434,7 +428,8 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
           );
         }
         else {
-          $elements[$delta]['#markup'] .= ' ' . $title . $time;
+          $elements[$delta]['#markup'] .= '<div class="field-timer-end-date">'
+          . $title . $time . '</div>';
         }
       }
     }
@@ -462,17 +457,7 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
       foreach ($items as $delta => $item) {
         $key = $entity_type . '_' . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta . '_2';
         $timestamp = $this->getTimestamp($item, $field, 'value2');
-        $js_settings[$key]['timestamp'] = $timestamp;
-        $js_settings[$key]['options'] = $settings2;
-        if ($settings['type2'] == 'timer' || ($settings['type2'] == 'auto' && $timestamp <= REQUEST_TIME)) {
-          $js_settings[$key]['options']['until'] = FALSE;
-          $js_settings[$key]['options']['since'] = TRUE;
-        }
-        elseif ($settings['type2'] == 'countdown' || ($settings['type2'] == 'auto' && $timestamp > REQUEST_TIME)) {
-          $js_settings[$key]['options']['until'] = TRUE;
-          $js_settings[$key]['options']['since'] = FALSE;
-        }
-        $js_settings[$key]['plugin'] = $this->getPluginName();
+        $js_settings += $this->generateJSSettingsArray($key, $timestamp, $settings['type2'], $settings2);
       }
     }
     
