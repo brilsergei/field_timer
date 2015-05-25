@@ -91,7 +91,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
       '#rows' => 3,
       '#cols' => 60,
       '#title' => t('Layout'),
-      '#defualt_value' => $settings['layout'],
+      '#default_value' => $settings['layout'],
       '#description' => t("See !documentation for this parameter.", array(
         '!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout'))
       )),
@@ -361,7 +361,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
         '#rows' => 3,
         '#cols' => 60,
         '#title' => t('Layout for End date'),
-        '#defualt_value' => $settings['layout2'],
+        '#default_value' => $settings['layout2'],
         '#description' => t("See !documentation for this parameter.", array(
           '!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout'))
         )),
