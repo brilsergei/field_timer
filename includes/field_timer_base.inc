@@ -168,17 +168,7 @@ abstract class field_timer_jquery_countdown_js_base extends field_timer_formatte
     foreach ($items as $delta => $item) {
       $key = $entity_type . '_' . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta;
       $timestamp = $this->getTimestamp($item, $field);
-      $js_settings[$key]['timestamp'] = $timestamp;
-      $js_settings[$key]['options'] = $settings;
-      if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $timestamp <= REQUEST_TIME)) {
-        $js_settings[$key]['options']['until'] = FALSE;
-        $js_settings[$key]['options']['since'] = TRUE;
-      }
-      elseif ($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $timestamp > REQUEST_TIME)) {
-        $js_settings[$key]['options']['until'] = TRUE;
-        $js_settings[$key]['options']['since'] = FALSE;
-      }
-      $js_settings[$key]['plugin'] = $this->getPluginName();
+      $js_settings += $this->generateJSSettingsArray($key, $timestamp, $settings['type'], $settings);
     }
     
     return $js_settings;
@@ -190,6 +180,24 @@ abstract class field_timer_jquery_countdown_js_base extends field_timer_formatte
   protected function loadJSandCSS($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     parent::loadJSandCSS($entity_type, $entity, $field, $instance, $langcode, $items, $display);
     drupal_add_css(drupal_get_path('module', 'field_timer') . '/css/field_timer.css', 'file');
+  }
+  
+  protected function generateJSSettingsArray($key, $timestamp, $type, $settings) {
+    $js_settings = array();
+
+    $js_settings[$key]['timestamp'] = $timestamp;
+    $js_settings[$key]['options'] = $settings;
+    if ($type == 'timer' || ($type == 'auto' && $timestamp <= REQUEST_TIME)) {
+      $js_settings[$key]['options']['until'] = FALSE;
+      $js_settings[$key]['options']['since'] = TRUE;
+    }
+    elseif ($type == 'countdown' || ($type == 'auto' && $timestamp > REQUEST_TIME)) {
+      $js_settings[$key]['options']['until'] = TRUE;
+      $js_settings[$key]['options']['since'] = FALSE;
+    }
+    $js_settings[$key]['plugin'] = $this->getPluginName();
+
+    return $js_settings;
   }
 
   protected function formatterTypes() {

@@ -51,7 +51,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
     $summary[] = t('Format: %format', array('%format' => $settings['format']));
     $summary[] = t('Layout: %layout', array('%layout' => $settings['layout']));
     $summary[] = t('Compact: %compact', array('%compact' => $settings['compact'] ? t('Yes') : t('No')));
-    $summary[] = t('Significant: %significant', array('%significant' => $settings['significant']));
+    $summary[] = t('Granularity: %significant', array('%significant' => $settings['significant']));
     $summary[] = t('Time separator: %timeSeparator', array('%timeSeparator' => $settings['timeSeparator']));
     $summary[] = t('Pad with zeroes: %padZeroes', array('%padZeroes' => $settings['padZeroes'] ? t('Yes') : t('No')));
 
@@ -105,7 +105,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
 
     $settings_form['significant'] = array(
       '#type' => 'select',
-      '#title' => t('Significant'),
+      '#title' => t('Granularity'),
       '#options' => range(0, 7),
       '#default_value' => $settings['significant'],
     );
@@ -155,7 +155,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
    * @inheritdoc
    */
   public function getFormatterName() {
-    return 'field_timer_jquery_count_down';
+    return 'field_timer_jquery_countdown';
   }
   
   /**
@@ -282,7 +282,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
       $summary[] = t('Format for Start date: %format', array('%format' => $settings['format']));
       $summary[] = t('Layout for Start date: %layout', array('%layout' => $settings['layout']));
       $summary[] = t('Compact for Start date: %compact', array('%compact' => $settings['compact'] ? t('Yes') : t('No')));
-      $summary[] = t('Significant for Start date: %significant', array('%significant' => $settings['significant']));
+      $summary[] = t('Granularity for Start date: %significant', array('%significant' => $settings['significant']));
       $summary[] = t('Time separator for Start date: %timeSeparator', array('%timeSeparator' => $settings['timeSeparator']));
       $summary[] = t('Pad with zeroes for Start date: %padZeroes', array('%padZeroes' => $settings['padZeroes'] ? t('Yes') : t('No')));
       $summary[] = t('Title for End date: %title', array('%title' => $settings['title2']));
@@ -291,7 +291,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
       $summary[] = t('Format for End date: %format', array('%format' => $settings['format2']));
       $summary[] = t('Layout for End date: %layout', array('%layout' => $settings['layout2']));
       $summary[] = t('Compact for End date: %compact', array('%compact' => $settings['compact2'] ? t('Yes') : t('No')));
-      $summary[] = t('Significant for End date: %significant', array('%significant' => $settings['significant2']));
+      $summary[] = t('Granularity for End date: %significant', array('%significant' => $settings['significant2']));
       $summary[] = t('Time separator for End date: %timeSeparator', array('%timeSeparator' => $settings['timeSeparator2']));
       $summary[] = t('Pad with zeroes for End date: %padZeroes', array('%padZeroes' => $settings['padZeroes2'] ? t('Yes') : t('No')));
       $summary[] = t('Display: %display', array('%display' => $displays[$settings['fromto']]));
@@ -323,7 +323,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
       $settings_form['format']['#title'] = t('Format for Start date');
       $settings_form['layout']['#title'] = t('Layout for Start date');
       $settings_form['compact']['#title'] = t('Display Start date in compact format');
-      $settings_form['significant']['#title'] = t('Significant for Start date');
+      $settings_form['significant']['#title'] = t('Granularity for Start date');
       $settings_form['timeSeparator']['#title'] = t('Time separator for Start date');
       $settings_form['padZeroes']['#title'] = t('Pad with zeroes for Start date');
       
@@ -375,7 +375,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
 
       $settings_form['significant2'] = array(
         '#type' => 'select',
-        '#title' => t('Significant for End date'),
+        '#title' => t('Granularity for End date'),
         '#options' => range(0, 7),
         '#default_value' => $settings['significant2'],
       );
@@ -417,6 +417,10 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
         $elements[$delta]['#markup'] = '<span class="field-timer-start-date-title">'
         . $settings['title'] . '</span> ' . $elements[$delta]['#markup'];
       }
+      if ($settings['fromto'] == 'both' && !empty($field['settings']['todate'])) {
+        $elements[$delta]['#markup'] = '<div class="field-timer-start-date">'
+        . $elements[$delta]['#markup'] . '</div>';
+      }
       if ($settings['fromto'] != 'from' && !empty($field['settings']['todate'])) {
         $title = (!empty($settings['title2'])) ? '<span class="field-timer-end-date-title">' . $settings['title2'] . '</span> ' : '';
         $time = '<span id="jquery-countdown-' . $entity_type . '_'
@@ -429,7 +433,8 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
           );
         }
         else {
-          $elements[$delta]['#markup'] .= ' ' . $title . $time;
+          $elements[$delta]['#markup'] .= '<div class="field-timer-end-date">'
+          . $title . $time . '</div>';
         }
       }
     }
@@ -457,17 +462,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
       foreach ($items as $delta => $item) {
         $key = $entity_type . '_' . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta . '_2';
         $timestamp = $this->getTimestamp($item, $field, 'value2');
-        $js_settings[$key]['timestamp'] = $timestamp;
-        $js_settings[$key]['options'] = $settings2;
-        if ($settings['type2'] == 'timer' || ($settings['type2'] == 'auto' && $timestamp <= REQUEST_TIME)) {
-          $js_settings[$key]['options']['until'] = FALSE;
-          $js_settings[$key]['options']['since'] = TRUE;
-        }
-        elseif ($settings['type2'] == 'countdown' || ($settings['type2'] == 'auto' && $timestamp > REQUEST_TIME)) {
-          $js_settings[$key]['options']['until'] = TRUE;
-          $js_settings[$key]['options']['since'] = FALSE;
-        }
-        $js_settings[$key]['plugin'] = $this->getPluginName();
+        $js_settings += $this->generateJSSettingsArray($key, $timestamp, $settings['type2'], $settings2);
       }
     }
     
