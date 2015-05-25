@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Help file.
  * Contains help classes to perform field_timer_jquery_countdown_led formatter
  * related actions.
  */
@@ -10,12 +11,12 @@
  * Base class for field_timer_jquery_countdown_led formatter.
  */
 abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_countdown_js_base {
-  
+
   /**
    * @inheritdoc
    */
   final public function getFormatterDefinition() {
-    return array (
+    return array(
       'label' => t('jQuery Countdown LED'),
       'description' => t('Display timer and countdown as a LED.'),
     );
@@ -36,7 +37,7 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
       'display_seconds' => 1,
     );
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -58,7 +59,7 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
 
     return $summary;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -117,7 +118,7 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
 
     return $settings_form;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -150,7 +151,7 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
 
     return $elements;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -167,17 +168,16 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
   public function getFormatterName() {
     return 'field_timer_jquery_countdown_led';
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getPluginName() {
     return 'jquery.countdown.led';
   }
-  
+
   /**
    * Render field item.
-   * @return type
    */
   protected function renderLayout($display_days, $max_count_of_days, $display_hours, $display_minutes, $display_seconds, $countdown_theme) {
     $layout = '<div class="jquery-countdown-led-display-wrapper">';
@@ -198,17 +198,17 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
       $layout .= '<span class="%t% imageSep"></span>'
       . '<span class="%t% image{s10}"></span><span class="%t% image{s1}"></span>';
     }
-    
+
     return str_replace('%t%', $countdown_theme, $layout) . '</div>';
   }
-  
+
   protected function formatterThemes() {
     return array(
       'green' => t('Green'),
       'blue' => t('Blue'),
     );
   }
-  
+
   protected function formatterDays() {
     return array(
       1 => 9,
@@ -217,13 +217,15 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
       4 => 9999,
     );
   }
+
 }
 
 /**
- * Class for field_timer_jquery_countdown_led formatter and field_timer field type.
+ * Class for field_timer_jquery_countdown_led formatter and field_timer field
+ * type.
  */
 class field_timer_jquery_countdown_led_field_timer extends field_timer_jquery_countdown_led_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -237,13 +239,15 @@ class field_timer_jquery_countdown_led_field_timer extends field_timer_jquery_co
   protected function getTimestamp($item, $field, $key = 'timestamp') {
     return $item[$key];
   }
+
 }
 
 /**
- * Base class for field_timer_jquery_countdown_led formatter and date field types.
+ * Base class for field_timer_jquery_countdown_led formatter and date field
+ * types.
  */
 abstract class field_timer_jquery_countdown_led_date_field_base extends field_timer_jquery_countdown_led_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -261,7 +265,7 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
       'fromto' => 'both',
     );
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -308,14 +312,14 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
    */
   public function getSettingsForm($settings, $field) {
     $settings_form = parent::getSettingsForm($settings, $field);
-    
+
     $settings_form['title'] = array(
       '#type' => 'textfield',
       '#title' => empty($field['settings']['todate']) ? t('Title') : t('Title for Start date'),
       '#default_value' => $settings['title'],
       '#weight' => -10,
     );
-    
+
     if (!empty($field['settings']['todate'])) {
       $settings_form['type']['#title'] = t('Type for Start date');
       $settings_form['countdown_theme']['#title'] = t('Theme for Start date');
@@ -324,13 +328,13 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
       $settings_form['display_hours']['#title'] = t('Display hours');
       $settings_form['display_minutes']['#title'] = t('Display minutes');
       $settings_form['display_seconds']['#title'] = t('Display seconds');
-      
+
       $settings_form['title2'] = array(
         '#type' => 'textfield',
         '#title' => t('Title for End date'),
         '#default_value' => $settings['title2'],
       );
-      
+
       $settings_form['type2'] = array(
         '#type' => 'select',
         '#title' => t('Type for End date'),
@@ -381,7 +385,7 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
         '#title' => t('Display seconds for End date'),
         '#default_value' => $settings['display_seconds2'],
       );
-      
+
       $settings_form['fromto'] = array(
         '#type' => 'select',
         '#title' => t('Display'),
@@ -392,7 +396,7 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
 
     return $settings_form;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -436,7 +440,7 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
 
     return $elements;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -460,10 +464,10 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
         $js_settings += $this->generateJSSettingsArray($key, $timestamp, $settings['type2'], $settings2);
       }
     }
-    
+
     return $js_settings;
   }
-  
+
   protected function formatterDisplays() {
     return array(
       'both' => t('Both Start and End dates'),
@@ -471,13 +475,14 @@ abstract class field_timer_jquery_countdown_led_date_field_base extends field_ti
       'to' => t('End date only'),
     );
   }
+
 }
 
 /**
  * Class for field_timer_jquery_countdown formatter and datestamp field type.
  */
 class field_timer_jquery_countdown_led_datestamp extends field_timer_jquery_countdown_led_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -491,13 +496,14 @@ class field_timer_jquery_countdown_led_datestamp extends field_timer_jquery_coun
   protected function getTimestamp($item, $field, $key = 'value') {
     return $item[$key];
   }
+
 }
 
 /**
  * Class for field_timer_jquery_countdown formatter and date field type.
  */
 class field_timer_jquery_countdown_led_date extends field_timer_jquery_countdown_led_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -514,13 +520,14 @@ class field_timer_jquery_countdown_led_date extends field_timer_jquery_countdown
     $date = new DateObject($item[$key], $timezone_db, $db_format);
     return $date->getTimestamp();
   }
+
 }
 
 /**
  * Class for field_timer_jquery_countdown formatter and datetime field type.
  */
 class field_timer_jquery_countdown_led_datetime extends field_timer_jquery_countdown_led_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -537,4 +544,5 @@ class field_timer_jquery_countdown_led_datetime extends field_timer_jquery_count
     $date = new DateObject($item[$key], $timezone_db, $db_format);
     return $date->getTimestamp();
   }
+
 }

@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Help file.
  * Contains help classes to perform field_timer_county formatter related
  * actions.
  */
@@ -23,7 +24,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
    * @inheritdoc
    */
   final public function getFormatterDefinition() {
-    return array (
+    return array(
       'label' => t('County'),
       'description' => t('Use County jQuery plugin to display countdown.'),
     );
@@ -43,7 +44,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       'reflectionOpacity' => 0.2,
     );
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -66,7 +67,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
 
     return $summary;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -105,7 +106,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       '#default_value' => $settings['reflection'],
       '#attributes' => array(
         'class' => array('field-timer-county-reflection'),
-      )
+      ),
     );
 
     $settings_form['reflectionOpacity'] = array(
@@ -122,7 +123,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
 
     return $settings_form;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -148,21 +149,21 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
 
     return $elements;
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getFormatterName() {
     return 'field_timer_county';
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getPluginName() {
     return 'county';
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -181,10 +182,10 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
         )), 'error');
       }
     }
-    
+
     return $this->library_loaded;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -200,7 +201,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       $js_settings[$key]['options'] = $settings;
       $js_settings[$key]['plugin'] = $this->getPluginName();
     }
-    
+
     return $js_settings;
   }
 
@@ -210,7 +211,7 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       'scroll' => t('Scroll'),
     );
   }
-  
+
   protected function formatterThemes() {
     return array(
       'black' => t('Black'),
@@ -219,13 +220,14 @@ abstract class field_timer_county_base extends field_timer_formatter_js_base {
       'blue' => t('Blue'),
     );
   }
+
 }
 
 /**
  * Class for field_timer_county_formatter and field_timer field type.
  */
 class field_timer_county_field_timer extends field_timer_county_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -239,13 +241,14 @@ class field_timer_county_field_timer extends field_timer_county_base {
   protected function getTimestamp($item, $field, $key = 'timestamp') {
     return $item[$key];
   }
+
 }
 
 /**
  * Base class for field_timer_text formatter and date field types.
  */
 abstract class field_timer_county_date_field_base extends field_timer_county_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -262,7 +265,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
       'fromto' => 'both',
     );
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -307,20 +310,20 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
 
     return $summary;
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getSettingsForm($settings, $field) {
     $settings_form = parent::getSettingsForm($settings, $field);
-    
+
     $settings_form['title'] = array(
       '#type' => 'textfield',
       '#title' => empty($field['settings']['todate']) ? t('Title') : t('Title for Start date'),
       '#default_value' => $settings['title'],
       '#weight' => -10,
     );
-    
+
     if (!empty($field['settings']['todate'])) {
       $settings_form['animation']['#title'] = t('Animation for Start date');
       $settings_form['speed']['#title'] = t('Speed for Start date');
@@ -328,13 +331,13 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
       $settings_form['background']['#title'] = t('Background for Start date');
       $settings_form['reflection']['#title'] = t('Add reflection for Start date');
       $settings_form['reflectionOpacity']['#title'] = t('Reflection opacity for Start date');
-      
+
       $settings_form['title2'] = array(
         '#type' => 'textfield',
         '#title' => t('Title for End date'),
         '#default_value' => $settings['title2'],
       );
-      
+
       $settings_form['animation2'] = array(
         '#type' => 'select',
         '#title' => t('Animation for End date'),
@@ -368,7 +371,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
         '#default_value' => $settings['reflection2'],
         '#attributes' => array(
           'class' => array('field-timer-county-reflection-2'),
-        )
+        ),
       );
 
       $settings_form['reflectionOpacity2'] = array(
@@ -382,7 +385,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
           ),
         ),
       );
-      
+
       $settings_form['fromto'] = array(
         '#type' => 'select',
         '#title' => t('Display'),
@@ -390,7 +393,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
         '#default_value' => $settings['fromto'],
       );
     }
-    
+
     return $settings_form;
   }
 
@@ -431,7 +434,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
 
     return $elements;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -448,7 +451,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
           $settings2[substr($name, 0, strlen($name) - 1)] = $value;
         }
       }
-      
+
       foreach ($items as $delta => $item) {
         $key = $entity_type . '_' . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta . '_2';
         $js_settings[$key]['timestamp'] = $this->getTimestamp($item, $field, 'value2');
@@ -456,7 +459,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
         $js_settings[$key]['plugin'] = $this->getPluginName();
       }
     }
-    
+
     return $js_settings;
   }
 
@@ -467,13 +470,14 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
       'to' => t('End date only'),
     );
   }
+
 }
 
 /**
  * Class for field_timer_text formatter and datestamp field type.
  */
 class field_timer_county_datestamp extends field_timer_county_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -487,13 +491,14 @@ class field_timer_county_datestamp extends field_timer_county_date_field_base {
   protected function getTimestamp($item, $field, $key = 'value') {
     return $item[$key];
   }
+
 }
 
 /**
  * Class for field_timer_text formatter and date field type.
  */
 class field_timer_county_date extends field_timer_county_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -510,13 +515,14 @@ class field_timer_county_date extends field_timer_county_date_field_base {
     $date = new DateObject($item[$key], $timezone_db, $db_format);
     return $date->getTimestamp();
   }
+
 }
 
 /**
  * Class for field_timer_text formatter and datetime field type.
  */
 class field_timer_county_datetime extends field_timer_county_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -533,4 +539,5 @@ class field_timer_county_datetime extends field_timer_county_date_field_base {
     $date = new DateObject($item[$key], $timezone_db, $db_format);
     return $date->getTimestamp();
   }
+
 }

@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Help file.
  * Contains help classes to perform field_timer_jquery_countdown formatter
  * related actions.
  */
@@ -15,12 +16,11 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
    * @inheritdoc
    */
   final public function getFormatterDefinition() {
-    return array (
+    return array(
       'label' => t('jQuery Countdown'),
       'description' => t('Use jQuery Countdown plugin to display countdown and timer.'),
     );
   }
-
 
   /**
    * @inheritdoc
@@ -37,7 +37,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
       'padZeroes' => 0,
     );
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -57,7 +57,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
 
     return $summary;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -82,7 +82,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
       '#title' => t('Format'),
       '#default_value' => $settings['format'],
       '#description' => t("See !documentation for this parameter.", array(
-        '!documentation' => l(t('documentation'),'http://keith-wood.name/countdownRef.html', array('fragment' => 'format'))
+        '!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'format')),
       )),
     );
 
@@ -93,7 +93,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
       '#title' => t('Layout'),
       '#default_value' => $settings['layout'],
       '#description' => t("See !documentation for this parameter.", array(
-        '!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout'))
+        '!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout')),
       )),
     );
 
@@ -124,7 +124,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
 
     return $settings_form;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -150,21 +150,21 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
 
     return $elements;
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getFormatterName() {
     return 'field_timer_jquery_countdown';
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getPluginName() {
     return 'jquery.countdown';
   }
-  
+
   protected function formatterRegions() {
     return array(
       'sq' => t('Albanian'),
@@ -222,13 +222,14 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
       'cy' => t('Welsh'),
     );
   }
+
 }
 
 /**
  * Class for field_timer_jquery_countdown_formatter and field_timer field type.
  */
 class field_timer_jquery_countdown_field_timer extends field_timer_jquery_countdown_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -242,6 +243,7 @@ class field_timer_jquery_countdown_field_timer extends field_timer_jquery_countd
   protected function getTimestamp($item, $field, $key = 'timestamp') {
     return $item[$key];
   }
+
 }
 
 /**
@@ -263,10 +265,10 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
       'significant2' => 0,
       'timeSeparator2' => ':',
       'padZeroes2' => 0,
-      'fromto' => 'both'
+      'fromto' => 'both',
     );
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -303,20 +305,20 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
 
     return $summary;
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getSettingsForm($settings, $field) {
     $settings_form = parent::getSettingsForm($settings, $field);
-    
+
     $settings_form['title'] = array(
       '#type' => 'textfield',
       '#title' => empty($field['settings']['todate']) ? t('Title') : t('Title for Start date'),
       '#default_value' => $settings['title'],
       '#weight' => -10,
     );
-    
+
     if (!empty($field['settings']['todate'])) {
       $settings_form['type']['#title'] = t('Type for Start date');
       $settings_form['regional']['#title'] = t('Region for Start date');
@@ -326,13 +328,13 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
       $settings_form['significant']['#title'] = t('Granularity for Start date');
       $settings_form['timeSeparator']['#title'] = t('Time separator for Start date');
       $settings_form['padZeroes']['#title'] = t('Pad with zeroes for Start date');
-      
+
       $settings_form['title2'] = array(
         '#type' => 'textfield',
         '#title' => t('Title for End date'),
         '#default_value' => $settings['title2'],
       );
-      
+
       $settings_form['type2'] = array(
         '#type' => 'select',
         '#title' => t('Type for End date'),
@@ -352,7 +354,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
         '#title' => t('Format for End date'),
         '#default_value' => $settings['format2'],
         '#description' => t("See !documentation for this parameter.", array(
-          '!documentation' => l(t('documentation'),'http://keith-wood.name/countdownRef.html', array('fragment' => 'format'))
+          '!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'format')),
         )),
       );
 
@@ -391,7 +393,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
         '#title' => t('Pad with zeroes for End date'),
         '#default_value' => $settings['padZeroes2'],
       );
-      
+
       $settings_form['fromto'] = array(
         '#type' => 'select',
         '#title' => t('Display'),
@@ -399,7 +401,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
         '#default_value' => $settings['fromto'],
       );
     }
-    
+
     return $settings_form;
   }
 
@@ -441,7 +443,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
 
     return $elements;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -465,7 +467,7 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
         $js_settings += $this->generateJSSettingsArray($key, $timestamp, $settings['type2'], $settings2);
       }
     }
-    
+
     return $js_settings;
   }
 
@@ -476,13 +478,14 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
       'to' => t('End date only'),
     );
   }
+
 }
 
 /**
  * Class for field_timer_jquery_countdown formatter and datestamp field type.
  */
 class field_timer_jquery_countdown_datestamp extends field_timer_jquery_countdown_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -496,13 +499,14 @@ class field_timer_jquery_countdown_datestamp extends field_timer_jquery_countdow
   protected function getTimestamp($item, $field, $key = 'value') {
     return $item[$key];
   }
+
 }
 
 /**
  * Class for field_timer_jquery_countdown formatter and date field type.
  */
 class field_timer_jquery_countdown_date extends field_timer_jquery_countdown_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -519,13 +523,14 @@ class field_timer_jquery_countdown_date extends field_timer_jquery_countdown_dat
     $date = new DateObject($item[$key], $timezone_db, $db_format);
     return $date->getTimestamp();
   }
+
 }
 
 /**
  * Class for field_timer_jquery_countdown formatter and datetime field type.
  */
 class field_timer_jquery_countdown_datetime extends field_timer_jquery_countdown_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -542,5 +547,5 @@ class field_timer_jquery_countdown_datetime extends field_timer_jquery_countdown
     $date = new DateObject($item[$key], $timezone_db, $db_format);
     return $date->getTimestamp();
   }
-}
 
+}

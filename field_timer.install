@@ -12,7 +12,7 @@ function field_timer_field_schema($field) {
   if ($field['type'] == 'field_timer') {
     return array(
       'columns' => array(
-		'entity_property_name' => array(
+        'entity_property_name' => array(
           'type' => 'varchar',
           'length' => 100,
           'not null' => FALSE,

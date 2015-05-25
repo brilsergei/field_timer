@@ -127,7 +127,12 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
 function field_timer_field_formatter_info() {
   field_timer_include();
   $field_types = array('field_timer', 'datestamp', 'date', 'datetime');
-  $formatter_types = array('field_timer_text', 'field_timer_county', 'field_timer_jquery_countdown', 'field_timer_jquery_countdown_led');
+  $formatter_types = array(
+    'field_timer_text',
+    'field_timer_county',
+    'field_timer_jquery_countdown',
+    'field_timer_jquery_countdown_led',
+  );
   $formatters = array();
 
   foreach ($formatter_types as $formatter) {
@@ -165,7 +170,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
  * Implements hook_field_is_empty().
  */
 function field_timer_field_is_empty($item, $field) {
-  if (empty($item['timestamp']) && empty ($item['entity_property_name'])) {
+  if (empty($item['timestamp']) && empty($item['entity_property_name'])) {
     return TRUE;
   }
   return FALSE;
@@ -238,72 +243,6 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
 }
 
 /**
- * Implemtents hook_field_instance_settings_form().
- */
-/*function field_timer_field_instance_settings_form($field, $instance) {
-  $settings_form = array();
-  $settings = $instance['settings'];
-  foreach ($instance['display'] as $display) {
-    if ($display['type'] == 'field_timer_jquery_countdown' || $display['type'] == 'field_timer_jquery_countdown_led') {
-      $settings_form['jquery-countdown'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('jQuery Countdown options'),
-        '#description' => t('This settings effect only on jQuery Countdown and jQuery Countdown LED formatters.'),
-        '#collapsed' => TRUE,
-        '#collapsible' => TRUE,
-      );
-      $token_description = module_exists('token') ? '<br />' . t('This field supports tokens.') : '';
-      $settings_form['jquery-countdown']['expiryUrl'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Expiry URL'),
-        '#default_value' => $settings['jquery-countdown']['expiryUrl'],
-        '#description' => t('A URL to load when the countdown reaches zero.!brSee !link for this parameter.!token_description',
-              array(
-                '!token_description' => $token_description,
-                '!br' => '<br />',
-                '!link' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'expiryUrl')),
-              )
-        ),
-      );
-      $settings_form['jquery-countdown']['expiryText'] = array(
-        '#type' => 'textarea',
-        '#title' => t('Expiry text'),
-        '#default_value' => $settings['jquery-countdown']['expiryText'],
-        '#description' => t('A message to display when the countdown reaches zero.!brSee !link for this parameter.!token_description',
-              array(
-                '!token_description' => $token_description,
-                '!br' => '<br />',
-                '!link' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'expiryText')),
-              )
-        ),
-      );
-      $settings_form['jquery-countdown']['description'] = array(
-        '#type' => 'textarea',
-        '#title' => t('Description'),
-        '#default_value' => $settings['jquery-countdown']['description'],
-        '#description' => t('The descriptive text shown below the countdown timer.!brSee !link for this parameter.!token_description',
-              array(
-                '!token_description' => $token_description,
-                '!br' => '<br />',
-                '!link' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'description')),
-              )
-        ),
-      );
-      if (module_exists('token')) {
-        $settings_form['jquery-countdown']['token'] = array(
-          '#theme' => 'token_tree',
-          '#token_types' => array($instance['entity_type']),
-          '#global_types' => TRUE,
-          '#click_insert' => FALSE,
-        );
-      }
-      break;
-    }
-  }
-  return $settings_form;
-}*/
-
-/**
  * Implements hook_field_timer_entity_properties().
  */
 function field_timer_field_timer_entity_properties() {
@@ -362,10 +301,10 @@ function field_timer_include($formatter = '') {
     'field_timer_jquery_countdown',
     'field_timer_jquery_countdown_led',
   );
-  foreach($files as $file) {
+  foreach ($files as $file) {
     if ($file == 'field_timer_base' || empty($formatter)
         || (!empty($formatter) && $formatter == $file)) {
-      
+
       module_load_include('inc', 'field_timer', 'includes/' . $file);
     }
   }

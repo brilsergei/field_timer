@@ -9,7 +9,7 @@
  * Base class for field_timer_text formatter.
  */
 abstract class field_timer_text_base extends field_timer_formatter_base implements field_timer_formatter_interface {
-  
+
   /**
    * @inheritdoc
    */
@@ -21,7 +21,7 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
    * @inheritdoc
    */
   final public function getFormatterDefinition() {
-    return array (
+    return array(
       'label' => t('Text'),
       'description' => t('Simple text timer and countdown.'),
     );
@@ -37,7 +37,7 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
       'granularity' => 2,
     );
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -49,7 +49,7 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
 
     return $summary;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -71,7 +71,7 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
 
     return $settings_form;
   }
-  
+
   public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     $elements = array();
     $settings = $display['settings'];
@@ -85,17 +85,16 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
 
     return $elements;
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getFormatterName() {
     return 'field_timer_text';
   }
-  
+
   /**
    * Render field item.
-   * @return type
    */
   protected function renderItem($type, $granularity, $timestamp) {
     // Check what we should display - timer or countdown.
@@ -114,10 +113,10 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
         $time = format_interval($timestamp - REQUEST_TIME, $granularity);
         break;
     }
-    
+
     return $time;
   }
-  
+
   protected function formatterTypes() {
     return array(
       'auto' => t('Auto'),
@@ -125,12 +124,13 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
       'countdown' => t('Countdown'),
     );
   }
-  
+
   protected function formatterGranularity() {
     $options = range(0, 7);
     unset($options[0]);
     return $options;
   }
+
 }
 
 /**
@@ -151,6 +151,7 @@ class field_timer_text_field_timer extends field_timer_text_base {
   protected function getTimestamp($item, $field, $key = 'timestamp') {
     return $item[$key];
   }
+
 }
 
 /**
@@ -170,7 +171,7 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
       'fromto' => 'both',
     );
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -194,23 +195,23 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
 
     return $summary;
   }
-  
+
   /**
    * @inheritdoc
    */
   public function getSettingsForm($settings, $field) {
     $settings_form = parent::getSettingsForm($settings, $field);
-    
+
     $settings_form['title'] = array(
       '#type' => 'textfield',
       '#title' => empty($field['settings']['todate']) ? t('Title') : t('Title for Start date'),
       '#default_value' => $settings['title'],
       '#weight' => -10,
     );
-    
+
     if (!empty($field['settings']['todate'])) {
       $settings_form['type']['#title'] = t('Type for Start date');
-      $settings_form['granularity']['#title'] = t('Granularity for Start date');   
+      $settings_form['granularity']['#title'] = t('Granularity for Start date');
       $settings_form['title2'] = array(
         '#type' => 'textfield',
         '#title' => t('Title for End date'),
@@ -238,7 +239,7 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
         '#default_value' => $settings['fromto'],
       );
     }
-    
+
     return $settings_form;
   }
 
@@ -273,7 +274,7 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
         }
       }
     }
-    
+
     return $elements;
   }
 
@@ -284,13 +285,14 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
       'to' => t('End date only'),
     );
   }
+
 }
 
 /**
  * Class for field_timer_text formatter and datestamp field type.
  */
 class field_timer_text_datestamp extends field_timer_text_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -309,7 +311,7 @@ class field_timer_text_datestamp extends field_timer_text_date_field_base {
  * Class for field_timer_text formatter and date field type.
  */
 class field_timer_text_date extends field_timer_text_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -326,13 +328,14 @@ class field_timer_text_date extends field_timer_text_date_field_base {
     $date = new DateObject($item[$key], $timezone_db, $db_format);
     return $date->getTimestamp();
   }
+
 }
 
 /**
  * Class for field_timer_text formatter and datetime field type.
  */
 class field_timer_text_datetime extends field_timer_text_date_field_base {
-  
+
   /**
    * @inheritdoc
    */
@@ -349,4 +352,5 @@ class field_timer_text_datetime extends field_timer_text_date_field_base {
     $date = new DateObject($item[$key], $timezone_db, $db_format);
     return $date->getTimestamp();
   }
+
 }

@@ -9,99 +9,117 @@
  * Feild formatter interface.
  */
 interface field_timer_formatter_interface {
-  
+
   /**
    * Check if it is possible to enable current formatter.
-   * @return boolean
+   * 
+   * @return bool
    */
   public function enableFormatter();
 
   /**
    * Get formatter definition.
+   *
    * @return array Formatter definition.
    */
   public function getFormatterDefinition();
-  
+
   /**
-   * Get default formatter settings. All settings for each field type will be
-   * combined into one array.
+   * Get default formatter settings.
+   * All settings for each field type will be combined into one array.
+   *
    * @return array Default settings.
    */
   public function getDefaultSettings();
-  
+
   /**
    * Get formatter settings summary.
+   *
    * @param array $settings Formatter settings array.
    * @param array $field Field definition.
+   *
    * @return string array summary.
    */
   public function getSettingsSummary($settings, $field);
-  
+
   /**
    * Get formatter settings form.
+   *
    * @param array $settings Formatter settings array.
    * @param array $field Field definition.
+   *
    * @return array Drupal form array to display formetter settings form.
    */
   public function getSettingsForm($settings, $field);
-  
+
   /**
    * Render field items.
+   *
    * @param @see hook_field_formatter_view().
+   *
    * @return array Drupal renderable array.
    */
   public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display);
-  
+
   /**
    * Get formatter name.
+   *
    * @return string Formatter name.
    */
   public function getFormatterName();
-  
+
   /**
    * Get field type.
+   *
    * @return string Field type.
    */
   public function getFieldType();
+
 }
 
 /**
  * Base class.
  */
 abstract class field_timer_formatter_base implements field_timer_formatter_interface {
-  
+
   /**
    * Convert field item value to timstamp.
+   *
    * @param array $item Field item.
    * @param array $field Field definition.
    * @param mixed $key Key to get timestamp from field item.
+   *
    * @return int Timestamp.
    */
   abstract protected function getTimestamp($item, $field, $key = '');
+
 }
 
 /**
  * Base class for formatters using js library.
  */
 abstract class field_timer_formatter_js_base extends field_timer_formatter_base implements field_timer_formatter_interface {
-  
+
   protected $library_loaded = FALSE;
-  
+
   /**
    * Get jQuery plugin name.
+   *
    * @return string Plugin name.
    */
   abstract public function getPluginName();
 
   /**
    * Load library files.
-   * @return boolean Indicate if library files loaded successfully.
+   *
+   * @return bool Indicate if library files loaded successfully.
    */
   abstract protected function loadLibrary();
-  
+
   /**
    * Load custom JS and CSS files and JS settings.
-   * @return void.
+   *
+   * @param @see hook_field_formatter_view().
    */
   protected function loadJSandCSS($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     $js_settings = $this->generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display);
@@ -109,10 +127,12 @@ abstract class field_timer_formatter_js_base extends field_timer_formatter_base 
     drupal_add_js(array('field_timer' => $js_settings), 'setting');
     drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js');
   }
-  
+
   /**
    * Generate JS settings.
+   *
    * @param @see hook_field_formatter_view().
+   *
    * @return array Drupal JS settings array.
    */
   abstract protected function generateJSSettings($entity_type, $entity, $field, $instance, $langcode, $items, $display);
@@ -130,7 +150,7 @@ abstract class field_timer_jquery_countdown_js_base extends field_timer_formatte
     $library = libraries_detect('jquery.countdown');
     return $library && !empty($library['installed']);
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -149,13 +169,13 @@ abstract class field_timer_jquery_countdown_js_base extends field_timer_formatte
           '@js_min' => $js_name_min,
           '@full_path' => $base_path . '/' . $js_name,
           '@full_path_min' => $base_path . '/' . $js_name_min,
-      )), 'error');
+        )), 'error');
       }
     }
-    
+
     return $this->library_loaded;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -164,16 +184,16 @@ abstract class field_timer_jquery_countdown_js_base extends field_timer_formatte
     $id_key = $info['entity keys']['id'];
     $js_settings = array();
     $settings = $display['settings'];
-    
+
     foreach ($items as $delta => $item) {
       $key = $entity_type . '_' . $entity->{$id_key} . '_' . $field['field_name'] . '_' . $delta;
       $timestamp = $this->getTimestamp($item, $field);
       $js_settings += $this->generateJSSettingsArray($key, $timestamp, $settings['type'], $settings);
     }
-    
+
     return $js_settings;
   }
-  
+
   /**
    * @inheritdoc
    */
@@ -181,7 +201,7 @@ abstract class field_timer_jquery_countdown_js_base extends field_timer_formatte
     parent::loadJSandCSS($entity_type, $entity, $field, $instance, $langcode, $items, $display);
     drupal_add_css(drupal_get_path('module', 'field_timer') . '/css/field_timer.css', 'file');
   }
-  
+
   protected function generateJSSettingsArray($key, $timestamp, $type, $settings) {
     $js_settings = array();
 
@@ -207,4 +227,5 @@ abstract class field_timer_jquery_countdown_js_base extends field_timer_formatte
       'countdown' => t('Countdown'),
     );
   }
+
 }
