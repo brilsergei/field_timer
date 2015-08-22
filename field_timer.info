@@ -7,3 +7,9 @@ dependencies[] = libraries
 dependencies[] = date
 dependencies[] = date_popup
 dependencies[] = options
+
+files[] = includes/field_timer_base.inc
+files[] = includes/field_timer_text.inc
+files[] = includes/field_timer_county.inc
+files[] = includes/field_timer_jquery_countdown.inc
+files[] = includes/field_timer_jquery_countdown_led.inc

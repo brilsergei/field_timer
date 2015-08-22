@@ -125,7 +125,6 @@ function field_timer_field_widget_form(&$form, &$form_state, $field, $instance,
  * Implements hook_field_formatter_info().
  */
 function field_timer_field_formatter_info() {
-  field_timer_include();
   $field_types = array('field_timer', 'datestamp', 'date', 'datetime');
   $formatter_types = array(
     'field_timer_text',
@@ -160,7 +159,6 @@ function field_timer_field_formatter_info() {
 function field_timer_field_formatter_view($entity_type, $entity, $field, $instance,
         $langcode, $items, $display) {
 
-  field_timer_include($display['type']);
   $class = $display['type'] . '_' . $field['type'];
   $handler = new $class();
   return $handler->renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display);
@@ -220,7 +218,6 @@ function field_timer_field_load($entity_type, $entities, $field, $instances,
 function field_timer_field_formatter_settings_summary($field, $instance, $view_mode) {
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
-  field_timer_include($display['type']);
 
   $class = $display['type'] . '_' . $field['type'];
   $handler = new $class();
@@ -235,7 +232,6 @@ function field_timer_field_formatter_settings_form($field, $instance, $view_mode
 
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
-  field_timer_include($display['type']);
 
   $class = $display['type'] . '_' . $field['type'];
   $handler = new $class();
@@ -288,24 +284,4 @@ function field_timer_entity_properties($entity_type = '') {
     return $properties[$entity_type];
   }
   return $properties;
-}
-
-/**
- * Load includes.
- */
-function field_timer_include($formatter = '') {
-  $files = array(
-    'field_timer_base',
-    'field_timer_text',
-    'field_timer_county',
-    'field_timer_jquery_countdown',
-    'field_timer_jquery_countdown_led',
-  );
-  foreach ($files as $file) {
-    if ($file == 'field_timer_base' || empty($formatter)
-        || (!empty($formatter) && $formatter == $file)) {
-
-      module_load_include('inc', 'field_timer', 'includes/' . $file);
-    }
-  }
 }
