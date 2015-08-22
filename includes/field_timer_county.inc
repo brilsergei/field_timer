@@ -447,7 +447,7 @@ abstract class field_timer_county_date_field_base extends field_timer_county_bas
 
       $settings2 = array();
       foreach ($settings as $name => $value) {
-        if (substr($name, strlen($name - 2)) == '2') {
+        if (substr($name, strlen($name) - 1) == '2') {
           $settings2[substr($name, 0, strlen($name) - 1)] = $value;
         }
       }
