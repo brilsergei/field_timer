@@ -1,0 +1,42 @@
+county:
+  remote: http://www.egrappler.com/free-jquery-count-down-plugin-county/
+  version: 1.0
+  license:
+    name: GPL
+    url: http://egrappler.com/license/
+  js:
+    /libraries/county/js/county.js: {}
+  css:
+    component:
+      /libraries/county/css/county.css: {}
+  dependencies:
+    - core/jquery
+
+jquery.countdown:
+  remote: http://keith-wood.name/countdown.html
+  version: 2.0.2
+  license:
+    name: MIT
+    url: http://keith-wood.name/licence.html
+    gpl-compatible: true
+  js:
+    /libraries/jquery.countdown/jquery.plugin.min.js: { minified: true }
+    /libraries/jquery.countdown/jquery.countdown.min.js: { minified: true }
+  css:
+    component:
+      /libraries/jquery.countdown/jquery.countdown.css: {}
+  dependencies:
+    - core/jquery
+
+init:
+  version: VERSION
+  js:
+    js/field_timer.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
+  css:
+    component:
+      css/field_timer.css: {}

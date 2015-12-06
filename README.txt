@@ -2,28 +2,24 @@ h1. Field Timer
 
 h2. Description
 
-This module provides field which can be displayed as a timer/countdown. 
-A start/target date can be any date or an entity property which represent a 
-date (for example, created date of a node). Module provides 3 field formatters: 
-simple text and 2 formatters based on jQuery plugins County and 
-jQuery Countdown.
+This module provides datatime field formatters to display the field as a
+timer/countdown. Module provides 3 field formatters: simple text and
+2 formatters based on jQuery plugins: County and jQuery Countdown.
 
 h2. Requirements
 
-Libraries (http://drupal.org/project/libraries)
-Date Popup from package of modules Date (http://drupal.org/project/date)
 County (http://www.egrappler.com/free-jquery-count-down-plugin-county/)
 jQuery Countdown (http://keith-wood.name/countdown.html)
 
 h2. Installation
 
 1. Download the module.
-2. To be able to use County and jQuery Countdown plugins download them to
-sites/all/libraries/county and sites/all/libraries/jquery.countdown. This module
-supports jQuery Countdown 2.0.0.
+2. Download required JS libraries to drupal library directory and rename
+library directories to libraries/county and libraries/jquery.countdown
+respectively. This module supports jQuery Countdown 2.0.2.
 3. Remove first css rule from sites/all/libraries/county/css/county.css. It
 changes font size on the site. Plugin author was notified about this problem.
-I hope he fix it.
+I hope he'll fix it.
 4. Enable the module using admin module page or drush.
 
 h2. Issues, Bugs and Feature Requests
