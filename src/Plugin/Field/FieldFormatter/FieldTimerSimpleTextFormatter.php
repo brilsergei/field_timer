@@ -52,14 +52,15 @@ class FieldTimerSimpleTextFormatter extends DateTimeTimeAgoFormatter {
     foreach ($items as $delta => $item) {
       switch ($type) {
         case static::TYPE_TIMER:
-          if ($item->date->getTimestamp() < REQUEST_TIME) {
+          if ($item->date->getTimestamp() >= REQUEST_TIME) {
             unset($elements[$delta]);
           }
           break;
         case static::TYPE_COUNTDOWN:
-          if ($item->date->getTimestamp() > REQUEST_TIME) {
+          if ($item->date->getTimestamp() < REQUEST_TIME) {
             unset($elements[$delta]);
           }
+          break;
       }
     }
 
