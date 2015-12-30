@@ -71,7 +71,6 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
 
     $ids = $this->generateIds($items);
     $background = $this->getSetting('background');
-    dpm($background);
 
     foreach ($items as $delta => $item) {
       $elements[$delta] = array(
