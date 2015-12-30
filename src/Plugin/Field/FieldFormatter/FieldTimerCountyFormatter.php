@@ -70,15 +70,18 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
     $elements = parent::viewElements($items, $langcode);
 
     $ids = $this->generateIds($items);
+    $attributes = array(
+      'class' => array('field-timer-county'),
+    );
     $background = $this->getSetting('background');
+    if (!empty($background)) {
+      $attributes['style'] = 'background:' . $background . ';';
+    }
 
     foreach ($items as $delta => $item) {
       $elements[$delta] = array(
         '#theme' => 'container',
-        '#attributes' => array(
-          'style' => 'background:' . $background . ';',
-          'class' => array('field-timer-county'),
-        ),
+        '#attributes' => $attributes,
         '#children' => array(
           '#markup' => '<div id="' . $ids[$delta] . '"  data-timestamp="'
           . $this->getTimestamp($item) . '"></div>',
