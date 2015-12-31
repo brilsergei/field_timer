@@ -1,5 +1,5 @@
 name: Field Timer
 type: module
-description: Provides a basic field to create timer or countdown and timer/countdown formatters for datetime field.
+description: Provides a datetime field formatter to display the field as timer or countdown.
 package: Fields
 core: 8.x
