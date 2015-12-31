@@ -53,7 +53,10 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
 
-    $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME . '.' . $this->getSetting('regional');
+    $regional = $this->getSetting('regional');
+    if ($regional != 'en') {
+      $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME . '.' . $regional;
+    }
 
     $ids = $this->generateIds($items);
 

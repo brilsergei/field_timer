@@ -236,19 +236,6 @@ jquery.countdown.et:
   dependencies:
     - core/jquery.countdown
 
-# English
-jquery.countdown.en:
-  remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
-  license:
-    name: MIT
-    url: http://keith-wood.name/licence.html
-    gpl-compatible: true
-  js:
-    /libraries/jquery.countdown/jquery.countdown-en.js: { minified: false }
-  dependencies:
-    - core/jquery.countdown
-
 # Farsi/Persian
 jquery.countdown.fa:
   remote: http://keith-wood.name/countdown.html
