@@ -84,8 +84,8 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
       '#type' => 'textfield',
       '#title' => $this->t('Format'),
       '#default_value' => $this->getSetting('format'),
-      '#description' => $this->t("See !documentation for this parameter.", array(
-        '!documentation' => $this->getDocumentationLink('documentation', array('fragment' => 'format')),
+      '#description' => $this->t('See <a href=":url" target="_blank">documentation</a> for this parameter.', array(
+        ':url' => $this->getDocumentationLink(array('fragment' => 'format')),
       )),
     );
 
@@ -95,8 +95,8 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
       '#cols' => 60,
       '#title' => $this->t('Layout'),
       '#default_value' => $this->getSetting('layout'),
-      '#description' => $this->t("See !documentation for this parameter.", array(
-        '!documentation' => $this->getDocumentationLink('documentation', array('fragment' => 'layout')),
+      '#description' => $this->t('See <a href=":url" target="_blank">documentation</a> for this parameter.', array(
+        ':url' => $this->getDocumentationLink(array('fragment' => 'layout')),
       )),
     );
 

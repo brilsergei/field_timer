@@ -96,9 +96,8 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
     );
   }
 
-  protected function getDocumentationLink($text, array $options = array()) {
-    $doc_url = Url::fromUri('http://keith-wood.name/countdownRef.html', $options);
-    return Link::fromTextAndUrl($this->t($text), $doc_url);
+  protected function getDocumentationLink(array $options = array()) {
+    return Url::fromUri('http://keith-wood.name/countdownRef.html', $options)->toString();
   }
 
 }
