@@ -12,7 +12,7 @@ h2. Requirements
 
 Libraries (http://drupal.org/project/libraries)
 Date Popup from package of modules Date (http://drupal.org/project/date)
-County (http://www.egrappler.com/free-jquery-count-down-plugin-county/)
+County (https://github.com/brilsergei/county)
 jQuery Countdown (http://keith-wood.name/countdown.html)
 
 h2. Installation
@@ -21,10 +21,7 @@ h2. Installation
 2. To be able to use County and jQuery Countdown plugins download them to
 sites/all/libraries/county and sites/all/libraries/jquery.countdown. This module
 supports jQuery Countdown 2.0.0.
-3. Remove first css rule from sites/all/libraries/county/css/county.css. It
-changes font size on the site. Plugin author was notified about this problem.
-I hope he fix it.
-4. Enable the module using admin module page or drush.
+3. Enable the module using admin module page or drush.
 
 h2. Issues, Bugs and Feature Requests
 
