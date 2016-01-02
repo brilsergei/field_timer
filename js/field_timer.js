@@ -7,6 +7,9 @@
   Drupal.behaviors.field_timer = {
     attach: function() {
       var settings = drupalSettings.field_timer;
+      if ($.countdown != undefined) {
+        $.countdown.setDefaults($.countdown.regionalOptions['']);
+      }
       for (var key in settings) {
         var options = settings[key].settings;
         var $item = $('#' + key);
@@ -25,7 +28,8 @@
                 {
                   until: (options.until ? new Date(timestamp * 1000) : null),
                   since: (options.since ? new Date(timestamp * 1000) : null)
-                }
+                },
+                $.countdown.regionalOptions[options.regional]
               ));
             });
             break;
