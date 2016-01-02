@@ -14,15 +14,14 @@ function _field_timer_text_formatter($items, $settings) {
   $elements = array();
 
   foreach ($items as $delta => $item) {
+    $time = '';
     // Check what we should display - timer or countdown.
     switch ($settings['type']) {
       case 'auto':
         $interval = REQUEST_TIME - $item['timestamp'];
+        $sign = '-';
         if ($interval > 0) {
           $sign = '+';
-        }
-        else {
-          $sign = '-';
         }
         $time = $sign . format_interval(abs($interval), $settings['granularity']);
         break;
@@ -47,7 +46,7 @@ function _field_timer_text_formatter($items, $settings) {
 /**
  * Help function.
  *
- * Build renderable array and load neccessary files for County formatter.
+ * Build renderable array and load necessary files for County formatter.
  */
 function _field_timer_county_formatter($items, $settings, $entity_type, $entity, $instance) {
   $info = entity_get_info($entity_type);
@@ -75,7 +74,7 @@ function _field_timer_county_formatter($items, $settings, $entity_type, $entity,
   $base_path = 'sites/all/libraries/county';
   if (!$library_loaded) {
     drupal_set_message(t("Can't load County library. Please download !url jQuery plugin and extract it to @path, so @js can be found at @full_path.", array(
-        '!url' => l(t('County'), 'http://www.egrappler.com/free-jquery-count-down-plugin-county/', array('absolute' => TRUE)),
+        '!url' => l(t('County'), 'https://github.com/brilsergei/county', array('absolute' => TRUE)),
         '@path' => $base_path,
         '@js' => $js_name,
         '@full_path' => $base_path . '/js/' . $js_name,
@@ -92,7 +91,7 @@ function _field_timer_county_formatter($items, $settings, $entity_type, $entity,
 /**
  * Help function.
  *
- * Build renderable array and load neccessary files for jQuery Countdown
+ * Build renderable array and load necessary files for jQuery Countdown
  * formatter.
  */
 function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type, $entity, $instance) {
@@ -152,7 +151,7 @@ function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type
     return array();
   }
 
-  // Add neccessary js and css files.
+  // Add necessary js and css files.
   drupal_add_js(array('field_timer' => $js_settings), 'setting');
   $path = libraries_get_path('jquery.countdown');
   if (file_exists($path . '/jquery.countdown-' . $settings['regional'] . '.js')) {
@@ -167,7 +166,7 @@ function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type
 /**
  * Help function.
  *
- * Build renderable array and load neccessary files for jQuery Countdown LED
+ * Build renderable array and load necessary files for jQuery Countdown LED
  * formatter.
  */
 function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_type, $entity, $instance) {
@@ -252,7 +251,7 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
     return array();
   }
 
-  // Add neccessary js and css files.
+  // Add necessary js and css files.
   drupal_add_js(array('field_timer' => $js_settings), 'setting');
   drupal_add_js(drupal_get_path('module', 'field_timer') . '/js/field_timer.js', 'file');
   drupal_add_css(drupal_get_path('module', 'field_timer') . '/css/field_timer.css');
@@ -494,7 +493,7 @@ function _field_timer_jquery_countdown_settings_form($settings) {
     '#type' => 'textfield',
     '#title' => t('Format'),
     '#default_value' => $settings['format'],
-    '#description' => t("See !documentation for this parameter.", array(
+    '#description' => t('See !documentation for this parameter.', array(
       '!documentation' => l(t('documentation'),'http://keith-wood.name/countdownRef.html', array('fragment' => 'format'))
     )),
   );
@@ -505,7 +504,7 @@ function _field_timer_jquery_countdown_settings_form($settings) {
     '#cols' => 60,
     '#title' => t('Layout'),
     '#defualt_value' => $settings['layout'],
-    '#description' => t("See !documentation for this parameter.", array(
+    '#description' => t('See !documentation for this parameter.', array(
       '!documentation' => l(t('documentation'), 'http://keith-wood.name/countdownRef.html', array('fragment' => 'layout'))
     )),
   );
@@ -570,7 +569,7 @@ function _field_timer_jquery_countdown_led_settings_form($settings) {
     '#type' => 'checkbox',
     '#title' => t('Display days'),
     '#default_value' => $settings['display_days'],
-    '#attributes' => array('class' => array('field-timer-dislay-days')),
+    '#attributes' => array('class' => array('field-timer-display-days')),
   );
 
   $settings_form['max_count_of_days'] = array(
@@ -585,7 +584,7 @@ function _field_timer_jquery_countdown_led_settings_form($settings) {
     '#default_value' => $settings['max_count_of_days'],
     '#states' => array(
       'invisible' => array(
-        'input.field-timer-dislay-days' => array('checked' => FALSE),
+        'input.field-timer-display-days' => array('checked' => FALSE),
       ),
     ),
   );
