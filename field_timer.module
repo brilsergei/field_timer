@@ -212,7 +212,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
       return _field_timer_text_formatter($items, $settings);
 
     case 'field_timer_county':
-      return _field_timer_county_formatter($items, $settings, $entity_type, $entity);
+      return _field_timer_county_formatter($items, $settings, $entity_type, $entity, $instance);
 
     case 'field_timer_jquery_countdown':
       return _field_timer_jquery_countdown_formatter($items, $settings, $entity_type, $entity, $instance);

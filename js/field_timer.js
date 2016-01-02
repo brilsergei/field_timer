@@ -4,27 +4,28 @@
       var settings = Drupal.settings.field_timer;
       for (var type in settings) {
         for (var id in settings[type]) {
-          for (var delta in settings[type][id]) {
-            switch (settings[type][id].plugin) {
-              case 'county':
-                var options = settings[type][id].options;
-                $('#county-' + type + '-' + settings[type][id].nid + '-' + delta).not('.field-timer-processed').
+          for (var field_name in settings[type][id]) {
+            for (var delta in settings[type][id][field_name]) {
+              switch (settings[type][id][field_name].plugin) {
+                case 'county':
+                  var options = settings[type][id][field_name].options;
+                  $('#county-' + type + '-' + settings[type][id][field_name].nid + '-' + field_name + '-' + delta).not('.field-timer-processed').
                   county({
-                    endDateTime: new Date(settings[type][id][delta] * 1000),
+                    endDateTime: new Date(settings[type][id][field_name][delta] * 1000),
                     animation: options.animation,
                     speed: options.speed,
                     theme: options.county_theme,
                     reflection: options.reflection,
-                    reflectionOpacity: options.reflectionOpacity,
+                    reflectionOpacity: options.reflectionOpacity
                   }).addClass('field-timer-processed');
-                break;
+                  break;
 
-              case 'jquery.countdown':
-                var options = settings[type][id].options;
-                $('#jquery-countdown-' + type + '-' + settings[type][id].nid + '-' + delta).not('.field-timer-processed').
+                case 'jquery.countdown':
+                  var options = settings[type][id][field_name].options;
+                  $('#jquery-countdown-' + type + '-' + settings[type][id][field_name].nid + '-' + field_name + '-' + delta).not('.field-timer-processed').
                   countdown({
-                    until: options.until ? new Date(settings[type][id][delta] * 1000) : null,
-                    since: options.since ? new Date(settings[type][id][delta] * 1000) : null,
+                    until: options.until ? new Date(settings[type][id][field_name][delta] * 1000) : null,
+                    since: options.since ? new Date(settings[type][id][field_name][delta] * 1000) : null,
                     format: options.format,
                     layout: options.layout,
                     compact: options.compact,
@@ -33,21 +34,22 @@
                     description: options.description,
                     expiryText: options.expiryText,
                     expiryUrl: options.expiryUrl,
-                    padZeroes: options.padZeroes,
+                    padZeroes: options.padZeroes
                   }).addClass('field-timer-processed');
-                break;
-                
-              case 'jquery.countdown.led':
-                var options = settings[type][id].options;
-                $('#jquery-countdown-led-' + type + '-' + settings[type][id].nid + '-' + delta).not('.field-timer-processed').
+                  break;
+
+                case 'jquery.countdown.led':
+                  var options = settings[type][id][field_name].options;
+                  $('#jquery-countdown-led-' + type + '-' + settings[type][id][field_name].nid + '-' + field_name + '-' + delta).not('.field-timer-processed').
                   countdown({
-                    until: options.until ? new Date(settings[type][id][delta] * 1000) : null,
-                    since: options.since ? new Date(settings[type][id][delta] * 1000) : null,
-                    layout: $('#jquery-countdown-led-' + type + '-' + settings[type][id].nid + '-' + delta).html(),
+                    until: options.until ? new Date(settings[type][id][field_name][delta] * 1000) : null,
+                    since: options.since ? new Date(settings[type][id][field_name][delta] * 1000) : null,
+                    layout: $('#jquery-countdown-led-' + type + '-' + settings[type][id][field_name].nid + '-' + field_name + '-' + delta).html(),
                     description: options.description,
                     expiryText: options.expiryText,
-                    expiryUrl: options.expiryUrl,
+                    expiryUrl: options.expiryUrl
                   }).addClass('field-timer-processed');
+              }
             }
           }
         }
