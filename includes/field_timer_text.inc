@@ -8,8 +8,7 @@
 /**
  * Base class for field_timer_text formatter.
  */
-abstract class field_timer_text_base extends field_timer_formatter_base implements field_timer_formatter_interface {
-
+abstract class field_timer_text_base extends field_timer_formatter_base {
   /**
    * @inheritdoc
    */
@@ -97,6 +96,7 @@ abstract class field_timer_text_base extends field_timer_formatter_base implemen
    * Render field item.
    */
   protected function renderItem($type, $granularity, $timestamp) {
+    $time = '';
     // Check what we should display - timer or countdown.
     switch ($type) {
       case 'auto':

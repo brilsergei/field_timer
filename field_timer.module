@@ -12,8 +12,8 @@ function field_timer_libraries_info() {
   return array(
     'county' => array(
       'name' => t('County'),
-      'vendor url' => 'http://www.egrappler.com/free-jquery-count-down-plugin-county/',
-      'download url' => 'http://www.egrappler.com/free-jquery-count-down-plugin-county/',
+      'vendor url' => 'https://github.com/brilsergei/county',
+      'download url' => 'https://github.com/brilsergei/county/archive/master.zip',
       'version' => '1.0',
       'files' => array(
         'js' => array(
@@ -168,10 +168,7 @@ function field_timer_field_formatter_view($entity_type, $entity, $field, $instan
  * Implements hook_field_is_empty().
  */
 function field_timer_field_is_empty($item, $field) {
-  if (empty($item['timestamp']) && empty($item['entity_property_name'])) {
-    return TRUE;
-  }
-  return FALSE;
+   return empty($item['timestamp']) && empty($item['entity_property_name']);
 }
 
 /**
@@ -203,10 +200,9 @@ function field_timer_field_load($entity_type, $entities, $field, $instances,
   // Set timestamp for field item if an entity property used as target/end date.
   foreach ($entities as $id => $entity) {
     foreach ($items[$id] as $delta => $item) {
-      if (empty($item['timestamp']) && !empty($item['entity_property_name'])) {
-        if (isset($entity->{$item['entity_property_name']})) {
-          $items[$id][$delta]['timestamp'] = $entity->{$item['entity_property_name']};
-        }
+      if (empty($item['timestamp']) && !empty($item['entity_property_name']) &&
+        isset($entity->{$item['entity_property_name']})) {
+        $items[$id][$delta]['timestamp'] = $entity->{$item['entity_property_name']};
       }
     }
   }
@@ -254,8 +250,8 @@ function field_timer_field_timer_entity_properties() {
     'file' => array(
       'timestamp' => t('File upload date'),
     ),
-    'taxanomy_term' => array(),
-    'taxanomy_vocabulary' => array(),
+    'taxonomy_term' => array(),
+    'taxonomy_vocabulary' => array(),
     'user' => array(
       'created' => t('User create date'),
       'access' => t('User last access date'),

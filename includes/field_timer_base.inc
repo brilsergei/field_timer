@@ -6,7 +6,7 @@
  */
 
 /**
- * Feild formatter interface.
+ * Field formatter interface.
  */
 interface field_timer_formatter_interface {
 
@@ -48,7 +48,7 @@ interface field_timer_formatter_interface {
    * @param array $settings Formatter settings array.
    * @param array $field Field definition.
    *
-   * @return array Drupal form array to display formetter settings form.
+   * @return array Drupal form array to display formatter settings form.
    */
   public function getSettingsForm($settings, $field);
 
@@ -83,7 +83,7 @@ interface field_timer_formatter_interface {
 abstract class field_timer_formatter_base implements field_timer_formatter_interface {
 
   /**
-   * Convert field item value to timstamp.
+   * Convert field item value to timestamp.
    *
    * @param array $item Field item.
    * @param array $field Field definition.
@@ -98,7 +98,7 @@ abstract class field_timer_formatter_base implements field_timer_formatter_inter
 /**
  * Base class for formatters using js library.
  */
-abstract class field_timer_formatter_js_base extends field_timer_formatter_base implements field_timer_formatter_interface {
+abstract class field_timer_formatter_js_base extends field_timer_formatter_base {
 
   protected $library_loaded = FALSE;
 
