@@ -7,6 +7,10 @@
   Drupal.behaviors.field_timer = {
     attach: function() {
       var settings = Drupal.settings.field_timer;
+      if ($.countdown != undefined) {
+        // Global regional settings must be set to English.
+        $.countdown.setDefaults($.countdown.regionalOptions['']);
+      }
       for (var key in settings) {
         switch (settings[key].plugin) {
           case 'county':
@@ -18,14 +22,14 @@
                 speed: options.speed,
                 theme: options.county_theme,
                 reflection: options.reflection,
-                reflectionOpacity: options.reflectionOpacity,
+                reflectionOpacity: options.reflectionOpacity
               }).addClass('field-timer-processed');
             break;
 
           case 'jquery.countdown':
             var options = settings[key].options;
             $('#jquery-countdown-' + key).not('.field-timer-processed').
-              countdown({
+              countdown($.extend({
                 until: options.until ? new Date(settings[key].timestamp * 1000) : null,
                 since: options.since ? new Date(settings[key].timestamp * 1000) : null,
                 format: options.format,
@@ -33,17 +37,18 @@
                 compact: options.compact,
                 significant: options.significant,
                 timeSeparator: options.timeSeparator,
-                padZeroes: options.padZeroes,
-              }).addClass('field-timer-processed');
+                padZeroes: options.padZeroes
+              }, $.countdown.regionalOptions[options.regional])).addClass('field-timer-processed');
             break;
 
           case 'jquery.countdown.led':
             var options = settings[key].options;
-            $('#jquery-countdown-led-' + key).not('.field-timer-processed').
+            var $elem = $('#jquery-countdown-led-' + key);
+            $elem.not('.field-timer-processed').
               countdown({
                 until: options.until ? new Date(settings[key].timestamp * 1000) : null,
                 since: options.since ? new Date(settings[key].timestamp * 1000) : null,
-                layout: $('#jquery-countdown-led-' + key).html(),
+                layout: $elem.html()
               }).addClass('field-timer-processed');
             break;
         }
