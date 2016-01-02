@@ -2,6 +2,9 @@
   Drupal.behaviors.field_timer = {
     attach: function() {
       var settings = Drupal.settings.field_timer;
+      if ($.countdown != undefined) {
+        $.countdown.setDefaults($.countdown.regionalOptions['']);
+      }
       for (var type in settings) {
         for (var id in settings[type]) {
           for (var field_name in settings[type][id]) {
@@ -23,7 +26,7 @@
                 case 'jquery.countdown':
                   var options = settings[type][id][field_name].options;
                   $('#jquery-countdown-' + type + '-' + settings[type][id][field_name].nid + '-' + field_name + '-' + delta).not('.field-timer-processed').
-                  countdown({
+                  countdown($.extend({
                     until: options.until ? new Date(settings[type][id][field_name][delta] * 1000) : null,
                     since: options.since ? new Date(settings[type][id][field_name][delta] * 1000) : null,
                     format: options.format,
@@ -35,7 +38,7 @@
                     expiryText: options.expiryText,
                     expiryUrl: options.expiryUrl,
                     padZeroes: options.padZeroes
-                  }).addClass('field-timer-processed');
+                  }, $.countdown.regionalOptions[options.regional])).addClass('field-timer-processed');
                   break;
 
                 case 'jquery.countdown.led':
