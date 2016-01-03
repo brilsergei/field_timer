@@ -50,22 +50,22 @@ function _field_timer_text_formatter($items, $settings) {
  */
 function _field_timer_county_formatter($items, $settings, $entity_type, $entity, $instance) {
   $info = entity_get_info($entity_type);
-  $id_key = $info['entity keys']['id'];
+  $id_key = 'id_' . $entity->{$info['entity keys']['id']};
+  $field_name = $instance['field_name'];
   $js_settings = array();
   $elements = array();
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['nid'] = $entity->{$id_key};
 
   foreach ($items as $delta => $item) {
     $elements[$delta] = array(
       '#type' => 'markup',
-      '#markup' => '<div id="county-' . $entity_type . '-' . $entity->{$id_key}
+      '#markup' => '<div id="county-' . $entity_type . '-' . $id_key
         . '-' . $instance['field_name'] . '-' . $delta . '" '
         . 'style="background: ' . $settings['background'] . ';"></div>',
     );
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']][$delta] = $item['timestamp'];
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['timestamp'] = $item['timestamp'];
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['options'] = $settings;
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['plugin'] = 'county';
   }
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options'] = $settings;
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['plugin'] = 'county';
 
   // Load library files.
   $library = libraries_load('county');
@@ -96,20 +96,10 @@ function _field_timer_county_formatter($items, $settings, $entity_type, $entity,
  */
 function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type, $entity, $instance) {
   $info = entity_get_info($entity_type);
-  $id_key = $info['entity keys']['id'];
+  $id_key = 'id_' . $entity->{$info['entity keys']['id']};
+  $field_name = $instance['field_name'];
   $js_settings = array();
   $elements = array();
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['nid'] = $entity->{$id_key};
-
-  foreach ($items as $delta => $item) {
-    $elements[$delta] = array(
-      '#type' => 'markup',
-      '#markup' => '<span id="jquery-countdown-' . $entity_type . '-'
-        . $entity->{$id_key} . '-' . $instance['field_name'] . '-' . $delta
-        . '" class="jquery-countdown"></span>',
-    );
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']][$delta] = $item['timestamp'];
-  }
 
   // Add description, expiry text and url.
   $instance_settings = $instance['settings']['jquery-countdown'];
@@ -118,16 +108,26 @@ function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type
   $instance_settings['expiryText'] = token_replace($instance_settings['expiryText'], $data);
   $instance_settings['description'] = token_replace($instance_settings['description'], $data);
 
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options'] = array_merge($settings, $instance_settings);
-  if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] <= REQUEST_TIME)) {
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options']['until'] = FALSE;
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options']['since'] = TRUE;
+  foreach ($items as $delta => $item) {
+    $elements[$delta] = array(
+      '#type' => 'markup',
+      '#markup' => '<span id="jquery-countdown-' . $entity_type . '-' . $id_key
+        . '-' . $instance['field_name'] . '-' . $delta
+        . '" class="jquery-countdown"></span>',
+    );
+
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['timestamp'] = $item['timestamp'];
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['options'] = array_merge($settings, $instance_settings);
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['plugin'] = 'jquery.countdown';
+    if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] <= REQUEST_TIME)) {
+      $js_settings[$entity_type][$id_key][$field_name][$delta]['options']['until'] = FALSE;
+      $js_settings[$entity_type][$id_key][$field_name][$delta]['options']['since'] = TRUE;
+    }
+    elseif ($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $item['timestamp'] > REQUEST_TIME)) {
+      $js_settings[$entity_type][$id_key][$field_name][$delta]['options']['until'] = TRUE;
+      $js_settings[$entity_type][$id_key][$field_name][$delta]['options']['since'] = FALSE;
+    }
   }
-  elseif ($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $item['timestamp'] > REQUEST_TIME)) {
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options']['until'] = TRUE;
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options']['since'] = FALSE;
-  }
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['plugin'] = 'jquery.countdown';
 
   // Load library files.
   $library = libraries_load('jquery.countdown');
@@ -172,10 +172,10 @@ function _field_timer_jquery_countdown_formatter($items, $settings, $entity_type
 function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_type, $entity, $instance) {
 
   $info = entity_get_info($entity_type);
-  $id_key = $info['entity keys']['id'];
+  $id_key = 'id_' . $entity->{$info['entity keys']['id']};
+  $field_name = $instance['field_name'];
   $js_settings = array();
   $elements = array();
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['nid'] = $entity->{$id_key};
 
   // Add description, expiry text and url.
   $instance_settings = $instance['settings']['jquery-countdown'];
@@ -215,23 +215,23 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
     $elements[$delta] = array(
       '#type' => 'markup',
       '#markup' => '<span id="jquery-countdown-led-' . $entity_type . '-'
-        . $entity->{$id_key} . '-' . $instance['field_name'] . '-' . $delta
+        . $id_key . '-' . $instance['field_name'] . '-' . $delta
         . '" class="jquery-countdown-led ' . $settings['countdown_theme'] . '">'
         . str_replace('%t%', $settings['countdown_theme'], $layout) . '</span>',
     );
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']][$delta] = $item['timestamp'];
-  }
 
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options'] = array_merge($settings, $instance_settings);
-  if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] <= REQUEST_TIME)) {
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options']['until'] = FALSE;
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options']['since'] = TRUE;
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['timestamp'] = $item['timestamp'];
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['options'] = array_merge($settings, $instance_settings);
+    $js_settings[$entity_type][$id_key][$field_name][$delta]['plugin'] = 'jquery.countdown.led';
+    if ($settings['type'] == 'timer' || ($settings['type'] == 'auto' && $item['timestamp'] <= REQUEST_TIME)) {
+      $js_settings[$entity_type][$id_key][$field_name][$delta]['options']['until'] = FALSE;
+      $js_settings[$entity_type][$id_key][$field_name][$delta]['options']['since'] = TRUE;
+    }
+    elseif ($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $item['timestamp'] > REQUEST_TIME)) {
+      $js_settings[$entity_type][$id_key][$field_name][$delta]['options']['until'] = TRUE;
+      $js_settings[$entity_type][$id_key][$field_name][$delta]['options']['since'] = FALSE;
+    }
   }
-  elseif ($settings['type'] == 'countdown' || ($settings['type'] == 'auto' && $item['timestamp'] > REQUEST_TIME)) {
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options']['until'] = TRUE;
-    $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['options']['since'] = FALSE;
-  }
-  $js_settings[$entity_type][$entity->{$id_key}][$instance['field_name']]['plugin'] = 'jquery.countdown.led';
 
   // Load library files.
   $library = libraries_load('jquery.countdown');
