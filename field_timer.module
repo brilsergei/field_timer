@@ -57,6 +57,7 @@ function field_timer_field_info() {
       'settings' => array(),
       'default_widget' => 'field_timer_simple_date',
       'default_formatter' => 'field_timer_text',
+      'property_type' => 'date',
     ),
   );
 }
