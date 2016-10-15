@@ -676,6 +676,7 @@ jquery.countdown.ur:
     /libraries/jquery.countdown/jquery.countdown-ur.js: { minified: false }
   dependencies:
     - core/jquery.countdown
+
 # Uzbek
 jquery.countdown.uz:
   remote: http://keith-wood.name/countdown.html

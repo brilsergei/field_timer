@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergei
- * Date: 29.11.15
- * Time: 21:32
- */
 
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
@@ -32,13 +26,15 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
   /**
    * LED color themes.
    */
-  const LED_THEME_BLUE = 'blue',
+  const
+    LED_THEME_BLUE = 'blue',
     LED_THEME_GREEN = 'green';
 
   /**
    * Available count of days to display in formatter.
    */
-  const LED_DAY_DIGITS_ONE = 1,
+  const
+    LED_DAY_DIGITS_ONE = 1,
     LED_DAY_DIGITS_TWO = 2,
     LED_DAY_DIGITS_THREE = 3,
     LED_DAY_DIGITS_FOUR = 4;
@@ -48,8 +44,8 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
    */
   public static function defaultSettings() {
     $settings = array(
-        'countdown_theme' => 'green',
-        'max_count_of_days' => 2,
+        'countdown_theme' => static::LED_THEME_GREEN,
+        'max_count_of_days' => static::LED_DAY_DIGITS_TWO,
         'display_days' => 1,
         'display_hours' => 1,
         'display_minutes' => 1,
@@ -156,6 +152,8 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
 
   /**
    * Renders timer/countdown layout.
+   *
+   * @return string
    */
   protected function getLayout() {
     $layout = '<span class="jquery-countdown-led-display-wrapper">';
@@ -180,6 +178,11 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
     return str_replace('%t%', $this->getSetting('countdown_theme'), $layout) . '</span>';
   }
 
+  /**
+   * Gets theme options.
+   *
+   * @return array
+   */
   protected function themeOptions() {
     return array(
       static::LED_THEME_GREEN => $this->t('Green'),
@@ -187,6 +190,11 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
     );
   }
 
+  /**
+   * Gets max number of days options.
+   *
+   * @return array
+   */
   protected function dayOptions() {
     return array(
       static::LED_DAY_DIGITS_ONE => 9,

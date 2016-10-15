@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains Drupal\field_timer\Plugin\Field\FieldFormatter\FieldTimerCountyFormatter.
- */
 
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
@@ -36,16 +32,18 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
   /**
    * Animation types.
    */
-  const ANIMATION_FADE = 'fade',
-      ANIMATION_SCROLL = 'scroll';
+  const
+    ANIMATION_FADE = 'fade',
+    ANIMATION_SCROLL = 'scroll';
 
   /**
    * County color themes.
    */
-  const COUNTY_THEME_BLUE = 'blue',
-      COUNTY_THEME_BLACK = 'black',
-      COUNTY_THEME_GRAY = 'gray',
-      COUNTY_THEME_RED = 'red';
+  const
+    COUNTY_THEME_BLUE = 'blue',
+    COUNTY_THEME_BLACK = 'black',
+    COUNTY_THEME_GRAY = 'gray',
+    COUNTY_THEME_RED = 'red';
 
   /**
    * {@inheritdoc}

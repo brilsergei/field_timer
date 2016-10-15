@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergei
- * Date: 29.11.15
- * Time: 19:05
- */
 
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
@@ -149,6 +143,11 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
     return $summary;
   }
 
+  /**
+   * Gets region options.
+   *
+   * @return array
+   */
   protected function regionOptions() {
     return array(
       'sq' => t('Albanian'),

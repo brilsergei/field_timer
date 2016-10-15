@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\field_timer\Plugin\Field\FieldFormatter\FieldTimerSimpleTextFormatter.
- */
-
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -27,9 +22,10 @@ class FieldTimerSimpleTextFormatter extends DateTimeTimeAgoFormatter {
   /**
    * Formatter types.
    */
-  const TYPE_AUTO = 'auto';
-  const TYPE_TIMER = 'timer';
-  const TYPE_COUNTDOWN = 'countdown';
+  const
+    TYPE_AUTO = 'auto',
+    TYPE_TIMER = 'timer',
+    TYPE_COUNTDOWN = 'countdown';
 
   /**
    * {@inheritdoc}

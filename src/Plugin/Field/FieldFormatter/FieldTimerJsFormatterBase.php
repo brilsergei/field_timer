@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains Drupal\field_timer\Plugin\Field\FieldFormatter\FieldTimerJsFormatterBase.
- */
 
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
@@ -11,6 +7,10 @@ use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
+/**
+ * Base implementation of formatters that uses JavaScript to render
+ * timer/countdown.
+ */
 abstract class FieldTimerJsFormatterBase extends FormatterBase {
 
   /**
@@ -101,11 +101,10 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
   }
 
   /**
-   * Prepares array of settings to use to initialize jQuery plugin.
+   * Prepares array of settings used to initialize jQuery plugin.
    *
    * @param \Drupal\Core\Field\FieldItemInterface $item
    *  Field item.
-   *
    * @return array
    *  Array of key-value pairs.
    */

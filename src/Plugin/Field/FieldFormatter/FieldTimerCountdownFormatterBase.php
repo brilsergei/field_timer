@@ -1,19 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergei
- * Date: 29.11.15
- * Time: 19:02
- */
 
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Url;
-use Drupal\Core\Link;
 
 
+/**
+ * Base implementation of formatters that uses jQuery Countdown plugin.
+ */
 abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBase {
 
   /**
@@ -24,7 +20,8 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
   /**
    * Formatter types.
    */
-  const TYPE_AUTO = 'auto',
+  const
+    TYPE_AUTO = 'auto',
     TYPE_TIMER = 'timer',
     TYPE_COUNTDOWN = 'countdown';
 
