@@ -8,7 +8,7 @@
   Drupal.behaviors.field_timer = {
     attach: function () {
       var settings = drupalSettings.field_timer;
-      if ($.countdown !== 'undefined') {
+      if ($.countdown !== undefined) {
         $.countdown.setDefaults($.countdown.regionalOptions['']);
       }
       for (var key in settings) {
