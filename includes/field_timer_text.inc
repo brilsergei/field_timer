@@ -33,7 +33,9 @@ abstract class field_timer_text_base extends field_timer_formatter_base {
   public function getDefaultSettings() {
     return array(
       'type' => 'auto',
-      'granularity' => 2,
+      'granularity_type' => 'auto',
+      'granularity_auto' => 2,
+      'granularity_manual' => array('day' => 'day'),
     );
   }
 
@@ -43,8 +45,9 @@ abstract class field_timer_text_base extends field_timer_formatter_base {
   public function getSettingsSummary($settings, $field) {
     $summary = array();
     $types = $this->formatterTypes();
+    $granularity_options = $this->granularitySettingsSummary($settings['granularity_type'], $settings['granularity_auto'], $settings['granularity_manual']);
     $summary[] = t('Type: %type', array('%type' => $types[$settings['type']]));
-    $summary[] = t('Granularity: %granularity', array('%granularity' => $settings['granularity']));
+    $summary[] = t('Granularity: %granularity_type (%granularity)', $granularity_options);
 
     return $summary;
   }
@@ -61,11 +64,37 @@ abstract class field_timer_text_base extends field_timer_formatter_base {
       '#default_value' => $settings['type'],
     );
 
-    $settings_form['granularity'] = array(
+    $settings_form['granularity_type'] = array(
       '#type' => 'select',
       '#title' => t('Granularity'),
-      '#options' => $this->formatterGranularity(),
-      '#default_value' => $settings['granularity'],
+      '#options' => $this->granularityTypes(),
+      '#default_value' => $settings['granularity_type'],
+      '#attributes' => array(
+        'class' => array('field-timer-text-granularity-type'),
+      ),
+    );
+
+    $settings_form['granularity_auto'] = array(
+      '#type' => 'select',
+      '#options' => $this->formatterGranularityAuto(),
+      '#default_value' => $settings['granularity_auto'],
+      '#states' => array(
+        'visible' => array(
+          'select.field-timer-text-granularity-type' => array('value' => 'auto'),
+        ),
+      ),
+    );
+
+    $settings_form['granularity_manual'] = array(
+      '#type' => 'select',
+      '#multiple' => TRUE,
+      '#options' => $this->formatterGranularityManual(),
+      '#default_value' => $settings['granularity_manual'],
+      '#states' => array(
+        'visible' => array(
+          'select.field-timer-text-granularity-type' => array('value' => 'manual'),
+        ),
+      ),
     );
 
     return $settings_form;
@@ -74,11 +103,12 @@ abstract class field_timer_text_base extends field_timer_formatter_base {
   public function renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
     $elements = array();
     $settings = $display['settings'];
+    $granularity_option = $settings['granularity_' . $settings['granularity_type']];
 
     foreach ($items as $delta => $item) {
       $elements[$delta] = array(
         '#type' => 'markup',
-        '#markup' => $this->renderItem($settings['type'], $settings['granularity'], $this->getTimestamp($item, $field)),
+        '#markup' => $this->renderItem($settings['type'], $settings['granularity_type'], $granularity_option, $this->getTimestamp($item, $field)),
       );
     }
 
@@ -95,26 +125,88 @@ abstract class field_timer_text_base extends field_timer_formatter_base {
   /**
    * Render field item.
    */
-  protected function renderItem($type, $granularity, $timestamp) {
+  protected function renderItem($type, $granularity_type, $granularity_option, $timestamp) {
     $time = '';
     // Check what we should display - timer or countdown.
     switch ($type) {
       case 'auto':
         $interval = REQUEST_TIME - $timestamp;
         $sign = ($interval > 0) ? '+' : '-';
-        $time = $sign . format_interval(abs($interval), $granularity);
+        $time = $sign . $this->formatInterval(abs($interval), $granularity_type, $granularity_option);
         break;
 
       case 'timer':
-        $time = format_interval(REQUEST_TIME - $timestamp, $granularity);
+        $time = $this->formatInterval(REQUEST_TIME - $timestamp, $granularity_type, $granularity_option);
         break;
 
       case 'countdown':
-        $time = format_interval($timestamp - REQUEST_TIME, $granularity);
+        $time = $this->formatInterval($timestamp - REQUEST_TIME, $granularity_type, $granularity_option);
         break;
     }
 
     return $time;
+  }
+
+  /**
+   * Formats interval according to granularity settings.
+   */
+  protected function formatInterval($interval, $granularity_type, $granularity_option) {
+    $result = '';
+    switch ($granularity_type) {
+      case 'auto':
+        $result = format_interval($interval, $granularity_option);
+        break;
+
+      case 'manual':
+        // @see function format_interval
+        $units = array(
+          '1 year|@count years' => 31536000,
+          '1 month|@count months' => 2592000,
+          '1 week|@count weeks' => 604800,
+          '1 day|@count days' => 86400,
+          '1 hour|@count hours' => 3600,
+          '1 min|@count min' => 60,
+          '1 sec|@count sec' => 1,
+        );
+        $granularity_options = array_keys($this->formatterGranularityManual());
+        $output = '';
+        foreach ($units as $key => $value) {
+          if (isset($granularity_option[array_pop($granularity_options)])) {
+            $key = explode('|', $key);
+            if ($interval >= $value) {
+              $output .= ($output ? ' ' : '') . format_plural(floor($interval / $value), $key[0], $key[1]);
+              $interval %= $value;
+            }
+          }
+        }
+        $result = $output ? $output : (isset($key) ? format_plural(0, $key[0], $key[1]) : format_interval($interval));
+        break;
+    }
+
+    return $result;
+  }
+
+  protected function granularitySettingsSummary($granularity_type, $granularity_auto, $granularity_manual) {
+    $granularity_types = $this->granularityTypes();
+    switch ($granularity_type) {
+      case 'auto':
+        $granularity = $granularity_auto;
+        break;
+      case 'manual':
+        $granularity = array();
+        $granularity_manual_options = $this->formatterGranularityManual();
+        foreach ($granularity_manual as $key => $value) {
+          if ($value) {
+            $granularity[] = $granularity_manual_options[$key];
+          }
+        }
+        $granularity = implode(', ', $granularity);
+        break;
+    }
+    return array(
+      '%granularity_type' => $granularity_types[$granularity_type],
+      '%granularity' => $granularity,
+    );
   }
 
   protected function formatterTypes() {
@@ -125,7 +217,26 @@ abstract class field_timer_text_base extends field_timer_formatter_base {
     );
   }
 
-  protected function formatterGranularity() {
+  protected function granularityTypes() {
+    return array(
+      'auto' => t('Auto'),
+      'manual' => t('Manual'),
+    );
+  }
+
+  protected function formatterGranularityManual() {
+    return array(
+      'second' => t('Second'),
+      'minute' => t('Minute'),
+      'hour' => t('Hour'),
+      'day' => t('Day'),
+      'week' => t('Week'),
+      'month' => t('Month'),
+      'year' => t('Year'),
+    );
+  }
+
+  protected function formatterGranularityAuto() {
     $options = range(0, 7);
     unset($options[0]);
     return $options;
@@ -167,7 +278,9 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
       'title' => '',
       'title2' => '',
       'type2' => 'auto',
-      'granularity2' => 2,
+      'granularity_type2' => 'auto',
+      'granularity_auto2' => 2,
+      'granularity_manual2' => array('day' => 'day'),
       'fromto' => 'both',
     );
   }
@@ -180,11 +293,13 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
     if (!empty($field['settings']['todate'])) {
       $types = $this->formatterTypes();
       $displays = $this->formatterDisplays();
+      $granularity_options = $this->granularitySettingsSummary($settings['granularity_type'], $settings['granularity_auto'], $settings['granularity_manual']);
+      $granularity_options2 = $this->granularitySettingsSummary($settings['granularity_type2'], $settings['granularity_auto2'], $settings['granularity_manual2']);
       $summary[] = t('Type for Start date: %type', array('%type' => $types[$settings['type']]));
-      $summary[] = t('Granularity for Start date: %granularity', array('%granularity' => $settings['granularity']));
+      $summary[] = t('Granularity for Start date: %granularity_type (%granularity)', $granularity_options);
       $summary[] = t('Title for Start date: %title', array('%title' => $settings['title']));
       $summary[] = t('Type for End date: %type', array('%type' => $types[$settings['type2']]));
-      $summary[] = t('Granularity for End date: %granularity', array('%granularity' => $settings['granularity2']));
+      $summary[] = t('Granularity for End date: %granularity_type (%granularity)', $granularity_options2);
       $summary[] = t('Title for End date: %title', array('%title' => $settings['title2']));
       $summary[] = t('Display: %display', array('%display' => $displays[$settings['fromto']]));
     }
@@ -211,7 +326,7 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
 
     if (!empty($field['settings']['todate'])) {
       $settings_form['type']['#title'] = t('Type for Start date');
-      $settings_form['granularity']['#title'] = t('Granularity for Start date');
+      $settings_form['granularity_type']['#title'] = t('Granularity for Start date');
       $settings_form['title2'] = array(
         '#type' => 'textfield',
         '#title' => t('Title for End date'),
@@ -225,11 +340,37 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
         '#default_value' => $settings['type2'],
       );
 
-      $settings_form['granularity2'] = array(
+      $settings_form['granularity_type2'] = array(
         '#type' => 'select',
         '#title' => t('Granularity for End date'),
-        '#options' => $this->formatterGranularity(),
-        '#default_value' => $settings['granularity2'],
+        '#options' => $this->granularityTypes(),
+        '#default_value' => $settings['granularity_type2'],
+        '#attributes' => array(
+          'class' => array('field-timer-text-granularity-type-2'),
+        ),
+      );
+
+      $settings_form['granularity_auto2'] = array(
+        '#type' => 'select',
+        '#options' => $this->formatterGranularityAuto(),
+        '#default_value' => $settings['granularity_auto2'],
+        '#states' => array(
+          'visible' => array(
+            'select.field-timer-text-granularity-type-2' => array('value' => 'auto'),
+          ),
+        ),
+      );
+
+      $settings_form['granularity_manual2'] = array(
+        '#type' => 'select',
+        '#multiple' => TRUE,
+        '#options' => $this->formatterGranularityManual(),
+        '#default_value' => $settings['granularity_manual2'],
+        '#states' => array(
+          'visible' => array(
+            'select.field-timer-text-granularity-type-2' => array('value' => 'manual'),
+          ),
+        ),
       );
 
       $settings_form['fromto'] = array(
@@ -250,6 +391,7 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
     $settings = $display['settings'];
     $elements = ($settings['fromto'] != 'to') ? parent::renderItems($entity_type, $entity, $field, $instance, $langcode, $items, $display) : array();
 
+    $granularity_option = $settings['granularity_' . $settings['granularity_type2'] . '2'];
     foreach ($items as $delta => $item) {
       if ($settings['fromto'] != 'to' && !empty($settings['title'])) {
         $elements[$delta]['#markup'] = '<span class="field-timer-start-date-title">'
@@ -261,7 +403,7 @@ abstract class field_timer_text_date_field_base extends field_timer_text_base {
       }
       if ($settings['fromto'] != 'from' && !empty($field['settings']['todate'])) {
         $title = (!empty($settings['title2'])) ? '<span class="field-timer-end-date-title">' . $settings['title2'] . '</span> ' : '';
-        $time = $this->renderItem($settings['type2'], $settings['granularity2'], $this->getTimestamp($item, $field, 'value2'));
+        $time = $this->renderItem($settings['type2'], $settings['granularity_type2'], $granularity_option, $this->getTimestamp($item, $field, 'value2'));
         if ($settings['fromto'] == 'to') {
           $elements[$delta] = array(
             '#type' => 'markup',
