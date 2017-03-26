@@ -49,14 +49,14 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    $settings = array(
+    $settings = [
         'animation' => static::ANIMATION_FADE,
         'speed' => 500,
         'theme' => static::COUNTY_THEME_BLUE,
         'background' => '',
         'reflection' => 1,
         'reflectionOpacity' => 0.2,
-      ) + parent::defaultSettings();
+      ] + parent::defaultSettings();
 
     return $settings;
   }
@@ -68,23 +68,23 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
     $elements = parent::viewElements($items, $langcode);
 
     $keys = $this->getItemKeys($items);
-    $attributes = array(
-      'class' => array('field-timer-county'),
-    );
+    $attributes = [
+      'class' => ['field-timer-county'],
+    ];
     $background = $this->getSetting('background');
     if (!empty($background)) {
       $attributes['style'] = 'background:' . $background . ';';
     }
 
     foreach ($items as $delta => $item) {
-      $elements[$delta] = array(
+      $elements[$delta] = [
         '#theme' => 'container',
         '#attributes' => $attributes,
-        '#children' => array(
+        '#children' => [
           '#markup' => '<div data-field-timer-key="' . $keys[$delta] . '"  data-timestamp="'
             . $this->getTimestamp($item) . '"></div>',
-        ),
-      );
+        ],
+      ];
     }
 
     return $elements;
@@ -96,53 +96,53 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
-    $form['animation'] = array(
+    $form['animation'] = [
       '#type' => 'select',
       '#title' => $this->t('Animation'),
       '#options' => $this->animationOptions(),
       '#default_value' => $this->getSetting('animation'),
-    );
+    ];
 
-    $form['speed'] = array(
+    $form['speed'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Speed'),
       '#default_value' => $this->getSetting('speed'),
-    );
+    ];
 
-    $form['theme'] = array(
+    $form['theme'] = [
       '#type' => 'select',
       '#title' => $this->t('Theme'),
       '#options' => $this->themeOptions(),
       '#default_value' => $this->getSetting('theme'),
-    );
+    ];
 
-    $form['background'] = array(
+    $form['background'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Background'),
       '#default_value' => $this->getSetting('background'),
       '#description' => $this->t("Data from this field will be added to css property 'background'."),
-    );
+    ];
 
-    $form['reflection'] = array(
+    $form['reflection'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Add reflection'),
       '#default_value' => $this->getSetting('reflection'),
-      '#attributes' => array(
-        'class' => array('field-timer-county-reflection'),
-      ),
-    );
+      '#attributes' => [
+        'class' => ['field-timer-county-reflection'],
+      ],
+    ];
 
-    $form['reflectionOpacity'] = array(
+    $form['reflectionOpacity'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Reflection opacity'),
       '#default_value' => $this->getSetting('reflectionOpacity'),
       '#description' => $this->t('Float value between 0 and 1.'),
-      '#states' => array(
-        'invisible' => array(
-          'input.field-timer-county-reflection' => array('checked' => FALSE),
-        ),
-      ),
-    );
+      '#states' => [
+        'invisible' => [
+          'input.field-timer-county-reflection' => ['checked' => FALSE],
+        ],
+      ],
+    ];
 
     return $form;
   }
@@ -157,17 +157,13 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
     $theme = $this->getSetting('theme');
     $reflection = $this->getSetting('reflection');
 
-    $summary[] = $this->t('Animation: @animation', array('@animation' => $this->animationOptions()[$animation]));
-    $summary[] = $this->t('Speed: @speed', array('@speed' => $this->getSetting('speed') . 'ms'));
-    $summary[] = $this->t('Theme: @theme', array('@theme' => $this->themeOptions()[$theme]));
-    $summary[] = $this->t('Background: @css', array('@css' => $this->getSetting('background')));
-    $summary[] = $this->t('Reflection: @state', array(
-      '@state' => $reflection ? $this->t('Enabled') : $this->t('Disabled'),
-    ));
+    $summary[] = $this->t('Animation: @animation', ['@animation' => $this->animationOptions()[$animation]]);
+    $summary[] = $this->t('Speed: @speed', ['@speed' => $this->getSetting('speed') . 'ms']);
+    $summary[] = $this->t('Theme: @theme', ['@theme' => $this->themeOptions()[$theme]]);
+    $summary[] = $this->t('Background: @css', ['@css' => $this->getSetting('background')]);
+    $summary[] = $this->t('Reflection: @state', ['@state' => $reflection ? $this->t('Enabled') : $this->t('Disabled')]);
     if ($reflection) {
-      $summary[] = t('Reflection opacity: @opacity', array(
-        '@opacity' => $this->getSetting('reflectionOpacity'),
-      ));
+      $summary[] = t('Reflection opacity: @opacity', ['@opacity' => $this->getSetting('reflectionOpacity')]);
     }
 
     return $summary;
@@ -188,10 +184,10 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
    * @return array
    */
   protected function animationOptions() {
-    return array(
+    return [
       static::ANIMATION_FADE => $this->t('Fade'),
       static::ANIMATION_SCROLL => $this->t('Scroll'),
-    );
+    ];
   }
 
   /**
@@ -200,12 +196,12 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
    * @return array
    */
   protected function themeOptions() {
-    return array(
+    return [
       static::COUNTY_THEME_BLUE => $this->t('Blue'),
       static::COUNTY_THEME_RED => $this->t('Red'),
       static::COUNTY_THEME_GRAY => $this->t('Gray'),
       static::COUNTY_THEME_BLACK => $this->t('Black'),
-    );
+    ];
   }
 
 }

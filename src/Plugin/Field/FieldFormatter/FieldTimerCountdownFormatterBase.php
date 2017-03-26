@@ -29,9 +29,9 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    $settings = array(
+    $settings = [
       'type' => static::TYPE_AUTO,
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
 
     return $settings;
   }
@@ -42,12 +42,12 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
-    $form['type'] = array(
+    $form['type'] = [
       '#type' => 'select',
       '#title' => $this->t('Type'),
       '#options' => $this->typeOptions(),
       '#default_value' => $this->getSetting('type'),
-    );
+    ];
 
     return $form;
   }
@@ -59,7 +59,7 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
     $summary = parent::settingsSummary();
 
     $type = $this->getSetting('type');
-    $summary[] = $this->t('Type: @type', array('@type' => $this->typeOptions()[$type]));
+    $summary[] = $this->t('Type: @type', ['@type' => $this->typeOptions()[$type]]);
 
     return $summary;
   }
@@ -86,14 +86,14 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
   }
 
   protected function typeOptions() {
-    return array(
+    return [
       static::TYPE_AUTO => $this->t('Auto'),
       static::TYPE_TIMER => $this->t('Timer'),
       static::TYPE_COUNTDOWN => $this->t('Countdown'),
-    );
+    ];
   }
 
-  protected function getDocumentationLink(array $options = array()) {
+  protected function getDocumentationLink(array $options = []) {
     return Url::fromUri('http://keith-wood.name/countdownRef.html', $options)->toString();
   }
 

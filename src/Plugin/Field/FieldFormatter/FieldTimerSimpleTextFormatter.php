@@ -31,9 +31,9 @@ class FieldTimerSimpleTextFormatter extends DateTimeTimeAgoFormatter {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    $settings = array(
-        'type' => static::TYPE_AUTO,
-      ) + parent::defaultSettings();
+    $settings = [
+      'type' => static::TYPE_AUTO,
+    ] + parent::defaultSettings();
 
     return $settings;
   }
@@ -69,13 +69,13 @@ class FieldTimerSimpleTextFormatter extends DateTimeTimeAgoFormatter {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
-    $form['type'] = array(
+    $form['type'] = [
       '#type' => 'select',
       '#title' => $this->t('Type'),
       '#default_value' => $this->getSetting('type'),
       '#options' => $this->typeOptions(),
       '#description' => $this->t('Switch timer/countdown automatically or disable it.'),
-    );
+    ];
 
     return $form;
   }
@@ -87,17 +87,17 @@ class FieldTimerSimpleTextFormatter extends DateTimeTimeAgoFormatter {
     $summary = parent::settingsSummary();
 
     $type = $this->getSetting('type');
-    $summary[] = $this->t('Type: @type', array('@type' => $this->typeOptions()[$type]));
+    $summary[] = $this->t('Type: @type', ['@type' => $this->typeOptions()[$type]]);
 
     return $summary;
   }
 
   protected function typeOptions() {
-    return array(
+    return [
       static::TYPE_AUTO => $this->t('Auto'),
       static::TYPE_TIMER => $this->t('Timer'),
       static::TYPE_COUNTDOWN => $this->t('Countdown'),
-    );
+    ];
   }
 
 }

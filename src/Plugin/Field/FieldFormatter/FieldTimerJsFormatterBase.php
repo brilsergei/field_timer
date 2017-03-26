@@ -35,7 +35,7 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = array();
+    $elements = [];
 
     $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME;
     $elements['#attached']['library'][] = 'field_timer/init';
@@ -56,16 +56,16 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
     if (!$this->itemKeys) {
       $entity = $items->getEntity();
 
-      $this->itemKeys = array();
+      $this->itemKeys = [];
       foreach ($items as $delta => $item) {
-        $this->itemKeys[$delta] = implode('-', array(
+        $this->itemKeys[$delta] = implode('-', [
           $entity->getEntityTypeId(),
           $entity->bundle(),
           $entity->id(),
           $items->getFieldDefinition()->getName(),
           $delta,
           Crypt::randomBytesBase64(8),
-        ));
+        ]);
       }
     }
 
@@ -82,7 +82,7 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    */
   protected function generateJsSettings(FieldItemListInterface $items) {
     $keys = $this->getItemKeys($items);
-    $js_settings = array();
+    $js_settings = [];
 
     foreach ($items as $delta => $item) {
       $timestamp = $this->getTimestamp($item);

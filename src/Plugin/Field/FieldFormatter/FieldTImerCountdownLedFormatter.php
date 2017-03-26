@@ -43,14 +43,14 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    $settings = array(
+    $settings = [
         'countdown_theme' => static::LED_THEME_GREEN,
         'max_count_of_days' => static::LED_DAY_DIGITS_TWO,
         'display_days' => 1,
         'display_hours' => 1,
         'display_minutes' => 1,
         'display_seconds' => 1,
-      ) + parent::defaultSettings();
+      ] + parent::defaultSettings();
 
     return $settings;
   }
@@ -65,11 +65,11 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
 
     foreach ($items as $delta => $item) {
       $layout = $this->getLayout();
-      $elements[$delta] = array(
+      $elements[$delta] = [
         '#markup' => '<div class="field-timer-jquery-countdown-led '
           . $this->getSetting('countdown_theme') . '" data-field-timer-key="' . $keys[$delta]
           . '" data-timestamp="' . $this->getTimestamp($item) . '">' . $layout . '</div>',
-      );
+      ];
     }
 
     return $elements;
@@ -81,49 +81,49 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
-    $form['countdown_theme'] = array(
+    $form['countdown_theme'] = [
       '#type' => 'select',
       '#title' => $this->t('Theme'),
       '#options' => $this->themeOptions(),
       '#default_value' => $this->getSetting('countdown_theme'),
-    );
+    ];
 
-    $form['display_days'] = array(
+    $form['display_days'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Display days'),
       '#default_value' => $this->getSetting('display_days'),
-      '#attributes' => array('class' => array('field-timer-display-days')),
-    );
+      '#attributes' => ['class' => ['field-timer-display-days']],
+    ];
 
-    $form['max_count_of_days'] = array(
+    $form['max_count_of_days'] = [
       '#type' => 'select',
       '#title' => $this->t('Max count of days'),
       '#options' => $this->dayOptions(),
       '#default_value' => $this->getSetting('max_count_of_days'),
-      '#states' => array(
-        'invisible' => array(
-          'input.field-timer-display-days' => array('checked' => FALSE),
-        ),
-      ),
-    );
+      '#states' => [
+        'invisible' => [
+          'input.field-timer-display-days' => ['checked' => FALSE],
+        ],
+      ],
+    ];
 
-    $form['display_hours'] = array(
+    $form['display_hours'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Display hours'),
       '#default_value' => $this->getSetting('display_hours'),
-    );
+    ];
 
-    $form['display_minutes'] = array(
+    $form['display_minutes'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Display minutes'),
       '#default_value' => $this->getSetting('display_minutes'),
-    );
+    ];
 
-    $form['display_seconds'] = array(
+    $form['display_seconds'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Display seconds'),
       '#default_value' => $this->getSetting('display_seconds'),
-    );
+    ];
 
     return $form;
   }
@@ -137,14 +137,14 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
     $theme = $this->getSetting('countdown_theme');
     $max_count_of_days = $this->getSetting('max_count_of_days');
 
-    $summary[] = t('Theme: %theme', array('%theme' => $this->themeOptions()[$theme]));
-    $summary[] = t('Display days: %display_days', array('%display_days' => $this->getSetting('display_days') ? $this->t('Yes') : $this->t('No')));
+    $summary[] = t('Theme: %theme', ['%theme' => $this->themeOptions()[$theme]]);
+    $summary[] = t('Display days: %display_days', ['%display_days' => $this->getSetting('display_days') ? $this->t('Yes') : $this->t('No')]);
     if ($this->getSetting('display_days')) {
-      $summary[] = t('Maximum count of days: %max_count_of_days', array('%max_count_of_days' => $this->dayOptions()[$max_count_of_days]));
+      $summary[] = t('Maximum count of days: %max_count_of_days', ['%max_count_of_days' => $this->dayOptions()[$max_count_of_days]]);
     }
-    $summary[] = t('Display hours: %display_hours', array('%display_hours' => $this->getSetting('display_hours') ? $this->t('Yes') : $this->t('No')));
-    $summary[] = t('Display minutes: %display_minutes', array('%display_minutes' => $this->getSetting('display_minutes') ? $this->t('Yes') : $this->t('No')));
-    $summary[] = t('Display seconds: %display_seconds', array('%display_seconds' => $this->getSetting('display_seconds') ? $this->t('Yes') : $this->t('No')));
+    $summary[] = t('Display hours: %display_hours', ['%display_hours' => $this->getSetting('display_hours') ? $this->t('Yes') : $this->t('No')]);
+    $summary[] = t('Display minutes: %display_minutes', ['%display_minutes' => $this->getSetting('display_minutes') ? $this->t('Yes') : $this->t('No')]);
+    $summary[] = t('Display seconds: %display_seconds', ['%display_seconds' => $this->getSetting('display_seconds') ? $this->t('Yes') : $this->t('No')]);
 
     return $summary;
   }
@@ -183,10 +183,10 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
    * @return array
    */
   protected function themeOptions() {
-    return array(
+    return [
       static::LED_THEME_GREEN => $this->t('Green'),
       static::LED_THEME_BLUE => $this->t('Blue'),
-    );
+    ];
   }
 
   /**
@@ -195,12 +195,12 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
    * @return array
    */
   protected function dayOptions() {
-    return array(
+    return [
       static::LED_DAY_DIGITS_ONE => 9,
       static::LED_DAY_DIGITS_TWO => 99,
       static::LED_DAY_DIGITS_THREE => 999,
       static::LED_DAY_DIGITS_FOUR => 9999,
-    );
+    ];
   }
 
 }

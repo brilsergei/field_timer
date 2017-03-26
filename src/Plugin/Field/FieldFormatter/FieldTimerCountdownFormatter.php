@@ -28,7 +28,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    $settings = array(
+    $settings = [
       'regional' => 'en',
       'format' => 'dHMS',
       'layout' => '',
@@ -36,7 +36,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
       'significant' => 0,
       'timeSeparator' => ':',
       'padZeroes' => 0,
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
 
     return $settings;
   }
@@ -55,10 +55,10 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
     $keys = $this->getItemKeys($items);
 
     foreach ($items as $delta => $item) {
-      $elements[$delta] = array(
+      $elements[$delta] = [
         '#markup' => '<span class="field-timer-jquery-countdown" data-field-timer-key="'
           . $keys[$delta] . '" data-timestamp="' . $this->getTimestamp($item) . '"></span>',
-      );
+      ];
     }
 
     return $elements;
@@ -70,57 +70,57 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
-    $form['regional'] = array(
+    $form['regional'] = [
       '#type' => 'select',
       '#title' => $this->t('Region'),
       '#default_value' => $this->getSetting('regional'),
       '#options' => $this->regionOptions(),
-    );
+    ];
 
-    $form['format'] = array(
+    $form['format'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Format'),
       '#default_value' => $this->getSetting('format'),
-      '#description' => $this->t('See <a href=":url" target="_blank">documentation</a> for this parameter.', array(
-        ':url' => $this->getDocumentationLink(array('fragment' => 'format')),
-      )),
-    );
+      '#description' => $this->t('See <a href=":url" target="_blank">documentation</a> for this parameter.', [
+        ':url' => $this->getDocumentationLink(['fragment' => 'format']),
+      ]),
+    ];
 
-    $form['layout'] = array(
+    $form['layout'] = [
       '#type' => 'textarea',
       '#rows' => 3,
       '#cols' => 60,
       '#title' => $this->t('Layout'),
       '#default_value' => $this->getSetting('layout'),
-      '#description' => $this->t('See <a href=":url" target="_blank">documentation</a> for this parameter.', array(
-        ':url' => $this->getDocumentationLink(array('fragment' => 'layout')),
-      )),
-    );
+      '#description' => $this->t('See <a href=":url" target="_blank">documentation</a> for this parameter.', [
+        ':url' => $this->getDocumentationLink(['fragment' => 'layout']),
+      ]),
+    ];
 
-    $form['compact'] = array(
+    $form['compact'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Display in compact format'),
       '#default_value' => $this->getSetting('compact'),
-    );
+    ];
 
-    $form['significant'] = array(
+    $form['significant'] = [
       '#type' => 'select',
       '#title' => $this->t('Granularity'),
       '#options' => range(0, 7),
       '#default_value' => $this->getSetting('significant'),
-    );
+    ];
 
-    $form['timeSeparator'] = array(
+    $form['timeSeparator'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Time separator'),
       '#default_value' => $this->getSetting('timeSeparator'),
-    );
+    ];
 
-    $form['padZeroes'] = array(
+    $form['padZeroes'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Pad with zeroes'),
       '#default_value' => $this->getSetting('padZeroes'),
-    );
+    ];
 
     return $form;
   }
@@ -132,13 +132,13 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
     $summary = parent::settingsSummary();
 
     $region = $this->getSetting('regional');
-    $summary[] = $this->t('Region: %regional', array('%regional' => $this->regionOptions()[$region]));
-    $summary[] = $this->t('Format: %format', array('%format' => $this->getSetting('format')));
-    $summary[] = $this->t('Layout: %layout', array('%layout' => $this->getSetting('layout')));
-    $summary[] = $this->t('Compact: %compact', array('%compact' => $this->getSetting('compact') ? $this->t('Yes') : $this->t('No')));
-    $summary[] = $this->t('Granularity: %significant', array('%significant' => $this->getSetting('significant')));
-    $summary[] = $this->t('Time separator: %timeSeparator', array('%timeSeparator' => $this->getSetting('timeSeparator')));
-    $summary[] = $this->t('Pad with zeroes: %padZeroes', array('%padZeroes' => $this->getSetting('padZeroes') ? $this->t('Yes') : $this->t('No')));
+    $summary[] = $this->t('Region: %regional', ['%regional' => $this->regionOptions()[$region]]);
+    $summary[] = $this->t('Format: %format', ['%format' => $this->getSetting('format')]);
+    $summary[] = $this->t('Layout: %layout', ['%layout' => $this->getSetting('layout')]);
+    $summary[] = $this->t('Compact: %compact', ['%compact' => $this->getSetting('compact') ? $this->t('Yes') : $this->t('No')]);
+    $summary[] = $this->t('Granularity: %significant', ['%significant' => $this->getSetting('significant')]);
+    $summary[] = $this->t('Time separator: %timeSeparator', ['%timeSeparator' => $this->getSetting('timeSeparator')]);
+    $summary[] = $this->t('Pad with zeroes: %padZeroes', ['%padZeroes' => $this->getSetting('padZeroes') ? $this->t('Yes') : $this->t('No')]);
 
     return $summary;
   }
@@ -149,7 +149,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
    * @return array
    */
   protected function regionOptions() {
-    return array(
+    return [
       'sq' => t('Albanian'),
       'ar' => t('Arabic'),
       'hy' => t('Armenian'),
@@ -203,7 +203,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
       'uz' => t('Uzbek'),
       'vi' => t('Vietnamese'),
       'cy' => t('Welsh'),
-    );
+    ];
   }
 
 }
