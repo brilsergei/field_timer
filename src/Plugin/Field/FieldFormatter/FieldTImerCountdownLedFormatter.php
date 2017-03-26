@@ -61,15 +61,14 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
 
-    $ids = $this->generateIds($items);
+    $keys = $this->getItemKeys($items);
 
     foreach ($items as $delta => $item) {
       $layout = $this->getLayout();
       $elements[$delta] = array(
-        '#markup' => '<div id="' . $ids[$delta] . '" '
-          . 'class="field-timer-jquery-countdown-led '
-          . $this->getSetting('countdown_theme') . '" data-timestamp="'
-          . $this->getTimestamp($item) . '">' . $layout . '</div>',
+        '#markup' => '<div class="field-timer-jquery-countdown-led '
+          . $this->getSetting('countdown_theme') . '" data-field-timer-key="' . $keys[$delta]
+          . '" data-timestamp="' . $this->getTimestamp($item) . '">' . $layout . '</div>',
       );
     }
 

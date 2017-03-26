@@ -3,6 +3,7 @@
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -22,6 +23,13 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    * Key used by js code to determine how to initialize the timer/countdown.
    */
   const JS_KEY = '';
+
+  /**
+   * Stores set of unique html ids for current items.
+   *
+   * @var array
+   */
+  protected $itemKeys;
 
   /**
    * {@inheritdoc}
@@ -44,21 +52,24 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    * @return array
    *  Array of ids keyed by field item delta.
    */
-  protected function generateIds(FieldItemListInterface $items) {
-    $entity = $items->getEntity();
+  protected function getItemKeys(FieldItemListInterface $items) {
+    if (!$this->itemKeys) {
+      $entity = $items->getEntity();
 
-    $ids = array();
-    foreach ($items as $delta => $item) {
-      $ids[$delta] = implode('_', array(
-        $entity->getEntityTypeId(),
-        $entity->bundle(),
-        $entity->id(),
-        $items->getFieldDefinition()->getName(),
-        $delta,
-      ));
+      $this->itemKeys = array();
+      foreach ($items as $delta => $item) {
+        $this->itemKeys[$delta] = implode('-', array(
+          $entity->getEntityTypeId(),
+          $entity->bundle(),
+          $entity->id(),
+          $items->getFieldDefinition()->getName(),
+          $delta,
+          Crypt::randomBytesBase64(8),
+        ));
+      }
     }
 
-    return $ids;
+    return $this->itemKeys;
   }
 
   /**
@@ -70,14 +81,14 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    *  Array of JS settings to be used to initialize timer/countdown widget.
    */
   protected function generateJsSettings(FieldItemListInterface $items) {
-    $ids = $this->generateIds($items);
+    $keys = $this->getItemKeys($items);
     $js_settings = array();
 
     foreach ($items as $delta => $item) {
       $timestamp = $this->getTimestamp($item);
       if ($timestamp !== NULL) {
-        $js_settings[$ids[$delta]]['settings'] = $this->preparePluginSettings($item);
-        $js_settings[$ids[$delta]]['plugin'] = static::JS_KEY;
+        $js_settings[$keys[$delta]]['settings'] = $this->preparePluginSettings($item);
+        $js_settings[$keys[$delta]]['plugin'] = static::JS_KEY;
       }
     }
 

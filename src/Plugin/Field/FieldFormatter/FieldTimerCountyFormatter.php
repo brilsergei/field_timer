@@ -67,7 +67,7 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
 
-    $ids = $this->generateIds($items);
+    $keys = $this->getItemKeys($items);
     $attributes = array(
       'class' => array('field-timer-county'),
     );
@@ -81,8 +81,8 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
         '#theme' => 'container',
         '#attributes' => $attributes,
         '#children' => array(
-          '#markup' => '<div id="' . $ids[$delta] . '"  data-timestamp="'
-          . $this->getTimestamp($item) . '"></div>',
+          '#markup' => '<div data-field-timer-key="' . $keys[$delta] . '"  data-timestamp="'
+            . $this->getTimestamp($item) . '"></div>',
         ),
       );
     }

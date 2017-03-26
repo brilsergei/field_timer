@@ -52,12 +52,12 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
       $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME . '.' . $regional;
     }
 
-    $ids = $this->generateIds($items);
+    $keys = $this->getItemKeys($items);
 
     foreach ($items as $delta => $item) {
       $elements[$delta] = array(
-        '#markup' => '<span id="' . $ids[$delta] . '" class="field-timer-jquery-countdown"'
-          . ' data-timestamp="' . $this->getTimestamp($item) . '"></span>',
+        '#markup' => '<span class="field-timer-jquery-countdown" data-field-timer-key="'
+          . $keys[$delta] . '" data-timestamp="' . $this->getTimestamp($item) . '"></span>',
       );
     }
 

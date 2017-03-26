@@ -14,13 +14,15 @@
       for (var key in settings) {
         if (settings.hasOwnProperty(key)) {
           var options = settings[key].settings;
-          var $item = $('#' + key);
+          var $item = $('[data-field-timer-key=' + key + ']');
           var timestamp = $item.data('timestamp');
           switch (settings[key].plugin) {
             case 'county':
-              $item.once('field-timer').each(function () {
-                $(this).county($.extend({endDateTime: new Date(timestamp * 1000)}, options));
-              });
+              if (!$item.hasClass('county-reflection')) {
+                $item.once('field-timer').each(function () {
+                  $(this).county($.extend({endDateTime: new Date(timestamp * 1000)}, options));
+                });
+              }
             break;
 
             case 'jquery.countdown':
