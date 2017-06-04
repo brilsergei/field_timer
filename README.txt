@@ -20,7 +20,7 @@ h2. Installation
 1. Download the module.
 2. To be able to use County and jQuery Countdown plugins download them to
 sites/all/libraries/county and sites/all/libraries/jquery.countdown. This module
-supports jQuery Countdown 2.0.0.
+supports jQuery Countdown 2.1.0.
 3. Enable the module using admin module page or drush.
 
 h2. Issues, Bugs and Feature Requests

@@ -201,6 +201,7 @@ abstract class field_timer_jquery_countdown_base extends field_timer_jquery_coun
       'ko' => t('Korean'),
       'lv' => t('Latvian'),
       'lt' => t('Lithuanian'),
+      'mk' => t('Macedonian'),
       'ml' => t('Malayalam'),
       'ms' => t('Malaysian'),
       'nb' => t('Norvegian'),
@@ -251,7 +252,7 @@ class field_timer_jquery_countdown_field_timer extends field_timer_jquery_countd
     parent::loadJSandCSS($entity_type, $entity, $field, $instance, $langcode, $items, $display);
     if ($display['settings']['regional'] != 'en') {
       $path = libraries_get_path('jquery.countdown');
-      drupal_add_js($path . '/jquery.countdown-' . $display['settings']['regional'] . '.js');
+      drupal_add_js($path . '/js/jquery.countdown-' . $display['settings']['regional'] . '.js');
     }
   }
 
@@ -489,11 +490,11 @@ abstract class field_timer_jquery_countdown_date_field_base extends field_timer_
     parent::loadJSandCSS($entity_type, $entity, $field, $instance, $langcode, $items, $display);
     if ($display['settings']['regional'] != 'en') {
       $path = libraries_get_path('jquery.countdown');
-      drupal_add_js($path . '/jquery.countdown-' . $display['settings']['regional'] . '.js');
+      drupal_add_js($path . '/js/jquery.countdown-' . $display['settings']['regional'] . '.js');
     }
     if ($display['settings']['regional2'] != 'en') {
       $path = libraries_get_path('jquery.countdown');
-      drupal_add_js($path . '/jquery.countdown-' . $display['settings']['regional2'] . '.js');
+      drupal_add_js($path . '/js/jquery.countdown-' . $display['settings']['regional2'] . '.js');
     }
   }
 

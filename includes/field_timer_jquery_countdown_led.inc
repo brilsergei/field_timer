@@ -159,7 +159,7 @@ abstract class field_timer_jquery_countdown_led_base extends field_timer_jquery_
     parent::loadJSandCSS($entity_type, $entity, $field, $instance, $langcode, $items, $display);
     // Since we can't get path to image from CSS file, we add this rule here.
     $path = libraries_get_path('jquery.countdown');
-    drupal_add_css('.jquery-countdown-led.green span{background: url(/' . $path . '/countdownLED.png) no-repeat 0px 0px;} .jquery-countdown-led.blue span{background: url(/' . $path . '/countdownGlowing.gif) no-repeat 0px 0px;}', 'inline');
+    drupal_add_css('.jquery-countdown-led.green span{background: url(/' . $path . '/img/countdownLED.png) no-repeat 0px 0px;} .jquery-countdown-led.blue span{background: url(/' . $path . '/img/countdownGlowing.gif) no-repeat 0px 0px;}', 'inline');
   }
 
   /**
