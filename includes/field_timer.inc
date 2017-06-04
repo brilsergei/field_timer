@@ -257,7 +257,7 @@ function _field_timer_jquery_countdown_led_formatter($items, $settings, $entity_
   drupal_add_css(drupal_get_path('module', 'field_timer') . '/css/field_timer.css');
   // Since we can't get path to image from CSS file, we add this rule here.
   $path = libraries_get_path('jquery.countdown');
-  drupal_add_css('.jquery-countdown-led.green span{background: url(/' . $path . '/countdownLED.png) no-repeat 0px 0px;} .jquery-countdown-led.blue span{background: url(/' . $path . '/countdownGlowing.gif) no-repeat 0px 0px;}', 'inline');
+  drupal_add_css('.jquery-countdown-led.green span{background: url(/' . $path . '/img/countdownLED.png) no-repeat 0px 0px;} .jquery-countdown-led.blue span{background: url(/' . $path . '/img/countdownGlowing.gif) no-repeat 0px 0px;}', 'inline');
 
   return $elements;
 }
