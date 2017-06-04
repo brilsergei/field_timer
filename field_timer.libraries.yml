@@ -167,7 +167,7 @@ jquery.countdown.zh-TW:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-xh-TW.js: { minified: false }
+    /libraries/jquery.countdown/jquery.countdown-zh-TW.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -466,7 +466,7 @@ jquery.countdown.lt:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-my.lt: { minified: false }
+    /libraries/jquery.countdown/jquery.countdown-lt.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
