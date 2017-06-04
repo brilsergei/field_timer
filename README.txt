@@ -16,7 +16,7 @@ h2. Installation
 1. Download the module.
 2. Download required JS libraries to drupal library directory and rename
 library directories to libraries/county and libraries/jquery.countdown
-respectively. This module supports jQuery Countdown 2.0.2.
+respectively. This module supports jQuery Countdown 2.1.0.
 4. Enable the module using admin module page or drush.
 
 h2. Issues, Bugs and Feature Requests

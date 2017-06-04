@@ -27,24 +27,24 @@ county:
 
 jquery.countdown:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.plugin.min.js: { minified: true }
-    /libraries/jquery.countdown/jquery.countdown.min.js: { minified: true }
+    /libraries/jquery.countdown/js/jquery.plugin.min.js: { minified: true }
+    /libraries/jquery.countdown/js/jquery.countdown.min.js: { minified: true }
   css:
     component:
-      /libraries/jquery.countdown/jquery.countdown.css: {}
+      /libraries/jquery.countdown/css/jquery.countdown.css: {}
   dependencies:
     - core/jquery
 
 # Albanian
 jquery.countdown.sq:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -57,7 +57,7 @@ jquery.countdown.sq:
 # Arabic
 jquery.countdown.ar:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -70,7 +70,7 @@ jquery.countdown.ar:
 # Armenian
 jquery.countdown.hy:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -83,7 +83,7 @@ jquery.countdown.hy:
 # Bengali/Bangla
 jquery.countdown.bn:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -96,7 +96,7 @@ jquery.countdown.bn:
 # Bosnian
 jquery.countdown.bs:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -109,7 +109,7 @@ jquery.countdown.bs:
 # Bulgarian
 jquery.countdown.bg:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -122,7 +122,7 @@ jquery.countdown.bg:
 # Burmese
 jquery.countdown.my:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -135,7 +135,7 @@ jquery.countdown.my:
 # Catalan
 jquery.countdown.ca:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -148,7 +148,7 @@ jquery.countdown.ca:
 # Chinese/Simplified
 jquery.countdown.zh-CN:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -161,7 +161,7 @@ jquery.countdown.zh-CN:
 # Chinese/Traditional
 jquery.countdown.zh-TW:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -174,7 +174,7 @@ jquery.countdown.zh-TW:
 # Croatian
 jquery.countdown.hr:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -187,7 +187,7 @@ jquery.countdown.hr:
 # Czech
 jquery.countdown.cs:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -200,7 +200,7 @@ jquery.countdown.cs:
 # Danish
 jquery.countdown.da:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -213,7 +213,7 @@ jquery.countdown.da:
 # Dutch
 jquery.countdown.nl:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -226,7 +226,7 @@ jquery.countdown.nl:
 # Estonian
 jquery.countdown.et:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -239,7 +239,7 @@ jquery.countdown.et:
 # Farsi/Persian
 jquery.countdown.fa:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -252,7 +252,7 @@ jquery.countdown.fa:
 # Finnish
 jquery.countdown.fi:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -265,7 +265,7 @@ jquery.countdown.fi:
 # Faroese
 jquery.countdown.fo:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -278,7 +278,7 @@ jquery.countdown.fo:
 # French
 jquery.countdown.fr:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -291,7 +291,7 @@ jquery.countdown.fr:
 # Galician
 jquery.countdown.gl:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -304,7 +304,7 @@ jquery.countdown.gl:
 # German
 jquery.countdown.de:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -317,7 +317,7 @@ jquery.countdown.de:
 # Greek
 jquery.countdown.el:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -330,7 +330,7 @@ jquery.countdown.el:
 # Gujarati
 jquery.countdown.gu:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -343,7 +343,7 @@ jquery.countdown.gu:
 # Hebrew
 jquery.countdown.he:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -356,7 +356,7 @@ jquery.countdown.he:
 # Hungarian
 jquery.countdown.hu:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -369,7 +369,7 @@ jquery.countdown.hu:
 # Indonesian
 jquery.countdown.id:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -382,7 +382,7 @@ jquery.countdown.id:
 # Icelandic
 jquery.countdown.is:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -395,7 +395,7 @@ jquery.countdown.is:
 # Italian
 jquery.countdown.it:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -408,7 +408,7 @@ jquery.countdown.it:
 # Japanese
 jquery.countdown.ja:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -421,7 +421,7 @@ jquery.countdown.ja:
 # Kannada
 jquery.countdown.kn:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -434,7 +434,7 @@ jquery.countdown.kn:
 # Korean
 jquery.countdown.ko:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -447,7 +447,7 @@ jquery.countdown.ko:
 # Latvian
 jquery.countdown.lv:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -460,7 +460,7 @@ jquery.countdown.lv:
 # Lithuanian
 jquery.countdown.lt:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -470,10 +470,23 @@ jquery.countdown.lt:
   dependencies:
     - core/jquery.countdown
 
+# Macedonian
+jquery.countdown.mk:
+  remote: http://keith-wood.name/countdown.html
+  version: 2.1.0
+  license:
+    name: MIT
+    url: http://keith-wood.name/licence.html
+    gpl-compatible: true
+  js:
+    /libraries/jquery.countdown/jquery.countdown-mk.js: { minified: false }
+  dependencies:
+    - core/jquery.countdown
+
 # Malayalam
 jquery.countdown.ml:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -486,7 +499,7 @@ jquery.countdown.ml:
 # Malaysian
 jquery.countdown.ms:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -499,7 +512,7 @@ jquery.countdown.ms:
 # Norvegian
 jquery.countdown.nb:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -512,7 +525,7 @@ jquery.countdown.nb:
 # Polish
 jquery.countdown.pl:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -525,7 +538,7 @@ jquery.countdown.pl:
 # Portuguese/Brazilian
 jquery.countdown.pt-BR:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -538,7 +551,7 @@ jquery.countdown.pt-BR:
 # Romanian
 jquery.countdown.ro:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -551,7 +564,7 @@ jquery.countdown.ro:
 # Russian
 jquery.countdown.ru:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -564,7 +577,7 @@ jquery.countdown.ru:
 # Serbian
 jquery.countdown.sr:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -577,7 +590,7 @@ jquery.countdown.sr:
 # Slovak
 jquery.countdown.sk:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -590,7 +603,7 @@ jquery.countdown.sk:
 # Slovenian
 jquery.countdown.sl:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -602,7 +615,7 @@ jquery.countdown.sl:
 # Spanish
 jquery.countdown.es:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -615,7 +628,7 @@ jquery.countdown.es:
 # Swedish
 jquery.countdown.sv:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -628,7 +641,7 @@ jquery.countdown.sv:
 # Thai
 jquery.countdown.th:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -641,7 +654,7 @@ jquery.countdown.th:
 # Turkish
 jquery.countdown.tr:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -654,7 +667,7 @@ jquery.countdown.tr:
 # Ukrainian
 jquery.countdown.uk:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -667,7 +680,7 @@ jquery.countdown.uk:
 # Urdu
 jquery.countdown.ur:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -680,7 +693,7 @@ jquery.countdown.ur:
 # Uzbek
 jquery.countdown.uz:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -693,7 +706,7 @@ jquery.countdown.uz:
 # Vietnamese
 jquery.countdown.vi:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
@@ -706,7 +719,7 @@ jquery.countdown.vi:
 # Welsh
 jquery.countdown.cy:
   remote: http://keith-wood.name/countdown.html
-  version: 2.0.2
+  version: 2.1.0
   license:
     name: MIT
     url: http://keith-wood.name/licence.html
