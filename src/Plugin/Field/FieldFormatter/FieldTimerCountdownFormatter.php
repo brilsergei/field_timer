@@ -184,6 +184,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
       'ko' => t('Korean'),
       'lv' => t('Latvian'),
       'lt' => t('Lithuanian'),
+      'mk' => t('Macedonian'),
       'ml' => t('Malayalam'),
       'ms' => t('Malaysian'),
       'nb' => t('Norvegian'),
