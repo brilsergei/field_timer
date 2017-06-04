@@ -50,7 +50,7 @@ jquery.countdown.sq:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-sq.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-sq.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -63,7 +63,7 @@ jquery.countdown.ar:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ar.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ar.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -76,7 +76,7 @@ jquery.countdown.hy:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-hy.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-hy.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -89,7 +89,7 @@ jquery.countdown.bn:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-bn.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-bn.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -102,7 +102,7 @@ jquery.countdown.bs:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-bs.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-bs.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -115,7 +115,7 @@ jquery.countdown.bg:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-bg.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-bg.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -128,7 +128,7 @@ jquery.countdown.my:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-my.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-my.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -141,7 +141,7 @@ jquery.countdown.ca:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ca.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ca.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -154,7 +154,7 @@ jquery.countdown.zh-CN:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-zh-CN.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-zh-CN.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -167,7 +167,7 @@ jquery.countdown.zh-TW:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-zh-TW.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-zh-TW.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -180,7 +180,7 @@ jquery.countdown.hr:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-hr.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-hr.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -193,7 +193,7 @@ jquery.countdown.cs:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-cs.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-cs.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -206,7 +206,7 @@ jquery.countdown.da:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-da.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-da.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -219,7 +219,7 @@ jquery.countdown.nl:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-nl.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-nl.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -232,7 +232,7 @@ jquery.countdown.et:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-et.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-et.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -245,7 +245,7 @@ jquery.countdown.fa:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-fa.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-fa.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -258,7 +258,7 @@ jquery.countdown.fi:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-fi.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-fi.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -271,7 +271,7 @@ jquery.countdown.fo:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-fo.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-fo.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -284,7 +284,7 @@ jquery.countdown.fr:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-fr.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-fr.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -297,7 +297,7 @@ jquery.countdown.gl:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-gl.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-gl.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -310,7 +310,7 @@ jquery.countdown.de:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-de.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-de.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -323,7 +323,7 @@ jquery.countdown.el:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-el.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-el.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -336,7 +336,7 @@ jquery.countdown.gu:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-gu.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-gu.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -349,7 +349,7 @@ jquery.countdown.he:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-he.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-he.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -362,7 +362,7 @@ jquery.countdown.hu:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-hu.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-hu.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -375,7 +375,7 @@ jquery.countdown.id:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-id.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-id.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -388,7 +388,7 @@ jquery.countdown.is:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-is.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-is.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -401,7 +401,7 @@ jquery.countdown.it:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-it.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-it.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -414,7 +414,7 @@ jquery.countdown.ja:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ja.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ja.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -427,7 +427,7 @@ jquery.countdown.kn:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-kn.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-kn.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -440,7 +440,7 @@ jquery.countdown.ko:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ko.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ko.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -453,7 +453,7 @@ jquery.countdown.lv:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-lv.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-lv.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -466,7 +466,7 @@ jquery.countdown.lt:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-lt.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-lt.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -479,7 +479,7 @@ jquery.countdown.mk:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-mk.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-mk.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -492,7 +492,7 @@ jquery.countdown.ml:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ml.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ml.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -505,7 +505,7 @@ jquery.countdown.ms:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ms.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ms.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -518,7 +518,7 @@ jquery.countdown.nb:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-nb.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-nb.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -531,7 +531,7 @@ jquery.countdown.pl:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-pl.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-pl.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -544,7 +544,7 @@ jquery.countdown.pt-BR:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-pt-BR.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-pt-BR.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -557,7 +557,7 @@ jquery.countdown.ro:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ro.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ro.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -570,7 +570,7 @@ jquery.countdown.ru:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ru.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ru.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -583,7 +583,7 @@ jquery.countdown.sr:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-sr.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-sr.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -596,7 +596,7 @@ jquery.countdown.sk:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-sk.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-sk.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -609,7 +609,7 @@ jquery.countdown.sl:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-sl.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-sl.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 # Spanish
@@ -621,7 +621,7 @@ jquery.countdown.es:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-es.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-es.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -634,7 +634,7 @@ jquery.countdown.sv:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-sv.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-sv.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -647,7 +647,7 @@ jquery.countdown.th:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-th.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-th.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -660,7 +660,7 @@ jquery.countdown.tr:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-tr.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-tr.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -673,7 +673,7 @@ jquery.countdown.uk:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-uk.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-uk.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -686,7 +686,7 @@ jquery.countdown.ur:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-ur.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-ur.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -699,7 +699,7 @@ jquery.countdown.uz:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-uz.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-uz.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -712,7 +712,7 @@ jquery.countdown.vi:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-vi.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-vi.js: { minified: false }
   dependencies:
     - core/jquery.countdown
 
@@ -725,6 +725,6 @@ jquery.countdown.cy:
     url: http://keith-wood.name/licence.html
     gpl-compatible: true
   js:
-    /libraries/jquery.countdown/jquery.countdown-cy.js: { minified: false }
+    /libraries/jquery.countdown/js/jquery.countdown-cy.js: { minified: false }
   dependencies:
     - core/jquery.countdown
