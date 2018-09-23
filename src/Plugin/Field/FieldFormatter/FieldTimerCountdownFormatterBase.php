@@ -67,7 +67,7 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
   /**
    * {@inheritdoc}
    */
-  protected function preparePluginSettings(FieldItemInterface $item) {
+  protected function preparePluginSettings(FieldItemInterface $item, $langcode) {
     $settings = $this->getSettings();
     $timestamp = $this->getTimestamp($item);
     $type = $this->getSetting('type');

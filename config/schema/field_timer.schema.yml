@@ -40,6 +40,9 @@ field.formatter.settings.field_timer_countdown:
   type: field.formatter.settings.field_timer_countdown_base
   label: 'Field Timer jQuery Countdown formatter display settings'
   mapping:
+    use_system_language:
+      type: boolean
+      label: 'Use system language'
     regional:
       type: string
       label: 'Region'

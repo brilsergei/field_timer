@@ -2,9 +2,13 @@
 
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
-
+use Drupal\Core\Language\LanguageDefault;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'field_timer_countdown' formatter.
@@ -17,7 +21,7 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
+class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase implements ContainerFactoryPluginInterface {
 
   /**
    * {@inheritdoc}
@@ -25,10 +29,38 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
   const JS_KEY = 'jquery.countdown';
 
   /**
+   * @var \Drupal\Core\Language\LanguageDefault
+   */
+  protected $languageDefault;
+
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, LanguageDefault $languageDefault) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+
+    $this->languageDefault = $languageDefault;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['label'],
+      $configuration['view_mode'],
+      $configuration['third_party_settings'],
+      $container->get('language.default')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
     $settings = [
+      'use_system_language' => FALSE,
       'regional' => 'en',
       'format' => 'dHMS',
       'layout' => '',
@@ -47,7 +79,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
 
-    $regional = $this->getSetting('regional');
+    $regional = $this->getRegion($langcode);
     if ($regional != 'en') {
       $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME . '.' . $regional;
     }
@@ -70,11 +102,29 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
+    $useSystemLanguageDescription = 'If this option is checked, it will try to '
+      . 'use appropriate translation from internal files and fallback to the '
+      . 'site\'s default language or English if nothing is found. Otherwise it '
+      . 'provides option \'Region\' to configure which translation to use for '
+      . 'each language on the site.';
+    $form['use_system_language'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use system language'),
+      '#default_value' => $this->getSetting('use_system_language'),
+      '#description' => $this->t($useSystemLanguageDescription),
+      '#attributes' => ['class' => ['field-timer-use-system-language']],
+    ];
+
     $form['regional'] = [
       '#type' => 'select',
       '#title' => $this->t('Region'),
       '#default_value' => $this->getSetting('regional'),
       '#options' => $this->regionOptions(),
+      '#states' => [
+        'invisible' => [
+          'input.field-timer-use-system-language' => ['checked' => TRUE],
+        ],
+      ],
     ];
 
     $form['format'] = [
@@ -131,8 +181,12 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
   public function settingsSummary() {
     $summary = parent::settingsSummary();
 
-    $region = $this->getSetting('regional');
-    $summary[] = $this->t('Region: %regional', ['%regional' => $this->regionOptions()[$region]]);
+    $useSystemLanguage = $this->getSetting('use_system_language');
+    $summary[] = $this->t('Use system language: %use_system_language', ['%use_system_language' => $useSystemLanguage ? $this->t('Yes') : $this->t('No')]);
+    if (!$useSystemLanguage) {
+      $region = $this->getSetting('regional');
+      $summary[] = $this->t('Region: %regional', ['%regional' => $this->regionOptions()[$region]]);
+    }
     $summary[] = $this->t('Format: %format', ['%format' => $this->getSetting('format')]);
     $summary[] = $this->t('Layout: %layout', ['%layout' => $this->getSetting('layout')]);
     $summary[] = $this->t('Compact: %compact', ['%compact' => $this->getSetting('compact') ? $this->t('Yes') : $this->t('No')]);
@@ -141,6 +195,50 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase {
     $summary[] = $this->t('Pad with zeroes: %padZeroes', ['%padZeroes' => $this->getSetting('padZeroes') ? $this->t('Yes') : $this->t('No')]);
 
     return $summary;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  protected function preparePluginSettings(FieldItemInterface $item, $langcode) {
+    $settings = parent::preparePluginSettings($item, $langcode);
+
+    unset($settings['use_system_language']);
+    $settings['regional'] = $this->getRegion($langcode);
+
+    return $settings;
+  }
+
+  /**
+   * Gets region to use for jquery.countdown.
+   *
+   * @param string $langcode
+   *
+   * @return string
+   */
+  protected function getRegion($langcode) {
+    // Fallback to English
+    $region = 'en';
+    if ($this->getSetting('use_system_language')) {
+      $regions = $this->regionOptions();
+      // Try content language
+      if (isset($regions[$langcode])) {
+        $region = $langcode;
+      }
+      else {
+        $defaultLangcode = $this->languageDefault->get()
+          ->getId();
+        // Try default language
+        if (isset($regions[$defaultLangcode])) {
+          $region = $defaultLangcode;
+        }
+      }
+    }
+    else {
+      $region = $this->getSetting('regional');
+    }
+
+    return $region;
   }
 
   /**

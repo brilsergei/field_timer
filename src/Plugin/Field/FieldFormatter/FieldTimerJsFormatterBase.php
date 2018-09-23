@@ -39,7 +39,7 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
 
     $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME;
     $elements['#attached']['library'][] = 'field_timer/init';
-    $elements['#attached']['drupalSettings']['field_timer'] = $this->generateJsSettings($items);
+    $elements['#attached']['drupalSettings']['field_timer'] = $this->generateJsSettings($items, $langcode);
 
     return $elements;
   }
@@ -77,17 +77,19 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    *
    * @param \Drupal\Core\Field\FieldItemListInterface $items
    *  Field items.
+   * @param string $langcode
+   *
    * @return array
    *  Array of JS settings to be used to initialize timer/countdown widget.
    */
-  protected function generateJsSettings(FieldItemListInterface $items) {
+  protected function generateJsSettings(FieldItemListInterface $items, $langcode) {
     $keys = $this->getItemKeys($items);
     $js_settings = [];
 
     foreach ($items as $delta => $item) {
       $timestamp = $this->getTimestamp($item);
       if ($timestamp !== NULL) {
-        $js_settings[$keys[$delta]]['settings'] = $this->preparePluginSettings($item);
+        $js_settings[$keys[$delta]]['settings'] = $this->preparePluginSettings($item, $langcode);
         $js_settings[$keys[$delta]]['plugin'] = static::JS_KEY;
       }
     }
@@ -116,9 +118,11 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    *
    * @param \Drupal\Core\Field\FieldItemInterface $item
    *  Field item.
+   * @param string $langcode
+   *
    * @return array
    *  Array of key-value pairs.
    */
-  abstract protected function preparePluginSettings(FieldItemInterface $item);
+  abstract protected function preparePluginSettings(FieldItemInterface $item, $langcode);
 
 }

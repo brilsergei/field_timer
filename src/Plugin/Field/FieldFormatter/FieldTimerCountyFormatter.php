@@ -172,7 +172,7 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
   /**
    * {@inheritdoc}
    */
-  protected function preparePluginSettings(FieldItemInterface $item) {
+  protected function preparePluginSettings(FieldItemInterface $item, $langcode) {
     $settings = $this->getSettings();
     unset($settings['background']);
     return $settings;
