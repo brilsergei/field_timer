@@ -79,9 +79,9 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
 
-    $regional = $this->getRegion($langcode);
-    if ($regional != 'en') {
-      $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME . '.' . $regional;
+    $language = $this->getLanguage($langcode);
+    if ($language != 'en') {
+      $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME . '.' . $language;
     }
 
     $keys = $this->getItemKeys($items);
@@ -117,9 +117,9 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
 
     $form['regional'] = [
       '#type' => 'select',
-      '#title' => $this->t('Region'),
+      '#title' => $this->t('Language'),
       '#default_value' => $this->getSetting('regional'),
-      '#options' => $this->regionOptions(),
+      '#options' => $this->languageOptions(),
       '#states' => [
         'invisible' => [
           'input.field-timer-use-system-language' => ['checked' => TRUE],
@@ -184,8 +184,8 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
     $useSystemLanguage = $this->getSetting('use_system_language');
     $summary[] = $this->t('Use system language: %use_system_language', ['%use_system_language' => $useSystemLanguage ? $this->t('Yes') : $this->t('No')]);
     if (!$useSystemLanguage) {
-      $region = $this->getSetting('regional');
-      $summary[] = $this->t('Region: %regional', ['%regional' => $this->regionOptions()[$region]]);
+      $language = $this->getSetting('regional');
+      $summary[] = $this->t('Language: %language', ['%language' => $this->languageOptions()[$language]]);
     }
     $summary[] = $this->t('Format: %format', ['%format' => $this->getSetting('format')]);
     $summary[] = $this->t('Layout: %layout', ['%layout' => $this->getSetting('layout')]);
@@ -204,49 +204,49 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
     $settings = parent::preparePluginSettings($item, $langcode);
 
     unset($settings['use_system_language']);
-    $settings['regional'] = $this->getRegion($langcode);
+    $settings['regional'] = $this->getLanguage($langcode);
 
     return $settings;
   }
 
   /**
-   * Gets region to use for jquery.countdown.
+   * Gets language to use for jquery.countdown.
    *
    * @param string $langcode
    *
    * @return string
    */
-  protected function getRegion($langcode) {
+  protected function getLanguage($langcode) {
     // Fallback to English
-    $region = 'en';
+    $language = 'en';
     if ($this->getSetting('use_system_language')) {
-      $regions = $this->regionOptions();
+      $languages = $this->languageOptions();
       // Try content language
-      if (isset($regions[$langcode])) {
-        $region = $langcode;
+      if (isset($languages[$langcode])) {
+        $language = $langcode;
       }
       else {
         $defaultLangcode = $this->languageDefault->get()
           ->getId();
         // Try default language
-        if (isset($regions[$defaultLangcode])) {
-          $region = $defaultLangcode;
+        if (isset($languages[$defaultLangcode])) {
+          $language = $defaultLangcode;
         }
       }
     }
     else {
-      $region = $this->getSetting('regional');
+      $language = $this->getSetting('regional');
     }
 
-    return $region;
+    return $language;
   }
 
   /**
-   * Gets region options.
+   * Gets language options.
    *
    * @return array
    */
-  protected function regionOptions() {
+  protected function languageOptions() {
     return [
       'sq' => t('Albanian'),
       'ar' => t('Arabic'),

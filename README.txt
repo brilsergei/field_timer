@@ -32,7 +32,7 @@ default language, 'en', which will be found in jQuery Countdown translation
 sets. For example, if content language is Belarusian (by), default language is
 Russian (ru), then countdown will be displayed in Russian because there is no
 Belarusian for jQuery Countdown.
-2. You may specify Region option for each language enabled in the system
+2. You may specify Language option for each language enabled in the system
 separately. In order to do it uncheck option 'Use system language' in the
 formatter settings form, export configs with 'drush cex'. After that you need
 find appropriate entity_view_mode entity config file in the folder with
