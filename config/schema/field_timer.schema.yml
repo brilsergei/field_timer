@@ -62,7 +62,7 @@ field.formatter.settings.field_timer_countdown:
     timeSeparator:
       type: string
       label: 'Time separator'
-    pasZeroes:
+    padZeroes:
       type: boolean
       label: 'Pad with zeroes'
 
