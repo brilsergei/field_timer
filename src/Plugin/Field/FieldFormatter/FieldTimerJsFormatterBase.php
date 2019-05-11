@@ -2,20 +2,18 @@
 
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
-
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
 /**
- * Base implementation of formatters that uses JavaScript to render
- * timer/countdown.
+ * Implementation of formatters that uses JavaScript to render timer/countdown.
  */
 abstract class FieldTimerJsFormatterBase extends FormatterBase {
 
   /**
-   * jQuery plugin name used to render timer/countdown widget.
+   * Plugin name used to render timer/countdown widget.
    */
   const LIBRARY_NAME = '';
 
@@ -48,9 +46,10 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    * Generates unique ids for the field items.
    *
    * @param \Drupal\Core\Field\FieldItemListInterface $items
-   *  The field items.
+   *   The field items.
+   *
    * @return array
-   *  Array of ids keyed by field item delta.
+   *   Array of ids keyed by field item delta.
    */
   protected function getItemKeys(FieldItemListInterface $items) {
     if (!$this->itemKeys) {
@@ -76,11 +75,12 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    * Generates JS settings for the field.
    *
    * @param \Drupal\Core\Field\FieldItemListInterface $items
-   *  Field items.
+   *   Field items.
    * @param string $langcode
+   *   Langcode value.
    *
    * @return array
-   *  Array of JS settings to be used to initialize timer/countdown widget.
+   *   Array of JS settings to be used to initialize timer/countdown widget.
    */
   protected function generateJsSettings(FieldItemListInterface $items, $langcode) {
     $keys = $this->getItemKeys($items);
@@ -101,9 +101,10 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    * Retrieves timestamp from field item.
    *
    * @param \Drupal\Core\Field\FieldItemInterface $item
-   *  Field item.
-   * @return integer|null
-   *  Datetime field item timestamp.
+   *   Field item.
+   *
+   * @return int|null
+   *   Datetime field item timestamp.
    */
   protected function getTimestamp(FieldItemInterface $item) {
     if (!empty($item->date)) {
@@ -117,11 +118,12 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    * Prepares array of settings used to initialize jQuery plugin.
    *
    * @param \Drupal\Core\Field\FieldItemInterface $item
-   *  Field item.
+   *   Field item.
    * @param string $langcode
+   *   Langcode value.
    *
    * @return array
-   *  Array of key-value pairs.
+   *   Array of key-value pairs.
    */
   abstract protected function preparePluginSettings(FieldItemInterface $item, $langcode);
 

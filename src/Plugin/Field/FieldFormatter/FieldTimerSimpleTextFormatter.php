@@ -52,6 +52,7 @@ class FieldTimerSimpleTextFormatter extends DateTimeTimeAgoFormatter {
             unset($elements[$delta]);
           }
           break;
+
         case static::TYPE_COUNTDOWN:
           if ($item->date->getTimestamp() < REQUEST_TIME) {
             unset($elements[$delta]);
@@ -92,6 +93,9 @@ class FieldTimerSimpleTextFormatter extends DateTimeTimeAgoFormatter {
     return $summary;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   protected function typeOptions() {
     return [
       static::TYPE_AUTO => $this->t('Auto'),

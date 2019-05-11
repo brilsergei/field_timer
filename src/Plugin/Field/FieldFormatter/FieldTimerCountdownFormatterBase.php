@@ -6,7 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Url;
 
-
 /**
  * Base implementation of formatters that uses jQuery Countdown plugin.
  */
@@ -85,6 +84,9 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
     return $settings;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   protected function typeOptions() {
     return [
       static::TYPE_AUTO => $this->t('Auto'),
@@ -93,6 +95,9 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
   protected function getDocumentationLink(array $options = []) {
     return Url::fromUri('http://keith-wood.name/countdownRef.html', $options)->toString();
   }

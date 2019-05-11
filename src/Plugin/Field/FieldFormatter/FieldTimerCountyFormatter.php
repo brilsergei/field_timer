@@ -50,13 +50,13 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
    */
   public static function defaultSettings() {
     $settings = [
-        'animation' => static::ANIMATION_FADE,
-        'speed' => 500,
-        'theme' => static::COUNTY_THEME_BLUE,
-        'background' => '',
-        'reflection' => 1,
-        'reflectionOpacity' => 0.2,
-      ] + parent::defaultSettings();
+      'animation' => static::ANIMATION_FADE,
+      'speed' => 500,
+      'theme' => static::COUNTY_THEME_BLUE,
+      'background' => '',
+      'reflection' => 1,
+      'reflectionOpacity' => 0.2,
+    ] + parent::defaultSettings();
 
     return $settings;
   }
@@ -82,7 +82,7 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
         '#attributes' => $attributes,
         '#children' => [
           '#markup' => '<div data-field-timer-key="' . $keys[$delta] . '"  data-timestamp="'
-            . $this->getTimestamp($item) . '"></div>',
+          . $this->getTimestamp($item) . '"></div>',
         ],
       ];
     }
@@ -182,6 +182,7 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
    * Gets animation options.
    *
    * @return array
+   *   Array of animation options.
    */
   protected function animationOptions() {
     return [
@@ -194,6 +195,7 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
    * Gets county theme options.
    *
    * @return array
+   *   Array of county theme options.
    */
   protected function themeOptions() {
     return [

@@ -24,15 +24,22 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase implements ContainerFactoryPluginInterface {
 
   /**
+   * Provides language.default service.
+   *
    * {@inheritdoc}
    */
   const JS_KEY = 'jquery.countdown';
 
   /**
+   * Provides language.default service.
+   *
    * @var \Drupal\Core\Language\LanguageDefault
    */
   protected $languageDefault;
 
+  /**
+   * {@inheritdoc}
+   */
   public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, LanguageDefault $languageDefault) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
 
@@ -89,7 +96,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
     foreach ($items as $delta => $item) {
       $elements[$delta] = [
         '#markup' => '<span class="field-timer-jquery-countdown" data-field-timer-key="'
-          . $keys[$delta] . '" data-timestamp="' . $this->getTimestamp($item) . '"></span>',
+        . $keys[$delta] . '" data-timestamp="' . $this->getTimestamp($item) . '"></span>',
       ];
     }
 
@@ -102,16 +109,17 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
-    $useSystemLanguageDescription = 'If this option is checked, it will try to '
+    $useSystemLanguageDescription = $this->t("If this option is checked, it will try to '
       . 'use appropriate translation from internal files and fallback to the '
-      . 'site\'s default language or English if nothing is found. Otherwise it '
-      . 'provides option \'Region\' to configure which translation to use for '
-      . 'each language on the site.';
+      . 'site's default language or English if nothing is found. Otherwise it '
+      . 'provides option 'Region' to configure which translation to use for '
+      . 'each language on the site.");
+
     $form['use_system_language'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Use system language'),
       '#default_value' => $this->getSetting('use_system_language'),
-      '#description' => $this->t($useSystemLanguageDescription),
+      '#description' => $useSystemLanguageDescription,
       '#attributes' => ['class' => ['field-timer-use-system-language']],
     ];
 
@@ -176,7 +184,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function settingsSummary() {
     $summary = parent::settingsSummary();
@@ -198,7 +206,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   protected function preparePluginSettings(FieldItemInterface $item, $langcode) {
     $settings = parent::preparePluginSettings($item, $langcode);
@@ -213,22 +221,24 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
    * Gets language to use for jquery.countdown.
    *
    * @param string $langcode
+   *   Language code.
    *
    * @return string
+   *   Language code.
    */
   protected function getLanguage($langcode) {
-    // Fallback to English
+    // Fallback to English.
     $language = 'en';
     if ($this->getSetting('use_system_language')) {
       $languages = $this->languageOptions();
-      // Try content language
+      // Try content language.
       if (isset($languages[$langcode])) {
         $language = $langcode;
       }
       else {
         $defaultLangcode = $this->languageDefault->get()
           ->getId();
-        // Try default language
+        // Try default language.
         if (isset($languages[$defaultLangcode])) {
           $language = $defaultLangcode;
         }
@@ -245,6 +255,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
    * Gets language options.
    *
    * @return array
+   *   Array of language options.
    */
   protected function languageOptions() {
     return [

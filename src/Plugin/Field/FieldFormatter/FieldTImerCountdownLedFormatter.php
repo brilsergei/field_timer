@@ -44,13 +44,13 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
    */
   public static function defaultSettings() {
     $settings = [
-        'countdown_theme' => static::LED_THEME_GREEN,
-        'max_count_of_days' => static::LED_DAY_DIGITS_TWO,
-        'display_days' => 1,
-        'display_hours' => 1,
-        'display_minutes' => 1,
-        'display_seconds' => 1,
-      ] + parent::defaultSettings();
+      'countdown_theme' => static::LED_THEME_GREEN,
+      'max_count_of_days' => static::LED_DAY_DIGITS_TWO,
+      'display_days' => 1,
+      'display_hours' => 1,
+      'display_minutes' => 1,
+      'display_seconds' => 1,
+    ] + parent::defaultSettings();
 
     return $settings;
   }
@@ -67,8 +67,8 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
       $layout = $this->getLayout();
       $elements[$delta] = [
         '#markup' => '<div class="field-timer-jquery-countdown-led '
-          . $this->getSetting('countdown_theme') . '" data-field-timer-key="' . $keys[$delta]
-          . '" data-timestamp="' . $this->getTimestamp($item) . '">' . $layout . '</div>',
+        . $this->getSetting('countdown_theme') . '" data-field-timer-key="' . $keys[$delta]
+        . '" data-timestamp="' . $this->getTimestamp($item) . '">' . $layout . '</div>',
       ];
     }
 
@@ -129,7 +129,7 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function settingsSummary() {
     $summary = parent::settingsSummary();
@@ -153,6 +153,7 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
    * Renders timer/countdown layout.
    *
    * @return string
+   *   Timer/countdown layout
    */
   protected function getLayout() {
     $layout = '<span class="jquery-countdown-led-display-wrapper">';
@@ -181,6 +182,7 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
    * Gets theme options.
    *
    * @return array
+   *   Array of theme options.
    */
   protected function themeOptions() {
     return [
@@ -193,6 +195,7 @@ class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
    * Gets max number of days options.
    *
    * @return array
+   *   Array of days options.
    */
   protected function dayOptions() {
     return [
