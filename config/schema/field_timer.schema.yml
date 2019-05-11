@@ -57,7 +57,7 @@ field.formatter.settings.field_timer_countdown:
       type: boolean
       label: 'Display in compact format'
     significant:
-      type: boolean
+      type: integer
       label: 'Granularity'
     timeSeparator:
       type: string
