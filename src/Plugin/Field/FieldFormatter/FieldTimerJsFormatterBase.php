@@ -52,14 +52,14 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    *   Array of ids keyed by field item delta.
    */
   protected function getItemKeys(FieldItemListInterface $items) {
-    if (!$this->itemKeys) {
+    $entity = $items->getEntity();
+    if (!isset($this->itemKeys[$entity->getEntityTypeId()][$entity->id()][$items->getFieldDefinition()->getName()])) {
       $entity = $items->getEntity();
 
       $this->itemKeys = [];
       foreach ($items as $delta => $item) {
-        $this->itemKeys[$delta] = implode('-', [
+        $this->itemKeys[$entity->getEntityTypeId()][$entity->id()][$items->getFieldDefinition()->getName()][$delta] = implode('-', [
           $entity->getEntityTypeId(),
-          $entity->bundle(),
           $entity->id(),
           $items->getFieldDefinition()->getName(),
           $delta,
@@ -68,7 +68,7 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
       }
     }
 
-    return $this->itemKeys;
+    return $this->itemKeys[$entity->getEntityTypeId()][$entity->id()][$items->getFieldDefinition()->getName()];
   }
 
   /**
