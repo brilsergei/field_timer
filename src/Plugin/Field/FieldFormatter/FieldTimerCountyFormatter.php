@@ -120,7 +120,7 @@ class FieldTimerCountyFormatter extends FieldTimerJsFormatterBase {
       '#type' => 'textfield',
       '#title' => $this->t('Background'),
       '#default_value' => $this->getSetting('background'),
-      '#description' => $this->t("Data from this field will be added to css property 'background'."),
+      '#description' => $this->t('Data from this field will be added to css property \'background\'.'),
     ];
 
     $form['reflection'] = [

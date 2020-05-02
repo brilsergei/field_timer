@@ -109,11 +109,11 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
-    $useSystemLanguageDescription = $this->t("If this option is checked, it will try to '
+    $useSystemLanguageDescription = $this->t('If this option is checked, it will try to '
       . 'use appropriate translation from internal files and fallback to the '
-      . 'site's default language or English if nothing is found. Otherwise it '
-      . 'provides option 'Region' to configure which translation to use for '
-      . 'each language on the site.");
+      . 'site\'s default language or English if nothing is found. Otherwise it '
+      . 'provides option \'Region\' to configure which translation to use for '
+      . 'each language on the site.');
 
     $form['use_system_language'] = [
       '#type' => 'checkbox',
