@@ -68,7 +68,7 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
       }
     }
 
-    return $this->itemKeys[$entity->getEntityTypeId()][$entity->id()][$items->getFieldDefinition()->getName()];
+    return $this->itemKeys[$entity->getEntityTypeId()][$entity->id()][$items->getFieldDefinition()->getName()] ?? [];
   }
 
   /**
