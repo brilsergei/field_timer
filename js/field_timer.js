@@ -50,6 +50,21 @@
           }
         }
       }
+    },
+    // @link https://github.com/kbwood/countdown/issues/48
+    detach: function (context) {
+      var settings = drupalSettings.field_timer;
+      if ($.countdown !== undefined) {
+        $.countdown.setDefaults($.countdown.regionalOptions['']);
+      }
+      for (var key in settings) {
+        if (settings.hasOwnProperty(key)) {
+          var $item = $('[data-field-timer-key=' + key + ']', context);
+          if ($item.length) {
+            $item.countdown('destroy');
+          }
+        }
+      }
     }
   };
 })(jQuery);
