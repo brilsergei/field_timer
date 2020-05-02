@@ -2,6 +2,7 @@
 
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -40,8 +41,8 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
   /**
    * {@inheritdoc}
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, LanguageDefault $languageDefault) {
-    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, TimeInterface $time, LanguageDefault $languageDefault) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings, $time);
 
     $this->languageDefault = $languageDefault;
   }
@@ -58,6 +59,7 @@ class FieldTimerCountdownFormatter extends FieldTimerCountdownFormatterBase impl
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
+      $container->get('datetime.time'),
       $container->get('language.default')
     );
   }
