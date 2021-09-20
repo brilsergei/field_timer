@@ -104,11 +104,11 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
     $timestamp = $this->getTimestamp($item);
     $type = $this->getSetting('type');
 
-    if ($type == 'timer' || ($type == 'auto' && $timestamp <= REQUEST_TIME)) {
+    if ($type == 'timer' || ($type == 'auto' && $timestamp <= $this->time->getRequestTime())) {
       $settings['until'] = FALSE;
       $settings['since'] = TRUE;
     }
-    elseif ($type == 'countdown' || ($type == 'auto' && $timestamp > REQUEST_TIME)) {
+    elseif ($type == 'countdown' || ($type == 'auto' && $timestamp > $this->time->getRequestTime())) {
       $settings['until'] = TRUE;
       $settings['since'] = FALSE;
     }
