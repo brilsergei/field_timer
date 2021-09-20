@@ -182,7 +182,7 @@ function field_timer_field_presave($entity_type, $entity, $field, $instance,
   // timestamp.
   if ($field['type'] == 'field_timer') {
     foreach ($items as $delta => $item) {
-      if (!empty($item['timestamp'])) {
+      if (!empty($item['timestamp']) && !is_numeric($item['timestamp'])) {
         $timestamp = strtotime($item['timestamp']);
         if ($timestamp) {
           $items[$delta]['timestamp'] = $timestamp;
