@@ -6,7 +6,7 @@ init:
     - core/jquery
     - core/drupal
     - core/drupalSettings
-    - core/jquery.once
+    - core/once
   css:
     component:
       css/field_timer.css: {}

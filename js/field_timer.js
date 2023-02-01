@@ -19,15 +19,15 @@
           switch (settings[key].plugin) {
             case 'county':
               if (!$item.hasClass('county-reflection')) {
-                $item.once('field-timer').each(function () {
-                  $(this).county($.extend({endDateTime: new Date(timestamp * 1000)}, options));
+                once('field-timer', $item).forEach(function (el) {
+                  $(el).county($.extend({endDateTime: new Date(timestamp * 1000)}, options));
                 });
               }
             break;
 
             case 'jquery.countdown':
-              $item.once('field-timer').each(function () {
-                $(this).countdown($.extend(
+              once('field-timer', $item).forEach(function (el) {
+                $(el).countdown($.extend(
                   options,
                   {
                     until: (options.until ? new Date(timestamp * 1000) : null),
@@ -39,8 +39,8 @@
             break;
 
             case 'jquery.countdown.led':
-              $item.once('field-timer').each(function () {
-                $(this).countdown({
+              once('field-timer', $item).forEach(function (el) {
+                $(el).countdown({
                   until: (options.until ? new Date(timestamp * 1000) : null),
                   since: (options.since ? new Date(timestamp * 1000) : null),
                   layout: $item.html()
