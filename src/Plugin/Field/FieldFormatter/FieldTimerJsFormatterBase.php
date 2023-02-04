@@ -35,7 +35,7 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
 
-    $elements['#attached']['library'][] = 'field_timer/' . static::LIBRARY_NAME;
+    $elements['#attached']['library'][] = $this->getLibraryName();
     $elements['#attached']['library'][] = 'field_timer/init';
     $elements['#attached']['drupalSettings']['field_timer'] = $this->generateJsSettings($items, $langcode);
 
@@ -112,6 +112,13 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
     }
 
     return NULL;
+  }
+
+  /**
+   * @return string
+   */
+  protected function getLibraryName(): string {
+    return 'field_timer/' . static::LIBRARY_NAME;
   }
 
   /**
