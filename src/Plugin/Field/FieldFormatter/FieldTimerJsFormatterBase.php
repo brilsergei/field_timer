@@ -3,9 +3,12 @@
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Crypt;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Implementation of formatters that uses JavaScript to render timer/countdown.
@@ -29,6 +32,39 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    */
   protected $itemKeys;
 
+  protected ConfigFactoryInterface $configFactory;
+
+  /**
+   * @param $plugin_id
+   * @param $plugin_definition
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   * @param array $settings
+   * @param $label
+   * @param $view_mode
+   * @param array $third_party_settings
+   * @param \Drupal\Core\Config\ConfigFactoryInterface|NULL $configFactory
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, ConfigFactoryInterface $configFactory = NULL) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+
+    if (!$configFactory) {
+      $message = 'Calling ' . __METHOD__ . ' without the $configFactory '
+        . 'argument is deprecated in field_timer:2.1.0 and it will be required '
+        . 'in field_timer:3.0.0. See https://www.drupal.org/node/3078162';
+      @trigger_error($message, E_USER_DEPRECATED);
+      $configFactory = \Drupal::configFactory();
+    }
+
+    $this->configFactory = $configFactory;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static($plugin_id, $plugin_definition, $configuration['field_definition'], $configuration['settings'], $configuration['label'], $configuration['view_mode'], $configuration['third_party_settings']);
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -38,6 +74,8 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
     $elements['#attached']['library'][] = $this->getLibraryName();
     $elements['#attached']['library'][] = 'field_timer/init';
     $elements['#attached']['drupalSettings']['field_timer'] = $this->generateJsSettings($items, $langcode);
+    $elements['#cache']['tags'] = $this->configFactory->get('field_timer.config')
+      ->getCacheTags();
 
     return $elements;
   }
@@ -118,7 +156,14 @@ abstract class FieldTimerJsFormatterBase extends FormatterBase {
    * @return string
    */
   protected function getLibraryName(): string {
-    return 'field_timer/' . static::LIBRARY_NAME;
+    $name = 'field_timer/' . static::LIBRARY_NAME;
+    $assetSource = $this->configFactory->get('field_timer.config')
+      ->get('asset_source');
+    if ($assetSource && $assetSource !== 'local') {
+      $name .= '-' . $assetSource;
+    }
+
+    return $name;
   }
 
   /**

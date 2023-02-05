@@ -3,6 +3,7 @@
 namespace Drupal\field_timer\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FieldItemInterface;
@@ -30,9 +31,10 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
    * @param $view_mode
    * @param array $third_party_settings
    * @param \Drupal\Component\Datetime\TimeInterface $time
+   * @param \Drupal\Core\Config\ConfigFactoryInterface|null $configFactory
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, TimeInterface $time) {
-    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, TimeInterface $time, ConfigFactoryInterface $configFactory = NULL) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings, $configFactory);
 
     $this->time = $time;
   }
@@ -41,7 +43,7 @@ abstract class FieldTimerCountdownFormatterBase extends FieldTimerJsFormatterBas
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static($plugin_id, $plugin_definition, $configuration['field_definition'], $configuration['settings'], $configuration['label'], $configuration['view_mode'], $configuration['third_party_settings'], $container->get('datetime.time'));
+    return new static($plugin_id, $plugin_definition, $configuration['field_definition'], $configuration['settings'], $configuration['label'], $configuration['view_mode'], $configuration['third_party_settings'], $container->get('datetime.time'), $container->get('config.factory'));
   }
 
   /**

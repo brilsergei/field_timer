@@ -1,0 +1,6 @@
+field_timer.config:
+  type: config
+  mapping:
+    asset_source:
+      type: string
+      label: 'Asset source'

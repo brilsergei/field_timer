@@ -1,0 +1,7 @@
+field_timer.config:
+  path: /admin/config/development/field-timer
+  defaults:
+    _form: Drupal\field_timer\Form\ConfigForm
+    _title: 'Field timer configuration'
+  requirements:
+    _permission: 'administer site configuration'
