@@ -10,7 +10,7 @@ field.formatter.settings.field_timer_county:
   type: mapping
   label: 'Field Timer County formatter display settings'
   mapping:
-    animaton:
+    animation:
       type: string
       label: 'Animation'
     speed:
