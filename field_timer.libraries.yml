@@ -10,6 +10,7 @@ init:
   css:
     component:
       css/field_timer.css: {}
+      css/field_timer-local.css: {}
 
 county:
   remote: http://www.egrappler.com/free-jquery-count-down-plugin-county/

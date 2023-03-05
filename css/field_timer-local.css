@@ -1,0 +1,6 @@
+.field-timer-jquery-countdown-led.green span {
+  background: url('/libraries/jquery.countdown/img/countdownLED.png') no-repeat 0 0;
+}
+.field-timer-jquery-countdown-led.blue span {
+  background: url('/libraries/jquery.countdown/img/countdownGlowing.gif') no-repeat 0 0;
+}

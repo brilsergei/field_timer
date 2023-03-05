@@ -4,20 +4,13 @@
 
 This module provides datetime field formatters to display the field as a
 timer or countdown. Module provides 3 field formatters: simple text and
-2 formatters based on jQuery plugins: County and jQuery Countdown.
-
-## Requirements
-
-- [County](https://github.com/brilsergei/county)
-- [jQuery Countdown](http://keith-wood.name/countdown.html)
+2 formatters based on jQuery plugins: [County](https://github.com/brilsergei/county)
+and [jQuery Countdown](http://keith-wood.name/countdown.html).
 
 ## Installation
 
-1. Download the module.
-2. Download required JS libraries to drupal library directory and rename
-library directories to libraries/county and libraries/jquery.countdown
-respectively. This module supports jQuery Countdown 2.1.0.
-4. Enable the module using admin module page or drush.
+1. Install module using composer or download the module archive.
+2. Enable the module using admin module page or drush.
 
 ## Translation
 
@@ -40,6 +33,13 @@ exported configurations, copy the file to the language folder which you want
 translate to and change in the copied file option 'regional' for your field.
 Formatter settings cannot be translated via interface yet. See
 https://www.drupal.org/project/drupal/issues/2546212
+
+## Assets
+Required assets of the used JS libs are loaded from [jsDelivr](https://www.jsdelivr.com/).
+It is also possible to load the assets from site local storage. In order to use locally stored library assets
+download required JS libraries to drupal library directory and rename
+library directories to libraries/county and libraries/jquery.countdown
+respectively. This module supports jQuery Countdown 2.1.0.
 
 ## Issues, Bugs and Feature Requests
 

@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * Create field_timer config.
+ */
+function field_timer_update_10201() {
+  $configFactory = \Drupal::configFactory();
+  $config = $configFactory->getEditable('field_timer.config');
+  // Set local as asset source on existing sites because site owners already
+  // has them downloaded and rely on local assets.
+  $config->set('asset_source', 'local');
+  $config->save(TRUE);
+}

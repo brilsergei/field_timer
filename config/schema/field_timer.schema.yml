@@ -1,3 +1,10 @@
+field_timer.config:
+  type: config_object
+  mapping:
+    asset_source:
+      type: string
+      label: 'Asset source'
+
 field.formatter.settings.field_timer_simple_text:
   type: field.formatter.settings.datetime_time_ago
   label: 'Field Timer Text timer or countdown formatter display settings'

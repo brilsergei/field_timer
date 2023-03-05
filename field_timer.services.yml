@@ -1,0 +1,3 @@
+services:
+  field_timer.library_asset_links:
+    class: Drupal\field_timer\LibraryAssetLinks

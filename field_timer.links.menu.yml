@@ -1,0 +1,5 @@
+field_timer.config:
+  title: Field timer configuration
+  route_name: field_timer.config
+  description: Configure field timer asset source.
+  parent: system.admin_config_development
