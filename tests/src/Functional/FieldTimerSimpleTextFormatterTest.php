@@ -9,8 +9,16 @@ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\field_timer\Plugin\Field\FieldFormatter\FieldTimerSimpleTextFormatter;
 use Drupal\Tests\datetime\Functional\DateTimeTimeAgoFormatterTest;
 
+/**
+ * Tests formatter 'field_timer_simple_text'.
+ *
+ * @group field_timer
+ */
 class FieldTimerSimpleTextFormatterTest extends DateTimeTimeAgoFormatterTest {
 
+  /**
+   * @inheritDoc
+   */
   protected static $modules = ['field_timer', 'entity_test', 'field_ui'];
 
   /**
@@ -20,6 +28,9 @@ class FieldTimerSimpleTextFormatterTest extends DateTimeTimeAgoFormatterTest {
    */
   protected $dateFormatter;
 
+  /**
+   * @inheritDoc
+   */
   protected function setUp(): void {
     $this->displayOptions = [
       'type' => 'field_timer_simple_text',
@@ -62,6 +73,9 @@ class FieldTimerSimpleTextFormatterTest extends DateTimeTimeAgoFormatterTest {
     $this->assertSession()->pageTextContains('Type: ' . $options[$type]);
   }
 
+  /**
+   * Tests timer mode of the formatter.
+   */
   public function testTimer() {
     $fieldName = 'field_datetime'; // @see \Drupal\Tests\datetime\Functional\DateTimeTimeAgoFormatterTest::setUp
     $pastFormat = 'started @interval ago';
@@ -111,6 +125,9 @@ class FieldTimerSimpleTextFormatterTest extends DateTimeTimeAgoFormatterTest {
       ->pageTextContains((string) $expected);
   }
 
+  /**
+   * Tests countdown mode of the formatter.
+   */
   public function testCountdown() {
     $fieldName = 'field_datetime'; // @see \Drupal\Tests\datetime\Functional\DateTimeTimeAgoFormatterTest::setUp
     $futureFormat = 'ends in @interval ago';
