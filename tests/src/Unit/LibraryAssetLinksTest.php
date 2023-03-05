@@ -5,9 +5,14 @@ namespace Drupal\Tests\field_timer\Unit;
 use Drupal\field_timer\LibraryAssetLinks;
 use Drupal\Tests\UnitTestCase;
 
+/**
+ * @coversDefaultClass \Drupal\field_timer\LibraryAssetLinks
+ * @group field_timer
+ */
 class LibraryAssetLinksTest extends UnitTestCase {
 
   /**
+   * @covers ::replaceLocalWithJsDelivr
    * @dataProvider replaceLocalWithJsDelivrDataProvider
    */
   public function testReplaceLocalWithJsDelivr(array $libraries, array $expected) {

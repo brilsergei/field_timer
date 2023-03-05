@@ -10,6 +10,11 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Tests\BrowserTestBase;
 
+/**
+ * Tests library assets on the page.
+ *
+ * @group field_timer
+ */
 class AssetSourceTest extends BrowserTestBase {
 
   /**
@@ -88,6 +93,8 @@ class AssetSourceTest extends BrowserTestBase {
   }
 
   /**
+   * Tests library assets are properly loaded according to the configuration.
+   *
    * @dataProvider assetSourcesDataProvider
    */
   public function testAssetSources(string $formatter, array $configs, array $assets) {

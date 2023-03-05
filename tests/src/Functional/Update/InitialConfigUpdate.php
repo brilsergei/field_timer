@@ -4,6 +4,11 @@ namespace Drupal\Tests\field_timer\Functional\Update;
 
 use Drupal\FunctionalTests\Update\UpdatePathTestBase;
 
+/**
+ * Tests field_timer_update_10201.
+ *
+ * @group field_timer
+ */
 class InitialConfigUpdate extends UpdatePathTestBase {
 
   /**
@@ -15,6 +20,9 @@ class InitialConfigUpdate extends UpdatePathTestBase {
     ];
   }
 
+  /**
+   * Tests creation of config on update.
+   */
   public function testConfigCreation() {
     $config = $this->config('field_timer.config');
     $this->assertEmpty($config->get('asset_source'));
