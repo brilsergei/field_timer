@@ -53,7 +53,7 @@ jquery.countdown.sq:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-sq.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Arabic
 jquery.countdown.ar:
@@ -66,7 +66,7 @@ jquery.countdown.ar:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ar.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Armenian
 jquery.countdown.hy:
@@ -79,7 +79,7 @@ jquery.countdown.hy:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-hy.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Bengali/Bangla
 jquery.countdown.bn:
@@ -92,7 +92,7 @@ jquery.countdown.bn:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-bn.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Bosnian
 jquery.countdown.bs:
@@ -105,7 +105,7 @@ jquery.countdown.bs:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-bs.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Bulgarian
 jquery.countdown.bg:
@@ -118,7 +118,7 @@ jquery.countdown.bg:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-bg.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Burmese
 jquery.countdown.my:
@@ -131,7 +131,7 @@ jquery.countdown.my:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-my.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Catalan
 jquery.countdown.ca:
@@ -144,7 +144,7 @@ jquery.countdown.ca:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ca.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Chinese/Simplified
 jquery.countdown.zh-CN:
@@ -157,7 +157,7 @@ jquery.countdown.zh-CN:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-zh-CN.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Chinese/Traditional
 jquery.countdown.zh-TW:
@@ -170,7 +170,7 @@ jquery.countdown.zh-TW:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-zh-TW.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Croatian
 jquery.countdown.hr:
@@ -183,7 +183,7 @@ jquery.countdown.hr:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-hr.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Czech
 jquery.countdown.cs:
@@ -196,7 +196,7 @@ jquery.countdown.cs:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-cs.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Danish
 jquery.countdown.da:
@@ -209,7 +209,7 @@ jquery.countdown.da:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-da.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Dutch
 jquery.countdown.nl:
@@ -222,7 +222,7 @@ jquery.countdown.nl:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-nl.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Estonian
 jquery.countdown.et:
@@ -235,7 +235,7 @@ jquery.countdown.et:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-et.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Farsi/Persian
 jquery.countdown.fa:
@@ -248,7 +248,7 @@ jquery.countdown.fa:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-fa.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Finnish
 jquery.countdown.fi:
@@ -261,7 +261,7 @@ jquery.countdown.fi:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-fi.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Faroese
 jquery.countdown.fo:
@@ -274,7 +274,7 @@ jquery.countdown.fo:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-fo.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # French
 jquery.countdown.fr:
@@ -287,7 +287,7 @@ jquery.countdown.fr:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-fr.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Galician
 jquery.countdown.gl:
@@ -300,7 +300,7 @@ jquery.countdown.gl:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-gl.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # German
 jquery.countdown.de:
@@ -313,7 +313,7 @@ jquery.countdown.de:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-de.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Greek
 jquery.countdown.el:
@@ -326,7 +326,7 @@ jquery.countdown.el:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-el.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Gujarati
 jquery.countdown.gu:
@@ -339,7 +339,7 @@ jquery.countdown.gu:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-gu.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Hebrew
 jquery.countdown.he:
@@ -352,7 +352,7 @@ jquery.countdown.he:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-he.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Hungarian
 jquery.countdown.hu:
@@ -365,7 +365,7 @@ jquery.countdown.hu:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-hu.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Indonesian
 jquery.countdown.id:
@@ -378,7 +378,7 @@ jquery.countdown.id:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-id.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Icelandic
 jquery.countdown.is:
@@ -391,7 +391,7 @@ jquery.countdown.is:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-is.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Italian
 jquery.countdown.it:
@@ -404,7 +404,7 @@ jquery.countdown.it:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-it.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Japanese
 jquery.countdown.ja:
@@ -417,7 +417,7 @@ jquery.countdown.ja:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ja.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Kannada
 jquery.countdown.kn:
@@ -430,7 +430,7 @@ jquery.countdown.kn:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-kn.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Korean
 jquery.countdown.ko:
@@ -443,7 +443,7 @@ jquery.countdown.ko:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ko.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Latvian
 jquery.countdown.lv:
@@ -456,7 +456,7 @@ jquery.countdown.lv:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-lv.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Lithuanian
 jquery.countdown.lt:
@@ -469,7 +469,7 @@ jquery.countdown.lt:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-lt.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Macedonian
 jquery.countdown.mk:
@@ -482,7 +482,7 @@ jquery.countdown.mk:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-mk.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Malayalam
 jquery.countdown.ml:
@@ -495,7 +495,7 @@ jquery.countdown.ml:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ml.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Malaysian
 jquery.countdown.ms:
@@ -508,7 +508,7 @@ jquery.countdown.ms:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ms.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Norvegian
 jquery.countdown.nb:
@@ -521,7 +521,7 @@ jquery.countdown.nb:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-nb.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Polish
 jquery.countdown.pl:
@@ -534,7 +534,7 @@ jquery.countdown.pl:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-pl.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Portuguese/Brazilian
 jquery.countdown.pt-BR:
@@ -547,7 +547,7 @@ jquery.countdown.pt-BR:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-pt-BR.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Romanian
 jquery.countdown.ro:
@@ -560,7 +560,7 @@ jquery.countdown.ro:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ro.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Russian
 jquery.countdown.ru:
@@ -573,7 +573,7 @@ jquery.countdown.ru:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ru.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Serbian
 jquery.countdown.sr:
@@ -586,7 +586,7 @@ jquery.countdown.sr:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-sr.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Slovak
 jquery.countdown.sk:
@@ -599,7 +599,7 @@ jquery.countdown.sk:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-sk.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Slovenian
 jquery.countdown.sl:
@@ -612,7 +612,7 @@ jquery.countdown.sl:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-sl.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 # Spanish
 jquery.countdown.es:
   remote: http://keith-wood.name/countdown.html
@@ -624,7 +624,7 @@ jquery.countdown.es:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-es.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Swedish
 jquery.countdown.sv:
@@ -637,7 +637,7 @@ jquery.countdown.sv:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-sv.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Thai
 jquery.countdown.th:
@@ -650,7 +650,7 @@ jquery.countdown.th:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-th.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Turkish
 jquery.countdown.tr:
@@ -663,7 +663,7 @@ jquery.countdown.tr:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-tr.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Ukrainian
 jquery.countdown.uk:
@@ -676,7 +676,7 @@ jquery.countdown.uk:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-uk.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Urdu
 jquery.countdown.ur:
@@ -689,7 +689,7 @@ jquery.countdown.ur:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-ur.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Uzbek
 jquery.countdown.uz:
@@ -702,7 +702,7 @@ jquery.countdown.uz:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-uz.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Vietnamese
 jquery.countdown.vi:
@@ -715,7 +715,7 @@ jquery.countdown.vi:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-vi.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
 
 # Welsh
 jquery.countdown.cy:
@@ -728,4 +728,4 @@ jquery.countdown.cy:
   js:
     /libraries/jquery.countdown/js/jquery.countdown-cy.js: { minified: false }
   dependencies:
-    - core/jquery.countdown
+    - field_timer/jquery.countdown
