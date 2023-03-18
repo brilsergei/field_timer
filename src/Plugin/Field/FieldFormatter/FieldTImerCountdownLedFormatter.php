@@ -18,6 +18,8 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class FieldTimerCountdownLedFormatter extends FieldTimerCountdownFormatterBase {
 
+  const LIBRARY_NAME = 'countdown_led';
+
   /**
    * {@inheritdoc}
    */
