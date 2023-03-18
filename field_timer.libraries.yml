@@ -7,10 +7,6 @@ init:
     - core/drupal
     - core/drupalSettings
     - core/once
-  css:
-    component:
-      css/field_timer.css: {}
-      css/field_timer-local.css: {}
 
 county:
   remote: http://www.egrappler.com/free-jquery-count-down-plugin-county/
@@ -23,6 +19,7 @@ county:
   css:
     component:
       /libraries/county/css/county.css: {}
+      css/field_timer_county.css: {}
   dependencies:
     - core/jquery
 
@@ -39,8 +36,17 @@ jquery.countdown:
   css:
     component:
       /libraries/jquery.countdown/css/jquery.countdown.css: {}
+      css/field_timer_countdown.css: {}
   dependencies:
     - core/jquery
+
+countdown_led:
+  css:
+    component:
+      css/field_timer_countdown_led.css: {}
+      css/field_timer_countdown_led_local.css: {}
+  dependencies:
+    - field_timer/jquery.countdown
 
 # Albanian
 jquery.countdown.sq:

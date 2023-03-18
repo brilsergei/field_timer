@@ -179,7 +179,7 @@ class AssetSourceTest extends BrowserTestBase {
     yield [
       'field_timer_countdown_led',
       [],
-      ['css/field_timer-js-delivr.css'],
+      ['css/field_timer_countdown_led_js_delivr.css'],
     ];
   }
 

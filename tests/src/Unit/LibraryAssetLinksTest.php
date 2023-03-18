@@ -23,9 +23,6 @@ class LibraryAssetLinksTest extends UnitTestCase {
 
   public function replaceLocalWithJsDelivrDataProvider() {
     $libraries = [
-      'init' => [
-        'css' => ['component' => ['css/field_timer-local.css' => []]],
-      ],
       'county' => [
         'js' => ['/libraries/county/js/county.js' => []],
         'css' => ['component' => ['/libraries/county/css/county.css' => []]],
@@ -41,15 +38,15 @@ class LibraryAssetLinksTest extends UnitTestCase {
           ],
         ],
       ],
+      'countdown_led' => [
+        'css' => ['component' => ['css/field_timer_countdown_led_local.css' => []]],
+      ],
       'jquery.countdown.hy' => [
         'js' => ['/libraries/jquery.countdown/js/jquery.countdown-hy.js' => []],
       ],
     ];
 
     $expected = [
-      'init' => [
-        'css' => ['component' => ['css/field_timer-js-delivr.css' => []]],
-      ],
       'county' => [
         'js' => [
           'https://cdn.jsdelivr.net/gh/brilsergei/county@0.0.1/js/county.js' => [
@@ -80,6 +77,9 @@ class LibraryAssetLinksTest extends UnitTestCase {
             ],
           ],
         ],
+      ],
+      'countdown_led' => [
+        'css' => ['component' => ['css/field_timer_countdown_led_js_delivr.css' => []]],
       ],
       'jquery.countdown.hy' => [
         'js' => [

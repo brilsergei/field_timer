@@ -18,8 +18,8 @@ class LibraryAssetLinks {
    */
   public function replaceLocalWithJsDelivr(array $libraries) {
     // Use CSS which contains link to images in CDN.
-    unset($libraries['init']['css']['component']['css/field_timer-local.css']);
-    $libraries['init']['css']['component']['css/field_timer-js-delivr.css'] = [];
+    unset($libraries['countdown_led']['css']['component']['css/field_timer_countdown_led_local.css']);
+    $libraries['countdown_led']['css']['component']['css/field_timer_countdown_led_js_delivr.css'] = [];
 
     // Replace links to local assets with links to assets in CDN.
     foreach ($libraries['county']['js'] as $js => $data) {

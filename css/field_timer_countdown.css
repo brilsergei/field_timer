@@ -1,0 +1,10 @@
+.field-timer-jquery-countdown {
+  display: inline-block;
+}
+.field-timer-jquery-countdown .countdown-section {
+  padding: 0 3px;
+  width: auto;
+}
+.field-timer-jquery-countdown .countdown-row {
+  padding: 0;
+}
